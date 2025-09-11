@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
   crearCarrera,
   obtenerCarrerasDeUniversidad,
+  editarCarrera,
+  eliminarCarrera,
 } from "../controllers/carrera.controller.js";
 import {
   verificarUsuario,
@@ -16,4 +18,11 @@ carreraRoutes.get(
   verificarUsuario,
   soloUniversidad,
   obtenerCarrerasDeUniversidad
+);
+carreraRoutes.put("/:id", verificarUsuario, soloUniversidad, editarCarrera);
+carreraRoutes.delete(
+  "/:id",
+  verificarUsuario,
+  soloUniversidad,
+  eliminarCarrera
 );
