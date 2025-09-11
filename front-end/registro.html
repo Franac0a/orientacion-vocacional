@@ -313,19 +313,47 @@
         .addEventListener("submit", async function (e) {
           e.preventDefault();
 
-          const submitBtn = document.getElementById("submitButton");
-          const originalHTML = submitBtn.innerHTML;
+          const name = document.getElementById("name").value.trim();
+          const lastname = document.getElementById("lastname").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
 
-          // Validaciones aquí...
+          if (password !== confirmPassword) {
+            showAlert("Error", "Las contraseñas no coinciden.");
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalHTML;
+            return;
+          }
 
           try {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML =
-              '<i class="fas fa-spinner fa-spin mr-2"></i> Creando cuenta...';
+            const response = await fetch(
+              "http://localhost:3000/api/auth/register",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  name: `${name} ${lastname}`,
+                  email,
+                  password,
+                  type: "estudiante", // o "universidad" si estás registrando instituciones
+                }),
+              }
+            );
 
-            // Tu lógica de registro aquí
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.error || "Error al registrar");
+            }
 
             showAlert("Success", "¡Cuenta creada exitosamente!");
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 1500);
           } catch (error) {
             showAlert("Error", error.message);
             submitBtn.disabled = false;

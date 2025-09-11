@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { sequelize } from "./src/config/database.js";
 import authRoutes from "./src/routes/auth.routes.js";
@@ -11,6 +12,8 @@ import { universidadRoutes } from "./src/routes/universidad.routes.js";
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
 
 // Middlewares globales
 app.use(express.json());
