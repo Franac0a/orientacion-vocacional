@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Test Vocacional</title>
+
+    <!-- Fuentes y estilos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/css/style-test.css" />
+  </head>
+  <body>
+    <!-- Topbar (opcional, si ya tenés una, podés quitar esta) -->
+    <header class="topbar">
+      <a href="index.html" class="brand">
+        <img src="src/img/logo.jpg" alt="Impulso" class="logo" />
+        <span>Impulso Vocacional</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">Inicio</a>
+        <a href="login.html">Ingresar</a>
+        <a href="registro.html" class="btn">Registrarse</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Test Vocacional</h1>
+        <p>Marcá la opción que más te represente. Una pregunta por vez.</p>
+      </section>
+
+      <!-- PROGRESO -->
+      <section class="progress-wrap card">
+        <div class="progress-top">
+          <span
+            ><strong>Progreso:</strong>
+            <span id="progressText">1 / 16</span></span
+          >
+        </div>
+        <div class="progress-bar"><div id="progressFill"></div></div>
+      </section>
+
+      <!-- FORM PASO A PASO (todas las preguntas están, JS muestra una por vez) -->
+      <form id="mbtiForm" class="card">
+        <!-- E / I -->
+        <h2 class="sr-only">Extraversión (E) vs. Introversión (I)</h2>
+        <div class="q">
+          <p>1. En eventos sociales, suelo…</p>
+          <label class="opt"
+            ><input type="radio" name="q1" value="E" required /> Hablar con
+            gente nueva</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q1" value="I" /> Quedarme con pocos
+            conocidos</label
+          >
+        </div>
+        <div class="q">
+          <p>2. Me recargo de energía cuando…</p>
+          <label class="opt"
+            ><input type="radio" name="q2" value="E" required /> Estoy con
+            otros</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q2" value="I" /> Estoy a solas</label
+          >
+        </div>
+        <div class="q">
+          <p>3. Prefiero aprender…</p>
+          <label class="opt"
+            ><input type="radio" name="q3" value="E" required /> Conversando en
+            grupo</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q3" value="I" />
+            Leyendo/reflexionando</label
+          >
+        </div>
+        <div class="q">
+          <p>4. En clase o reuniones, yo…</p>
+          <label class="opt"
+            ><input type="radio" name="q4" value="E" required /> Participo
+            espontáneamente</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q4" value="I" /> Pienso antes de
+            hablar</label
+          >
+        </div>
+
+        <!-- S / N -->
+        <h2 class="sr-only">Sensación (S) vs. Intuición (N)</h2>
+        <div class="q">
+          <p>5. Me centro más en…</p>
+          <label class="opt"
+            ><input type="radio" name="q5" value="S" required /> Hechos
+            concretos</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q5" value="N" /> Posibilidades e
+            ideas</label
+          >
+        </div>
+        <div class="q">
+          <p>6. Al aprender, prefiero…</p>
+          <label class="opt"
+            ><input type="radio" name="q6" value="S" required /> Pasos claros y
+            ejemplos</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q6" value="N" /> Ver el panorama
+            general</label
+          >
+        </div>
+        <div class="q">
+          <p>7. En proyectos, me siento cómodo…</p>
+          <label class="opt"
+            ><input type="radio" name="q7" value="S" required /> Siguiendo
+            procedimientos</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q7" value="N" /> Innovando caminos
+            nuevos</label
+          >
+        </div>
+        <div class="q">
+          <p>8. Descripciones que me atraen…</p>
+          <label class="opt"
+            ><input type="radio" name="q8" value="S" required /> Precisas y
+            detalladas</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q8" value="N" /> Metafóricas y
+            creativas</label
+          >
+        </div>
+
+        <!-- T / F -->
+        <h2 class="sr-only">Pensamiento (T) vs. Sentimiento (F)</h2>
+        <div class="q">
+          <p>9. Al decidir, priorizo…</p>
+          <label class="opt"
+            ><input type="radio" name="q9" value="T" required /> Lógica y
+            criterios</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q9" value="F" /> Impacto en las
+            personas</label
+          >
+        </div>
+        <div class="q">
+          <p>10. En discusiones, busco…</p>
+          <label class="opt"
+            ><input type="radio" name="q10" value="T" required /> Ser
+            objetivo</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q10" value="F" /> Mantener la
+            armonía</label
+          >
+        </div>
+        <div class="q">
+          <p>11. Feedback ideal…</p>
+          <label class="opt"
+            ><input type="radio" name="q11" value="T" required /> Directo y
+            sincero</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q11" value="F" /> Cuidadoso y
+            empático</label
+          >
+        </div>
+        <div class="q">
+          <p>12. Me motiva más…</p>
+          <label class="opt"
+            ><input type="radio" name="q12" value="T" required /> Lograr
+            objetivos</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q12" value="F" /> Ayudar a otros</label
+          >
+        </div>
+
+        <!-- J / P -->
+        <h2 class="sr-only">Juicio (J) vs. Percepción (P)</h2>
+        <div class="q">
+          <p>13. Mi organización…</p>
+          <label class="opt"
+            ><input type="radio" name="q13" value="J" required /> Planificada y
+            con agenda</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q13" value="P" /> Flexible y sobre la
+            marcha</label
+          >
+        </div>
+        <div class="q">
+          <p>14. Ante plazos, yo…</p>
+          <label class="opt"
+            ><input type="radio" name="q14" value="J" required /> Termino con
+            antelación</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q14" value="P" /> Trabajo mejor al
+            final</label
+          >
+        </div>
+        <div class="q">
+          <p>15. En viajes, prefiero…</p>
+          <label class="opt"
+            ><input type="radio" name="q15" value="J" required /> Itinerario
+            definido</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q15" value="P" /> Improvisar y
+            explorar</label
+          >
+        </div>
+        <div class="q">
+          <p>16. Cuando cambian los planes…</p>
+          <label class="opt"
+            ><input type="radio" name="q16" value="J" required /> Me incomoda,
+            me reordeno</label
+          >
+          <label class="opt"
+            ><input type="radio" name="q16" value="P" /> Me entusiasma la
+            novedad</label
+          >
+        </div>
+
+        <!-- Navegación por pasos -->
+        <div class="step-actions">
+          <button type="button" id="prevBtn" class="btn ghost" disabled>
+            Anterior
+          </button>
+          <button type="button" id="nextBtn" class="btn primary">
+            Siguiente
+          </button>
+          <button type="submit" id="submitBtn" class="btn primary hidden">
+            Ver resultado
+          </button>
+        </div>
+      </form>
+
+      <!-- RESULTADO -->
+      <section id="result" class="result hidden">
+        <h2>Tu tipo MBTI: <span id="type"></span></h2>
+        <p id="summary"></p>
+        <div class="share">
+          <button id="saveBtn" class="btn">Guardar</button>
+        </div>
+      </section>
+
+      <!-- HISTORIAL -->
+      <section class="card" id="savedCard">
+        <div class="saved-head">
+          <h3>Resultados guardados</h3>
+          <button id="refreshBtn" class="btn ghost">Actualizar</button>
+        </div>
+        <div id="savedList" class="saved-list empty">Sin resultados aún.</div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>© Impulso Vocacional Formosa</small>
+    </footer>
+
+    <!-- Lógica del test -->
+    <script src="src/js/mbti.js"></script>
+  </body>
+</html>
