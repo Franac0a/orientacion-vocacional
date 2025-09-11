@@ -14,12 +14,17 @@ export const verificarUsuario = (req, res, next) => {
 };
 
 export const soloUniversidad = (req, res, next) => {
-  if (req.usuario.tipo !== "universidad") {
-    return res
-      .status(403)
-      .json({ mensaje: "Solo universidades pueden acceder." });
+  try {
+    if (req.usuario.type !== "universidad") {
+      return res
+        .status(403)
+        .json({ mensaje: "Solo universidades pueden acceder." });
+    }
+    next();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ mensaje: "Error interno del servidor." });
   }
-  next();
 };
 
 export const soloEstudiante = (req, res, next) => {
