@@ -8,14 +8,12 @@ import {
   soloUniversidad,
 } from "../middlewares/auth.middleware.js";
 
-const router = Router();
+export const carreraRoutes = Router();
 
-router.post("/", verificarUsuario, soloUniversidad, crearCarrera);
-router.get(
+carreraRoutes.post("/", verificarUsuario, soloUniversidad, crearCarrera);
+carreraRoutes.get(
   "/",
   verificarUsuario,
   soloUniversidad,
   obtenerCarrerasDeUniversidad
 );
-
-export default router;

@@ -5,8 +5,11 @@ import {
   soloUniversidad,
 } from "../middlewares/auth.middleware.js";
 
-const router = Router();
+export const inscripcionRoutes = Router();
 
-router.post("/", verificarUsuario, soloUniversidad, agregarInscripcion);
-
-export default router;
+inscripcionRoutes.post(
+  "/",
+  verificarUsuario,
+  soloUniversidad,
+  agregarInscripcion
+);

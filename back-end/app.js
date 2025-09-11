@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { sequelize } from "./src/config/database.js";
-import authRoutes from "./src/routes/auth.routes.js";
-import userRoutes from "./src/routes/user.routes.js";
-import carreraRoutes from "./src/routes/carrera.routes.js";
-import inscripcionRoutes from "./src/routes/inscripcion.routes.js";
+import { authRoutes } from "./src/routes/auth.routes.js";
+import { userRoutes } from "./src/routes/user.routes.js";
+import { carreraRoutes } from "./src/routes/carrera.routes.js";
+import { inscripcionRoutes } from "./src/routes/inscripcion.routes.js";
 import { universidadRoutes } from "./src/routes/universidad.routes.js";
 
 dotenv.config();
