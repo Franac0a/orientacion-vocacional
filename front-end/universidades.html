@@ -103,16 +103,6 @@
     </main>
 
     <script>
-      // Simulación usuario logueado (en producción, obtener de localStorage o backend)
-      const currentUser = JSON.parse(localStorage.getItem("user")) || {
-        name: "Juan Pérez",
-      };
-      const userNameSpan = document.getElementById("userName");
-      if (currentUser && currentUser.name) {
-        userNameSpan.textContent = `Hola, ${currentUser.name}`;
-        userNameSpan.classList.remove("hidden");
-      }
-
       // Logout
       document.getElementById("logoutBtn").addEventListener("click", () => {
         localStorage.removeItem("authToken");
@@ -183,6 +173,13 @@
 
       // Render inicial
       renderUniversities();
+      // Mostrar nombre usuario logueado desde localStorage
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      if (currentUser && currentUser.name) {
+        document.getElementById(
+          "userName"
+        ).textContent = `Hola, ${currentUser.name}`;
+      }
     </script>
   </body>
 </html>
