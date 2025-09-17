@@ -345,13 +345,13 @@
         setupEventListeners();
       });
 
-      //   function checkAuth() {
-      //     const token = localStorage.getItem("authToken");
-      //     if (!token) {
-      //       window.location.href = "login.html";
-      //       return;
-      //     }
-      //   }
+      function checkAuth() {
+        const token = localStorage.getItem("authToken");
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+      }
 
       function setupEventListeners() {
         // Form submission

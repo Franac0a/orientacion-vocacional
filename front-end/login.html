@@ -337,8 +337,10 @@
             }
 
             // Redirigir después de 1.5 segundos
+            // Dentro del submit handler del formulario loginForm, reemplaza esta parte:
+
             setTimeout(() => {
-              window.location.href = "/dashboard"; // Cambia por tu ruta de dashboard
+              window.location.href = "universidades.html"; // Ruta a tu página de listado de universidades
             }, 1500);
           } catch (error) {
             // Error
