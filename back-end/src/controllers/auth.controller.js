@@ -27,12 +27,10 @@ export const register = async (req, res) => {
     });
     res.cookie("token", token, { httpOnly: true });
 
-    res
-      .status(201)
-      .json({
-        mensaje: "Usuario registrado correctamente.",
-        usuario: nuevoUsuario,
-      });
+    res.status(201).json({
+      mensaje: "Usuario registrado correctamente.",
+      usuario: nuevoUsuario,
+    });
   } catch (error) {
     res.status(500).json({ mensaje: "Error en el registro.", error });
   }
