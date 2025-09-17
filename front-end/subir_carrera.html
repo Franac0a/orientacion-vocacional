@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Carrera - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation Header -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <!-- Logo Impulso Educativo -->
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-impulso-green to-impulso-teal rounded-full flex items-center justify-center relative"
+            >
+              <img
+                src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23147a75'/><path d='M25 35 L40 35 L40 55 L25 55 Z' fill='white' stroke='white' stroke-width='2'/><path d='M30 38 L37 38 M30 42 L35 42 M30 46 L37 46 M30 50 L35 50' stroke='%23147a75' stroke-width='1'/><path d='M60 35 L75 35 L75 55 L60 55 Z' fill='none' stroke='white' stroke-width='2'/><path d='M63 38 L72 38 M63 42 L70 42 M63 46 L72 46 M63 50 L70 50' stroke='white' stroke-width='1'/><path d='M30 60 L50 55 L70 60 L70 75 L30 75 Z' fill='white'/><circle cx='50' cy='67' r='3' fill='%23F4D03F'/><path d='M50 67 L58 60' stroke='%23F4D03F' stroke-width='2'/><circle cx='58' cy='60' r='2' fill='%23F4D03F'/><path d='M22 42 L32 42 M68 42 L78 42' stroke='%23F4D03F' stroke-width='3'/></svg>"
+                alt="Logo completo de Impulso Educativo con libro abierto y birrete con borla dorada"
+                class="w-10 h-10"
+              />
+            </div>
+            <div>
+              <span class="text-xl font-bold text-impulso-dark">IMPULSO</span>
+              <br />
+              <span class="text-lg font-bold text-impulso-dark -mt-1 block"
+                >EDUCATIVO</span
+              >
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <span class="text-impulso-dark font-medium"
+              >Panel Universitario</span
+            >
+            <button
+              onclick="logout()"
+              class="text-red-600 hover:text-red-800 transition-colors"
+            >
+              <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Header -->
+      <div class="mb-8">
+        <div class="flex items-center mb-4">
+          <a
+            href="dashboard-universidad.html"
+            class="text-impulso-teal hover:text-impulso-green mr-4"
+          >
+            <i class="fas fa-arrow-left text-lg"></i>
+          </a>
+          <h1 class="text-3xl font-bold text-impulso-dark">
+            Crear Nueva Carrera
+          </h1>
+        </div>
+        <p class="text-gray-600">
+          Complete la información de la nueva oferta académica
+        </p>
+      </div>
+
+      <!-- Success/Error Messages -->
+      <div
+        id="alertSuccess"
+        class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-6"
+      >
+        <span class="block sm:inline" id="successMessage"></span>
+      </div>
+
+      <div
+        id="alertError"
+        class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6"
+      >
+        <span class="block sm:inline" id="errorMessage"></span>
+      </div>
+
+      <!-- Form Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-8">
+          <form id="crearCarreraForm" class="space-y-6">
+            <!-- Nombre de la Carrera -->
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+              >
+                Nombre de la Carrera <span class="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                maxlength="150"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                placeholder="Ej: Licenciatura en Administración de Empresas"
+              />
+              <p class="text-sm text-gray-500 mt-1">Máximo 150 caracteres</p>
+            </div>
+
+            <!-- Descripción -->
+            <div>
+              <label
+                for="description"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+              >
+                Descripción de la Carrera
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                rows="6"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                placeholder="Descripción detallada de la carrera, objetivos, perfil del egresado, campo laboral..."
+              ></textarea>
+              <p class="text-sm text-gray-500 mt-1">
+                Describe los objetivos, contenidos y perfil del egresado
+              </p>
+            </div>
+
+            <!-- Duration y Modality en Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Duración -->
+              <div>
+                <label
+                  for="duration"
+                  class="block text-sm font-medium text-impulso-dark mb-2"
+                >
+                  Duración <span class="text-red-500">*</span>
+                </label>
+                <select
+                  id="duration"
+                  name="duration"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal"
+                >
+                  <option value="">Seleccionar duración...</option>
+                  <option value="1 año">1 año</option>
+                  <option value="1.5 años">1.5 años</option>
+                  <option value="2 años">2 años</option>
+                  <option value="2.5 años">2.5 años</option>
+                  <option value="3 años">3 años</option>
+                  <option value="3.5 años">3.5 años</option>
+                  <option value="4 años">4 años</option>
+                  <option value="4.5 años">4.5 años</option>
+                  <option value="5 años">5 años</option>
+                  <option value="5.5 años">5.5 años</option>
+                  <option value="6 años">6 años</option>
+                  <option value="Otro">Otro</option>
+                </select>
+              </div>
+
+              <!-- Modalidad -->
+              <div>
+                <label
+                  for="modality"
+                  class="block text-sm font-medium text-impulso-dark mb-2"
+                >
+                  Modalidad <span class="text-red-500">*</span>
+                </label>
+                <select
+                  id="modality"
+                  name="modality"
+                  required
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal"
+                >
+                  <option value="">Seleccionar modalidad...</option>
+                  <option value="presencial">Presencial</option>
+                  <option value="virtual">Virtual</option>
+                  <option value="mixta">Mixta (Semipresencial)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Duración personalizada (oculta por defecto) -->
+            <div id="customDurationDiv" class="hidden">
+              <label
+                for="customDuration"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+              >
+                Especificar duración personalizada
+              </label>
+              <input
+                type="text"
+                id="customDuration"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal"
+                placeholder="Ej: 7 años, 18 meses, etc."
+              />
+            </div>
+
+            <!-- Preview Card -->
+            <div
+              class="bg-impulso-light/10 rounded-lg p-6 border-l-4 border-impulso-teal"
+            >
+              <h3 class="text-lg font-semibold text-impulso-dark mb-3">
+                <i class="fas fa-eye mr-2"></i>Vista Previa
+              </h3>
+              <div class="space-y-2">
+                <div class="flex items-center">
+                  <span class="font-medium text-impulso-dark w-24"
+                    >Nombre:</span
+                  >
+                  <span id="previewName" class="text-gray-600">-</span>
+                </div>
+                <div class="flex items-start">
+                  <span class="font-medium text-impulso-dark w-24"
+                    >Descripción:</span
+                  >
+                  <span id="previewDescription" class="text-gray-600">-</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-medium text-impulso-dark w-24"
+                    >Duración:</span
+                  >
+                  <span id="previewDuration" class="text-gray-600">-</span>
+                </div>
+                <div class="flex items-center">
+                  <span class="font-medium text-impulso-dark w-24"
+                    >Modalidad:</span
+                  >
+                  <span id="previewModality" class="text-gray-600">-</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div
+              class="flex flex-col sm:flex-row gap-4 justify-end pt-6 border-t border-gray-200"
+            >
+              <button
+                type="button"
+                onclick="resetForm()"
+                class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-all duration-300"
+              >
+                <i class="fas fa-undo mr-2"></i>Limpiar Formulario
+              </button>
+
+              <button
+                type="submit"
+                id="submitBtn"
+                class="px-8 py-3 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg transform hover:scale-105 transition-all duration-300 font-medium"
+              >
+                <i class="fas fa-plus mr-2"></i>Crear Carrera
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <div
+            class="w-12 h-12 bg-impulso-green/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i class="fas fa-graduation-cap text-impulso-green text-xl"></i>
+          </div>
+          <h3 class="font-semibold text-impulso-dark mb-2">
+            Información Completa
+          </h3>
+          <p class="text-sm text-gray-600">
+            Asegúrate de completar toda la información para que los estudiantes
+            tengan todos los detalles
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <div
+            class="w-12 h-12 bg-impulso-teal/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i class="fas fa-edit text-impulso-teal text-xl"></i>
+          </div>
+          <h3 class="font-semibold text-impulso-dark mb-2">
+            Edición Posterior
+          </h3>
+          <p class="text-sm text-gray-600">
+            Podrás modificar la información de la carrera después de crearla
+            desde tu panel
+          </p>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6 text-center">
+          <div
+            class="w-12 h-12 bg-impulso-gold/10 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i class="fas fa-users text-impulso-gold text-xl"></i>
+          </div>
+          <h3 class="font-semibold text-impulso-dark mb-2">Visibilidad</h3>
+          <p class="text-sm text-gray-600">
+            Tu carrera será visible para todos los estudiantes que busquen
+            opciones educativas
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Configuración API
+      const API_BASE_URL = "http://localhost:3001"; // Cambiar por tu URL de backend
+
+      // Referencias del DOM
+      const form = document.getElementById("crearCarreraForm");
+      const nameInput = document.getElementById("name");
+      const descriptionInput = document.getElementById("description");
+      const durationSelect = document.getElementById("duration");
+      const modalitySelect = document.getElementById("modality");
+      const customDurationDiv = document.getElementById("customDurationDiv");
+      const customDurationInput = document.getElementById("customDuration");
+
+      // Preview elements
+      const previewName = document.getElementById("previewName");
+      const previewDescription = document.getElementById("previewDescription");
+      const previewDuration = document.getElementById("previewDuration");
+      const previewModality = document.getElementById("previewModality");
+
+      // Inicializar
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAuth();
+        setupEventListeners();
+      });
+
+      //   function checkAuth() {
+      //     const token = localStorage.getItem("authToken");
+      //     if (!token) {
+      //       window.location.href = "login.html";
+      //       return;
+      //     }
+      //   }
+
+      function setupEventListeners() {
+        // Form submission
+        form.addEventListener("submit", crearCarrera);
+
+        // Preview updates
+        nameInput.addEventListener("input", updatePreview);
+        descriptionInput.addEventListener("input", updatePreview);
+        durationSelect.addEventListener("change", handleDurationChange);
+        modalitySelect.addEventListener("change", updatePreview);
+        customDurationInput.addEventListener("input", updatePreview);
+      }
+
+      function handleDurationChange() {
+        const selectedValue = durationSelect.value;
+
+        if (selectedValue === "Otro") {
+          customDurationDiv.classList.remove("hidden");
+          customDurationInput.required = true;
+        } else {
+          customDurationDiv.classList.add("hidden");
+          customDurationInput.required = false;
+          customDurationInput.value = "";
+        }
+
+        updatePreview();
+      }
+
+      function updatePreview() {
+        // Name
+        previewName.textContent = nameInput.value || "-";
+
+        // Description (truncated)
+        const desc = descriptionInput.value;
+        previewDescription.textContent = desc
+          ? desc.length > 100
+            ? desc.substring(0, 100) + "..."
+            : desc
+          : "-";
+
+        // Duration
+        let duration = durationSelect.value;
+        if (duration === "Otro" && customDurationInput.value) {
+          duration = customDurationInput.value;
+        }
+        previewDuration.textContent = duration || "-";
+
+        // Modality
+        const modalityText = {
+          presencial: "Presencial",
+          virtual: "Virtual",
+          mixta: "Mixta (Semipresencial)",
+        };
+        previewModality.textContent = modalityText[modalitySelect.value] || "-";
+      }
+
+      async function crearCarrera(e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById("submitBtn");
+        const originalHTML = submitBtn.innerHTML;
+
+        // Get form data
+        let duration = durationSelect.value;
+        if (duration === "Otro") {
+          duration = customDurationInput.value;
+        }
+
+        const carreraData = {
+          name: nameInput.value.trim(),
+          description: descriptionInput.value.trim(),
+          duration: duration,
+          modality: modalitySelect.value,
+        };
+
+        // Validations
+        if (
+          !carreraData.name ||
+          !carreraData.duration ||
+          !carreraData.modality
+        ) {
+          showAlert(
+            "error",
+            "Por favor complete todos los campos obligatorios"
+          );
+          return;
+        }
+
+        if (carreraData.name.length > 150) {
+          showAlert(
+            "error",
+            "El nombre de la carrera no puede exceder 150 caracteres"
+          );
+          return;
+        }
+
+        try {
+          // Show loading
+          submitBtn.disabled = true;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin mr-2"></i> Creando carrera...';
+
+          const token = localStorage.getItem("authToken");
+          const response = await fetch(`${API_BASE_URL}/api/carreras`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(carreraData),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            showAlert(
+              "success",
+              result.mensaje || "Carrera creada exitosamente"
+            );
+            resetForm();
+
+            // Redirect after 2 seconds
+            setTimeout(() => {
+              window.location.href = "dashboard-universidad.html";
+            }, 2000);
+          } else {
+            throw new Error(result.mensaje || "Error al crear la carrera");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          showAlert("error", error.message);
+        } finally {
+          // Restore button
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalHTML;
+        }
+      }
+
+      function resetForm() {
+        form.reset();
+        customDurationDiv.classList.add("hidden");
+        customDurationInput.required = false;
+        updatePreview();
+      }
+
+      function showAlert(type, message) {
+        const alertElement = document.getElementById(
+          type === "success" ? "alertSuccess" : "alertError"
+        );
+        const messageElement = document.getElementById(
+          type === "success" ? "successMessage" : "errorMessage"
+        );
+
+        messageElement.textContent = message;
+        alertElement.classList.remove("hidden");
+
+        // Hide after 5 seconds
+        setTimeout(() => {
+          alertElement.classList.add("hidden");
+        }, 5000);
+
+        // Scroll to top to show alert
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function logout() {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
+
+      // Character counter for name field
+      nameInput.addEventListener("input", function () {
+        const remaining = 150 - this.value.length;
+        const parent = this.parentElement;
+        let counter = parent.querySelector(".char-counter");
+
+        if (!counter) {
+          counter = document.createElement("p");
+          counter.className = "char-counter text-sm mt-1";
+          parent.appendChild(counter);
+        }
+
+        counter.textContent = `${remaining} caracteres restantes`;
+        counter.className = `char-counter text-sm mt-1 ${
+          remaining < 20 ? "text-red-500" : "text-gray-500"
+        }`;
+      });
+    </script>
+  </body>
+</html>
