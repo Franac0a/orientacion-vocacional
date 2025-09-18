@@ -8,6 +8,7 @@ import { userRoutes } from "./src/routes/user.routes.js";
 import { carreraRoutes } from "./src/routes/carrera.routes.js";
 import { inscripcionRoutes } from "./src/routes/inscripcion.routes.js";
 import { universidadRoutes } from "./src/routes/universidad.routes.js";
+import { testResultadoRoutes } from "./src/routes/testResultado.routes.js";
 
 dotenv.config();
 
@@ -25,10 +26,11 @@ app.use("/api/users", userRoutes);
 app.use("/api/carreras", carreraRoutes);
 app.use("/api/inscripciones", inscripcionRoutes);
 app.use("/api/universidades", universidadRoutes);
+app.use("/api", testResultadoRoutes);
 
 // Sincronización de modelos con la base de datos
 sequelize
-  .sync({ force: true }) // Cambialo a { force: true } si querés reiniciar la DB
+  .sync({ force: false }) // Cambialo a { force: true } si querés reiniciar la DB
   .then(() => {
     console.log("🟢 Base de datos sincronizada correctamente.");
     const PORT = process.env.PORT || 3000;
