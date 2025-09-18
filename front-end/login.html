@@ -9,7 +9,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="src/css/style-login.css" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script>
       tailwind.config = {
         theme: {
@@ -21,231 +22,537 @@
               "impulso-gold": "#F4D03F",
               "impulso-dark": "#0A5D61",
             },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
           },
         },
       };
     </script>
   </head>
-  <body
-    class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center p-4"
-  >
-    <div class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md">
-      <!-- Alertas de éxito/error -->
-      <div
-        id="alertSuccess"
-        class="hidden bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative mb-4 mx-4 mt-4"
-      >
-        <span class="block sm:inline" id="alertSuccessMessage"></span>
-      </div>
-
-      <div
-        id="alertError"
-        class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 mx-4 mt-4"
-      >
-        <span class="block sm:inline" id="alertErrorMessage"></span>
-      </div>
-
-      <!-- Header con Logo -->
-      <div
-        class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
-      >
-        <!-- Logo de Impulso Educativo -->
-        <div class="mb-4 flex justify-center">
-          <div
-            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg"
-          >
-            <img
-              src="src/img/logo.jpg"
-              alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
-              class="w-20 h-20 rounded-full"
-            />
-          </div>
-        </div>
-        <h1 class="text-2xl font-bold text-white mb-1">Impulso Educativo</h1>
-        <p class="text-impulso-light">Bienvenido de vuelta</p>
-      </div>
-
-      <!-- Formulario de Login -->
-      <div class="p-8">
-        <h2 class="text-2xl font-bold text-impulso-dark mb-2 text-center">
-          Iniciar Sesión
-        </h2>
-        <p class="text-gray-600 mb-6 text-center">
-          Accede a tu cuenta para continuar
-        </p>
-
-        <form id="loginForm" class="space-y-5">
-          <div>
-            <label
-              for="email"
-              class="block text-sm font-medium text-impulso-dark mb-2"
-              >Correo electrónico</label
-            >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <i class="fas fa-envelope text-impulso-light"></i>
-              </div>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
-                placeholder="tu@email.com"
+  <body class="overflow-x-hidden">
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <a href="index.html">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+                class="w-10 h-10 animate-pulse-slow"
               />
-            </div>
-          </div>
-
-          <div>
-            <label
-              for="password"
-              class="block text-sm font-medium text-impulso-dark mb-2"
-              >Contraseña</label
-            >
-            <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <i class="fas fa-lock text-impulso-light"></i>
-              </div>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                required
-                class="pl-10 pr-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
-                placeholder="••••••••"
-              />
-              <button
-                type="button"
-                id="togglePassword"
-                class="absolute inset-y-0 right-0 pr-3 flex items-center"
-              >
-                <i
-                  class="fas fa-eye text-impulso-light hover:text-impulso-teal transition duration-200"
-                ></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                class="h-4 w-4 text-impulso-teal focus:ring-impulso-teal border-gray-300 rounded"
-              />
-              <label
-                for="remember"
-                class="ml-2 block text-sm text-impulso-dark"
-              >
-                Recordarme
-              </label>
-            </div>
-            <a
-              href="#"
-              class="text-sm text-impulso-teal hover:text-impulso-green font-medium"
-            >
-              ¿Olvidaste tu contraseña?
             </a>
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
           </div>
 
-          <button
-            type="submit"
-            id="loginButton"
-            class="w-full bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
-          >
-            <i class="fas fa-sign-in-alt mr-2"></i>
-            Iniciar Sesión
-          </button>
-        </form>
-
-        <!-- Divider -->
-        <div class="mt-6 relative">
-          <div class="absolute inset-0 flex items-center">
-            <div class="w-full border-t border-gray-300"></div>
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
           </div>
-          <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">O continúa con</span>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test Vocacional</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+            >
+              Explorá</a
+            >
+            <div class="flex items-center space-x-3" id="auth-buttons">
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- Social Login Buttons -->
-        <div class="mt-6 grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="index.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
           >
-            <i class="fab fa-google text-red-500 mr-2"></i>
-            Google
-          </button>
-          <button
-            type="button"
-            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+          <a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
           >
-            <i class="fab fa-microsoft text-blue-500 mr-2"></i>
-            Microsoft
-          </button>
-        </div>
-
-        <div class="mt-6 text-center">
-          <p class="text-gray-600">
-            ¿No tienes una cuenta?
+          <a
+            href="test.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            id="mobile-test-link"
+            >Test Vocacional</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="contacto.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
             <a
               href="registro.html"
-              class="text-impulso-teal font-medium hover:text-impulso-green"
-              >Regístrate aquí</a
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
             >
-          </p>
-        </div>
-
-        <!-- Sección para instituciones educativas -->
-        <div class="mt-8 pt-6 border-t border-impulso-light/30 text-center">
-          <div
-            class="bg-gradient-to-r from-impulso-light/10 to-teal-50 p-4 rounded-lg"
-          >
-            <i class="fas fa-university text-impulso-gold text-xl mb-2"></i>
-            <p class="text-impulso-dark font-medium text-sm">
-              ¿Eres una institución educativa?
-            </p>
-            <a
-              href="mailto:info@impulsoeducativo.com"
-              class="inline-block mt-2 text-impulso-teal hover:text-impulso-green text-sm font-medium"
-            >
-              <i class="fas fa-envelope mr-1"></i>Contáctanos
+              Registrarse
             </a>
           </div>
         </div>
       </div>
-    </div>
+    </nav>
+    <main
+      class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center pt-24 md:pt-16 p-4"
+    >
+      <div
+        class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md"
+      >
+        <div
+          id="alertSuccess"
+          class="hidden bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative mx-4 mt-4"
+        >
+          <span class="block sm:inline" id="alertSuccessMessage"></span>
+        </div>
 
+        <div
+          id="alertError"
+          class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-4 mt-4"
+        >
+          <span class="block sm:inline" id="alertErrorMessage"></span>
+        </div>
+
+        <div
+          class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
+        >
+          <div class="mb-4 flex justify-center">
+            <div
+              class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg"
+            >
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+                class="w-20 h-20 rounded-full"
+              />
+            </div>
+          </div>
+          <h1 class="text-2xl font-bold text-white mb-1">Impulso Educativo</h1>
+          <p class="text-impulso-light">Bienvenido de vuelta</p>
+        </div>
+
+        <div class="p-8">
+          <h2 class="text-2xl font-bold text-impulso-dark mb-2 text-center">
+            Iniciar Sesión
+          </h2>
+          <p class="text-gray-600 mb-6 text-center">
+            Accede a tu cuenta para continuar
+          </p>
+
+          <form id="loginForm" class="space-y-5">
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+                >Correo electrónico</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i class="fas fa-envelope text-impulso-light"></i>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                  placeholder="tu@email.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+                >Contraseña</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i class="fas fa-lock text-impulso-light"></i>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  class="pl-10 pr-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  id="togglePassword"
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                >
+                  <i
+                    class="fas fa-eye text-impulso-light hover:text-impulso-teal transition duration-200"
+                  ></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="remember"
+                  name="remember"
+                  class="h-4 w-4 text-impulso-teal focus:ring-impulso-teal border-gray-300 rounded"
+                />
+                <label
+                  for="remember"
+                  class="ml-2 block text-sm text-impulso-dark"
+                >
+                  Recordarme
+                </label>
+              </div>
+              <a
+                href="#"
+                class="text-sm text-impulso-teal hover:text-impulso-green font-medium"
+              >
+                ¿Olvidaste tu contraseña?
+              </a>
+            </div>
+
+            <button
+              type="submit"
+              id="loginButton"
+              class="w-full bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Iniciar Sesión
+            </button>
+          </form>
+
+          <div class="mt-6 relative">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="px-2 bg-white text-gray-500">O continúa con</span>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+            >
+              <i class="fab fa-google text-red-500 mr-2"></i>
+              Google
+            </button>
+            <button
+              type="button"
+              class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+            >
+              <i class="fab fa-microsoft text-blue-500 mr-2"></i>
+              Microsoft
+            </button>
+          </div>
+
+          <div class="mt-6 text-center">
+            <p class="text-gray-600">
+              ¿No tienes una cuenta?
+              <a
+                href="registro.html"
+                class="text-impulso-teal font-medium hover:text-impulso-green"
+                >Regístrate aquí</a
+              >
+            </p>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-impulso-light/30 text-center">
+            <div
+              class="bg-gradient-to-r from-impulso-light/10 to-teal-50 p-4 rounded-lg"
+            >
+              <i class="fas fa-university text-impulso-gold text-xl mb-2"></i>
+              <p class="text-impulso-dark font-medium text-sm">
+                ¿Eres una institución educativa?
+              </p>
+              <a
+                href="mailto:info@impulsoeducativo.com"
+                class="inline-block mt-2 text-impulso-teal hover:text-impulso-green text-sm font-medium"
+              >
+                <i class="fas fa-envelope mr-1"></i>Contáctanos
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
     <script>
-      // Configuración de la API
-      const API_BASE_URL = "http://localhost:3001"; // URL de tu backend
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
 
-      // Mostrar alertas
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+
+        function updateUIForUser(userType) {
+          if (authButtonsContainer) {
+            authButtonsContainer.innerHTML = "";
+            const userMenuHtml = `
+              <div class="relative group">
+                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                </div>
+              </div>
+            `;
+            authButtonsContainer.innerHTML = userMenuHtml;
+          }
+
+          if (mobileAuthButtonsContainer) {
+            mobileAuthButtonsContainer.innerHTML = `
+              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </a>
+              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                Cerrar Sesión
+              </button>
+            `;
+          }
+
+          if (userType !== "estudiante") {
+            if (testLink) testLink.classList.add("hidden");
+            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+          } else {
+            if (testLink) testLink.classList.remove("hidden");
+            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+          }
+
+          const logoutButton = document.getElementById("logout-button");
+          const mobileLogoutButton = document.getElementById(
+            "mobile-logout-button"
+          );
+
+          if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+
+          if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+        }
+
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (token) {
+          updateUIForUser(userType);
+        } else {
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        }
+      });
+    </script>
+    <script>
+      const API_BASE_URL = "http://localhost:3000";
+
       function showAlert(type, message) {
         const alert = document.getElementById(`alert${type}`);
         const messageElement = document.getElementById(`alert${type}Message`);
-
         messageElement.textContent = message;
         alert.classList.remove("hidden");
-
         setTimeout(() => {
           alert.classList.add("hidden");
         }, 5000);
       }
 
-      // Toggle mostrar/ocultar contraseña
       document
         .getElementById("togglePassword")
         .addEventListener("click", function () {
           const passwordField = document.getElementById("password");
           const icon = this.querySelector("i");
-
           if (passwordField.type === "password") {
             passwordField.type = "text";
             icon.classList.remove("fa-eye");
@@ -257,27 +564,33 @@
           }
         });
 
-      // Validar email
       function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
       }
 
-      // Login con backend
+      // ... (código anterior)
+
       async function loginUser(loginData) {
         try {
-          const response = await fetch("http://localhost:3000/api/auth/login", {
+          const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(loginData),
           });
-
           const data = await response.json();
 
+          // **Validación de la respuesta del servidor**
           if (!response.ok) {
             throw new Error(data.error || "Credenciales incorrectas");
+          }
+
+          if (!data.token || !data.user) {
+            throw new Error(
+              "Respuesta del servidor incompleta. Falta información del usuario."
+            );
           }
 
           return data;
@@ -286,23 +599,17 @@
         }
       }
 
-      // Manejar envío del formulario
       document
         .getElementById("loginForm")
         .addEventListener("submit", async function (e) {
           e.preventDefault();
-
           const loginBtn = document.getElementById("loginButton");
           const originalHTML = loginBtn.innerHTML;
-
-          // Obtener valores del formulario
           const loginData = {
             email: document.getElementById("email").value.trim(),
             password: document.getElementById("password").value,
-            remember: document.getElementById("remember").checked,
           };
 
-          // Validaciones del frontend
           if (!loginData.email || !loginData.password) {
             showAlert("Error", "Por favor completa todos los campos");
             return;
@@ -314,45 +621,37 @@
           }
 
           try {
-            // Mostrar loading
             loginBtn.disabled = true;
             loginBtn.innerHTML =
               '<i class="fas fa-spinner fa-spin mr-2"></i> Iniciando sesión...';
 
-            // Enviar al backend
             const result = await loginUser(loginData);
 
-            // Éxito
-            showAlert("Success", "¡Login exitoso! Redirigiendo...");
-
-            // Guardar token en localStorage
+            // **Guardar los datos si la validación fue exitosa**
             localStorage.setItem("authToken", result.token);
+            localStorage.setItem("userType", result.user.type);
             localStorage.setItem("user", JSON.stringify(result.user));
 
-            // Recordar usuario si está marcado
-            if (loginData.remember) {
+            if (document.getElementById("remember").checked) {
               localStorage.setItem("rememberedEmail", loginData.email);
             } else {
               localStorage.removeItem("rememberedEmail");
             }
 
-            // Redirigir después de 1.5 segundos
-            // Dentro del submit handler del formulario loginForm, reemplaza esta parte:
+            showAlert("Success", "¡Login exitoso! Redirigiendo...");
 
+            // Redirigir al inicio después de 1.5 segundos
             setTimeout(() => {
-              window.location.href = "universidades.html"; // Ruta a tu página de listado de universidades
+              window.location.href = "index.html";
             }, 1500);
           } catch (error) {
-            // Error
             showAlert("Error", error.message);
-
-            // Restaurar botón
+          } finally {
             loginBtn.disabled = false;
             loginBtn.innerHTML = originalHTML;
           }
         });
-
-      // Recordar email si estaba guardado
+      // ... (código posterior)
       window.addEventListener("load", function () {
         const rememberedEmail = localStorage.getItem("rememberedEmail");
         if (rememberedEmail) {
@@ -360,8 +659,6 @@
           document.getElementById("remember").checked = true;
         }
       });
-
-      // Validación en tiempo real del email
       document.getElementById("email").addEventListener("blur", function () {
         if (this.value && !isValidEmail(this.value)) {
           this.classList.add("border-red-500");
@@ -371,18 +668,20 @@
           this.classList.add("border-gray-300");
         }
       });
-
-      // Efectos visuales en focus/blur
       const inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
         input.addEventListener("focus", function () {
           this.classList.add("ring-2", "ring-impulso-teal/30");
         });
-
         input.addEventListener("blur", function () {
           this.classList.remove("ring-2", "ring-impulso-teal/30");
         });
       });
     </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+    </style>
   </body>
 </html>

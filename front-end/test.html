@@ -1,276 +1,653 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Test Vocacional</title>
-
-    <!-- Fuentes y estilos -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Vocacional - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="src/css/style-test.css" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+    </style>
   </head>
-  <body>
-    <!-- Topbar (opcional, si ya tenés una, podés quitar esta) -->
-    <header class="topbar">
-      <a href="index.html" class="brand">
-        <img src="src/img/logo.jpg" alt="Impulso" class="logo" />
-        <span>Impulso Vocacional</span>
-      </a>
-      <nav class="nav">
-        <a href="index.html">Inicio</a>
-        <a href="login.html">Ingresar</a>
-        <a href="registro.html" class="btn">Registrarse</a>
-      </nav>
-    </header>
 
-    <main class="container">
-      <section class="hero">
-        <h1>Test Vocacional</h1>
-        <p>Marcá la opción que más te represente. Una pregunta por vez.</p>
-      </section>
+  <body
+    class="overflow-x-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 min-h-screen flex flex-col"
+  >
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <a href="index.html">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+                class="w-10 h-10 animate-pulse-slow"
+              />
+            </a>
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
 
-      <!-- PROGRESO -->
-      <section class="progress-wrap card">
-        <div class="progress-top">
-          <span
-            ><strong>Progreso:</strong>
-            <span id="progressText">1 / 16</span></span
-          >
-        </div>
-        <div class="progress-bar"><div id="progressFill"></div></div>
-      </section>
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
 
-      <!-- FORM PASO A PASO (todas las preguntas están, JS muestra una por vez) -->
-      <form id="mbtiForm" class="card">
-        <!-- E / I -->
-        <h2 class="sr-only">Extraversión (E) vs. Introversión (I)</h2>
-        <div class="q">
-          <p>1. En eventos sociales, suelo…</p>
-          <label class="opt"
-            ><input type="radio" name="q1" value="E" required /> Hablar con
-            gente nueva</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q1" value="I" /> Quedarme con pocos
-            conocidos</label
-          >
-        </div>
-        <div class="q">
-          <p>2. Me recargo de energía cuando…</p>
-          <label class="opt"
-            ><input type="radio" name="q2" value="E" required /> Estoy con
-            otros</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q2" value="I" /> Estoy a solas</label
-          >
-        </div>
-        <div class="q">
-          <p>3. Prefiero aprender…</p>
-          <label class="opt"
-            ><input type="radio" name="q3" value="E" required /> Conversando en
-            grupo</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q3" value="I" />
-            Leyendo/reflexionando</label
-          >
-        </div>
-        <div class="q">
-          <p>4. En clase o reuniones, yo…</p>
-          <label class="opt"
-            ><input type="radio" name="q4" value="E" required /> Participo
-            espontáneamente</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q4" value="I" /> Pienso antes de
-            hablar</label
-          >
-        </div>
-
-        <!-- S / N -->
-        <h2 class="sr-only">Sensación (S) vs. Intuición (N)</h2>
-        <div class="q">
-          <p>5. Me centro más en…</p>
-          <label class="opt"
-            ><input type="radio" name="q5" value="S" required /> Hechos
-            concretos</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q5" value="N" /> Posibilidades e
-            ideas</label
-          >
-        </div>
-        <div class="q">
-          <p>6. Al aprender, prefiero…</p>
-          <label class="opt"
-            ><input type="radio" name="q6" value="S" required /> Pasos claros y
-            ejemplos</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q6" value="N" /> Ver el panorama
-            general</label
-          >
-        </div>
-        <div class="q">
-          <p>7. En proyectos, me siento cómodo…</p>
-          <label class="opt"
-            ><input type="radio" name="q7" value="S" required /> Siguiendo
-            procedimientos</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q7" value="N" /> Innovando caminos
-            nuevos</label
-          >
-        </div>
-        <div class="q">
-          <p>8. Descripciones que me atraen…</p>
-          <label class="opt"
-            ><input type="radio" name="q8" value="S" required /> Precisas y
-            detalladas</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q8" value="N" /> Metafóricas y
-            creativas</label
-          >
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
+              id="test-link"
+              >Test Vocacional</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+            >
+              Explorá</a
+            >
+            <div class="flex items-center space-x-3" id="auth-buttons">
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
+          </div>
         </div>
 
-        <!-- T / F -->
-        <h2 class="sr-only">Pensamiento (T) vs. Sentimiento (F)</h2>
-        <div class="q">
-          <p>9. Al decidir, priorizo…</p>
-          <label class="opt"
-            ><input type="radio" name="q9" value="T" required /> Lógica y
-            criterios</label
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="index.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
           >
-          <label class="opt"
-            ><input type="radio" name="q9" value="F" /> Impacto en las
-            personas</label
+          <a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
           >
+          <a
+            href="test.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            id="mobile-test-link"
+            >Test Vocacional</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="contacto.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
+            <a
+              href="registro.html"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+            >
+              Registrarse
+            </a>
+          </div>
         </div>
-        <div class="q">
-          <p>10. En discusiones, busco…</p>
-          <label class="opt"
-            ><input type="radio" name="q10" value="T" required /> Ser
-            objetivo</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q10" value="F" /> Mantener la
-            armonía</label
-          >
-        </div>
-        <div class="q">
-          <p>11. Feedback ideal…</p>
-          <label class="opt"
-            ><input type="radio" name="q11" value="T" required /> Directo y
-            sincero</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q11" value="F" /> Cuidadoso y
-            empático</label
-          >
-        </div>
-        <div class="q">
-          <p>12. Me motiva más…</p>
-          <label class="opt"
-            ><input type="radio" name="q12" value="T" required /> Lograr
-            objetivos</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q12" value="F" /> Ayudar a otros</label
-          >
-        </div>
+      </div>
+    </nav>
 
-        <!-- J / P -->
-        <h2 class="sr-only">Juicio (J) vs. Percepción (P)</h2>
-        <div class="q">
-          <p>13. Mi organización…</p>
-          <label class="opt"
-            ><input type="radio" name="q13" value="J" required /> Planificada y
-            con agenda</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q13" value="P" /> Flexible y sobre la
-            marcha</label
-          >
+    <main class="flex-grow flex items-center justify-center p-4 pt-24 md:pt-16">
+      <div
+        id="loginSection"
+        class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md hidden"
+      >
+        <div
+          class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
+        >
+          <div class="mb-4 flex justify-center">
+            <div
+              class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg"
+            >
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+                class="w-20 h-20 rounded-full"
+              />
+            </div>
+          </div>
+          <h1 class="text-2xl font-bold text-white mb-1">Test Vocacional</h1>
+          <p class="text-impulso-light">Inicia sesión para comenzar</p>
         </div>
-        <div class="q">
-          <p>14. Ante plazos, yo…</p>
-          <label class="opt"
-            ><input type="radio" name="q14" value="J" required /> Termino con
-            antelación</label
+        <div class="p-8">
+          <p class="text-gray-600 mb-6 text-center">
+            Para acceder al test, por favor inicia sesión o regístrate.
+          </p>
+          <a
+            href="login.html"
+            class="w-full bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md flex items-center justify-center"
           >
-          <label class="opt"
-            ><input type="radio" name="q14" value="P" /> Trabajo mejor al
-            final</label
-          >
+            <i class="fas fa-sign-in-alt mr-2"></i>
+            Ir a Iniciar Sesión
+          </a>
+          <div class="mt-4 text-center">
+            <p class="text-gray-600">
+              ¿No tienes una cuenta?
+              <a
+                href="registro.html"
+                class="text-impulso-teal font-medium hover:text-impulso-green"
+                >Regístrate aquí</a
+              >
+            </p>
+          </div>
         </div>
-        <div class="q">
-          <p>15. En viajes, prefiero…</p>
-          <label class="opt"
-            ><input type="radio" name="q15" value="J" required /> Itinerario
-            definido</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q15" value="P" /> Improvisar y
-            explorar</label
-          >
-        </div>
-        <div class="q">
-          <p>16. Cuando cambian los planes…</p>
-          <label class="opt"
-            ><input type="radio" name="q16" value="J" required /> Me incomoda,
-            me reordeno</label
-          >
-          <label class="opt"
-            ><input type="radio" name="q16" value="P" /> Me entusiasma la
-            novedad</label
-          >
-        </div>
+      </div>
 
-        <!-- Navegación por pasos -->
-        <div class="step-actions">
-          <button type="button" id="prevBtn" class="btn ghost" disabled>
-            Anterior
-          </button>
-          <button type="button" id="nextBtn" class="btn primary">
-            Siguiente
-          </button>
-          <button type="submit" id="submitBtn" class="btn primary hidden">
-            Ver resultado
-          </button>
+      <div
+        id="testSection"
+        class="w-full max-w-4xl bg-white rounded-xl shadow-xl p-8 hidden"
+        data-aos="fade-up"
+      >
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-impulso-dark">
+            Test de Orientación Vocacional
+          </h2>
+          <p class="text-gray-600 mt-2">
+            Responde estas preguntas para descubrir tus intereses y posibles
+            carreras.
+          </p>
         </div>
-      </form>
+        <form id="testForm">
+          <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+            <p class="text-lg font-semibold text-impulso-dark mb-4">
+              1. ¿Qué tipo de actividades te resultan más atractivas?
+            </p>
+            <div class="space-y-3">
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p1"
+                  value="investigacion"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Explorar nuevas ideas y resolver problemas complejos
+                  (Investigación).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p1"
+                  value="artistico"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Crear o diseñar cosas con tus manos o con tecnología
+                  (Artístico).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p1"
+                  value="social"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Ayudar a las personas y trabajar en equipo (Social).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p1"
+                  value="convencional"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Organizar datos y trabajar con números de forma estructurada
+                  (Convencional).</span
+                >
+              </label>
+            </div>
+          </div>
 
-      <!-- RESULTADO -->
-      <section id="result" class="result hidden">
-        <h2>Tu tipo MBTI: <span id="type"></span></h2>
-        <p id="summary"></p>
-        <div class="share">
-          <button id="saveBtn" class="btn">Guardar</button>
-        </div>
-      </section>
+          <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+            <p class="text-lg font-semibold text-impulso-dark mb-4">
+              2. ¿Cuál es tu forma preferida de aprender?
+            </p>
+            <div class="space-y-3">
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p2"
+                  value="practico"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Haciendo proyectos prácticos y experimentando
+                  (Práctico).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p2"
+                  value="teorico"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Leyendo y estudiando teorías (Teórico).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p2"
+                  value="social"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Interactuando con otras personas y discutiendo
+                  (Social).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p2"
+                  value="metodico"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Siguiendo instrucciones y procedimientos paso a paso
+                  (Metódico).</span
+                >
+              </label>
+            </div>
+          </div>
 
-      <!-- HISTORIAL -->
-      <section class="card" id="savedCard">
-        <div class="saved-head">
-          <h3>Resultados guardados</h3>
-          <button id="refreshBtn" class="btn ghost">Actualizar</button>
-        </div>
-        <div id="savedList" class="saved-list empty">Sin resultados aún.</div>
-      </section>
+          <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+            <p class="text-lg font-semibold text-impulso-dark mb-4">
+              3. ¿Qué habilidades crees que son tus puntos fuertes?
+            </p>
+            <div class="space-y-3">
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p3"
+                  value="analitico"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Pensamiento analítico y resolución de problemas
+                  (Analítico).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p3"
+                  value="creativo"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Creatividad e imaginación (Creativo).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p3"
+                  value="comunicacion"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Comunicación y empatía (Comunicación).</span
+                >
+              </label>
+              <label
+                class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+              >
+                <input
+                  type="radio"
+                  name="p3"
+                  value="organizacion"
+                  class="form-radio h-5 w-5 text-impulso-teal"
+                />
+                <span class="ml-3 text-gray-700"
+                  >Organización y atención al detalle (Organización).</span
+                >
+              </label>
+            </div>
+          </div>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
+            >
+              <i class="fas fa-check-circle mr-2"></i>Ver Mis Resultados
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
 
-    <footer class="footer">
-      <small>© Impulso Vocacional Formosa</small>
+    <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
+      </div>
     </footer>
 
-    <!-- Lógica del test -->
-    <script src="src/js/mbti.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+
+        function updateUIForUser(userType) {
+          if (authButtonsContainer) {
+            authButtonsContainer.innerHTML = "";
+            const userMenuHtml = `
+              <div class="relative group">
+                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                </div>
+              </div>
+            `;
+            authButtonsContainer.innerHTML = userMenuHtml;
+          }
+
+          if (mobileAuthButtonsContainer) {
+            mobileAuthButtonsContainer.innerHTML = `
+              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </a>
+              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                Cerrar Sesión
+              </button>
+            `;
+          }
+
+          if (userType !== "estudiante") {
+            if (testLink) testLink.classList.add("hidden");
+            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+          } else {
+            if (testLink) testLink.classList.remove("hidden");
+            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+          }
+
+          const logoutButton = document.getElementById("logout-button");
+          const mobileLogoutButton = document.getElementById(
+            "mobile-logout-button"
+          );
+          const profileLink = document.getElementById("profile-link");
+          const mobileProfileLink = document.getElementById(
+            "mobile-profile-link"
+          );
+
+          const user = JSON.parse(localStorage.getItem("user"));
+
+          if (profileLink && user) {
+            let profilePage = "";
+            if (user.type === "estudiante") {
+              profilePage = "perfil-estudiante.html";
+            } else if (user.type === "universidad") {
+              profilePage = "dashboard-universidad.html";
+            }
+            profileLink.href = profilePage;
+            mobileProfileLink.href = profilePage;
+          }
+
+          if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              localStorage.removeItem("user");
+              window.location.href = "index.html";
+            });
+          }
+
+          if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              localStorage.removeItem("user");
+              window.location.href = "index.html";
+            });
+          }
+        }
+
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (token) {
+          updateUIForUser(userType);
+        } else {
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        }
+      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+        const loginSection = document.getElementById("loginSection");
+        const testSection = document.getElementById("testSection");
+
+        // Lógica para decidir qué sección mostrar
+        if (token && userType === "estudiante") {
+          // Si hay un token y el usuario es estudiante, muestra el test
+          loginSection.classList.add("hidden");
+          testSection.classList.remove("hidden");
+        } else {
+          // En cualquier otro caso, muestra el formulario de login
+          loginSection.classList.remove("hidden");
+          testSection.classList.add("hidden");
+        }
+      });
+    </script>
   </body>
 </html>

@@ -3,79 +3,511 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contacto – Impulso Educativo</title>
-    <link rel="stylesheet" href="src/css/style-contacto.css" />
+    <title>Contacto - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <!-- Header -->
-    <header class="topbar">
-      <a href="index.html" class="brand">
-        <img src="src/img/logo.jpg" alt="Impulso Educativo" class="logo" />
-        <span>Impulso Educativo</span>
-      </a>
-      <nav class="nav">
-        <a href="index.html">Inicio</a>
-        <a href="index.html">Servicios</a>
-        <a href="test.html">Test Vocacional</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="contacto.html" class="active">Contacto</a>
-        <a href="login.html" class="btn ghost">Iniciar Sesión</a>
-        <a href="registro.html" class="btn primary">Registrarse</a>
-      </nav>
-    </header>
+  <body
+    class="overflow-x-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50"
+  >
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <img
+              src="src/img/logo.jpg"
+              alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+              class="w-10 h-10 animate-pulse-slow"
+            />
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
 
-    <!-- Sección Contacto -->
-    <main class="container">
-      <section class="hero">
-        <h1>Contacto</h1>
-        <p>
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test Vocacional</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test Vocacional</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+            >
+              Explorá</a
+            >
+            <div class="flex items-center space-x-3" id="auth-buttons">
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="index.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
+          >
+          <a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
+          >
+          <a
+            href="test.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            id="mobile-test-link"
+            >Test Vocacional</a
+          >
+          <a
+            href="test.html"
+            class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+            id="test-link"
+            >Test Vocacional</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="contacto.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
+            <a
+              href="registro.html"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+            >
+              Registrarse
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section id="contacto" class="pt-32 pb-20 bg-white">
+      <div class="container mx-auto px-4 text-center">
+        <h1
+          class="text-4xl md:text-5xl font-bold text-impulso-dark mb-4"
+          data-aos="fade-up"
+        >
+          Contacto
+        </h1>
+        <p
+          class="text-lg text-gray-600 max-w-3xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           ¿Tenés dudas, sugerencias o querés más información? ¡Estamos para
           ayudarte!
         </p>
-      </section>
+      </div>
+    </section>
 
-      <section class="card-grid">
-        <div class="card">
-          <h2>Envíanos un mensaje</h2>
-          <form class="contact-form">
-            <label
-              >Nombre
-              <input type="text" placeholder="Tu nombre" required />
-            </label>
-            <label
-              >Email
-              <input type="email" placeholder="tu@email.com" required />
-            </label>
-            <label
-              >Mensaje
-              <textarea
-                rows="4"
-                placeholder="Escribí tu mensaje..."
-                required
-              ></textarea>
-            </label>
-            <button type="submit" class="btn primary">Enviar</button>
-          </form>
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div
+            class="bg-white p-8 rounded-xl shadow-lg"
+            data-aos="fade-right"
+            data-aos-delay="300"
+          >
+            <h2 class="text-2xl font-bold text-impulso-dark mb-4">
+              Envíanos un mensaje
+            </h2>
+            <form class="space-y-4">
+              <div>
+                <label
+                  for="name"
+                  class="block text-sm font-medium text-gray-700"
+                  >Nombre</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Tu nombre"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-impulso-teal focus:ring-impulso-teal sm:text-sm p-2 border"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700"
+                  >Email</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="tu@email.com"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-impulso-teal focus:ring-impulso-teal sm:text-sm p-2 border"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="message"
+                  class="block text-sm font-medium text-gray-700"
+                  >Mensaje</label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Escribí tu mensaje..."
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-impulso-teal focus:ring-impulso-teal sm:text-sm p-2 border"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="group w-full px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 font-semibold"
+              >
+                <i
+                  class="fas fa-paper-plane mr-2 group-hover:translate-x-1 transition-transform"
+                ></i>
+                Enviar
+              </button>
+            </form>
+          </div>
+
+          <div
+            class="bg-white p-8 rounded-xl shadow-lg"
+            data-aos="fade-left"
+            data-aos-delay="500"
+          >
+            <h2 class="text-2xl font-bold text-impulso-dark mb-4">
+              Información de Contacto
+            </h2>
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3 text-gray-600">
+                <i class="fas fa-envelope text-impulso-teal"></i>
+                <p>contacto@impulsoeducativo.com</p>
+              </div>
+              <div class="flex items-center space-x-3 text-gray-600">
+                <i class="fas fa-phone text-impulso-teal"></i>
+                <p>+54 370 400 1234</p>
+              </div>
+              <div class="flex items-center space-x-3 text-gray-600">
+                <i class="fas fa-map-marker-alt text-impulso-teal"></i>
+                <p>Formosa Capital, Argentina</p>
+              </div>
+            </div>
+            <div class="mt-8">
+              <h3 class="text-xl font-semibold text-impulso-dark mb-4">
+                Redes Sociales
+              </h3>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="text-gray-600 hover:text-impulso-teal transition-colors"
+                >
+                  <i class="fab fa-facebook-f text-2xl"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:text-impulso-teal transition-colors"
+                >
+                  <i class="fab fa-twitter text-2xl"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:text-impulso-teal transition-colors"
+                >
+                  <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:text-impulso-teal transition-colors"
+                >
+                  <i class="fab fa-linkedin-in text-2xl"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-impulso-dark text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="card">
-          <h2>Información</h2>
-          <p><strong>Email:</strong> contacto@impulsoeducativo.com</p>
-          <p><strong>Teléfono:</strong> +54 370 400 1234</p>
-          <p><strong>Dirección:</strong> Formosa Capital, Argentina</p>
-          <p><strong>Redes:</strong></p>
-          <ul>
-            <li><a href="#">Facebook</a></li>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">LinkedIn</a></li>
-          </ul>
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
         </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <small>© 2025 Impulso Educativo</small>
+      </div>
     </footer>
+
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+      document.addEventListener("DOMContentLoaded", () => {
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+
+        function updateUIForUser(userType) {
+          if (authButtonsContainer) {
+            authButtonsContainer.innerHTML = "";
+            const userMenuHtml = `
+              <div class="relative group">
+                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                </div>
+              </div>
+            `;
+            authButtonsContainer.innerHTML = userMenuHtml;
+          }
+
+          if (mobileAuthButtonsContainer) {
+            mobileAuthButtonsContainer.innerHTML = `
+              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </a>
+              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                Cerrar Sesión
+              </button>
+            `;
+          }
+
+          if (userType !== "estudiante") {
+            if (testLink) testLink.classList.add("hidden");
+            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+          } else {
+            if (testLink) testLink.classList.remove("hidden");
+            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+          }
+
+          const logoutButton = document.getElementById("logout-button");
+          const mobileLogoutButton = document.getElementById(
+            "mobile-logout-button"
+          );
+
+          if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+
+          if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+        }
+
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (token) {
+          updateUIForUser(userType);
+        } else {
+          // Asegúrate de que los enlaces del Test Vocacional estén ocultos si no hay sesión
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        }
+      });
+    </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+    </style>
   </body>
 </html>
