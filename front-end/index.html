@@ -37,7 +37,6 @@
   <body
     class="overflow-x-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50"
   >
-    <!-- Navigation -->
     <nav
       class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
       id="navbar"
@@ -55,7 +54,6 @@
             >
           </div>
 
-          <!-- Mobile menu button -->
           <div class="md:hidden">
             <button
               id="mobile-menu-btn"
@@ -65,7 +63,6 @@
             </button>
           </div>
 
-          <!-- Desktop menu -->
           <div class="hidden md:flex items-center space-x-8">
             <a
               href="#inicio"
@@ -78,17 +75,29 @@
               >Servicios</a
             >
             <a
-              href="#sobre-nosotros"
+              href="test.html"
+              id="test-link"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Test de Personalidad</a
+            >
+
+            <a
+              href="nosotros.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
               >Nosotros</a
             >
             <a
-              href="#contacto"
+              href="contacto.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
               >Contacto</a
             >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Explorá</a
+            >
 
-            <div class="flex items-center space-x-3">
+            <div id="logged-out-nav" class="flex items-center space-x-3">
               <a
                 href="login.html"
                 class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
@@ -102,10 +111,38 @@
                 Registrarse
               </a>
             </div>
+
+            <div
+              id="logged-in-nav"
+              style="display: none"
+              class="relative group"
+            >
+              <button
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="py-1">
+                  <a
+                    href="perfil.html"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Mi Perfil</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    id="logout-btn"
+                    >Cerrar Sesión</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Mobile menu -->
         <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
           <a
             href="#inicio"
@@ -118,6 +155,12 @@
             >Servicios</a
           >
           <a
+            href="test.html"
+            id="mobile-test-link"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Test de Personalidad</a
+          >
+          <a
             href="#sobre-nosotros"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Nosotros</a
@@ -127,7 +170,13 @@
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Contacto</a
           >
-          <div class="pt-3 space-y-2">
+          <a
+            href="univ.invitado.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Explorá</a
+          >
+
+          <div id="logged-out-mobile" class="pt-3 space-y-2">
             <a
               href="login.html"
               class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
@@ -141,16 +190,31 @@
               Registrarse
             </a>
           </div>
+          <div
+            id="logged-in-mobile"
+            style="display: none"
+            class="pt-3 space-y-2"
+          >
+            <a
+              href="perfil.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+              >Mi Perfil</a
+            >
+            <a
+              href="#"
+              id="logout-mobile-btn"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+              >Cerrar Sesión</a
+            >
+          </div>
         </div>
       </div>
     </nav>
 
-    <!-- Hero Section -->
     <section
       id="inicio"
       class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
     >
-      <!-- Background Animation -->
       <div class="absolute inset-0 overflow-hidden">
         <div
           class="absolute -top-40 -right-32 w-96 h-96 bg-impulso-light/20 rounded-full animate-float"
@@ -165,7 +229,6 @@
 
       <div class="container mx-auto px-4 z-10">
         <div class="text-center">
-          <!-- Logo Principal Animado -->
           <div class="mb-8" data-aos="zoom-in" data-aos-duration="1000">
             <div class="inline-block relative">
               <img
@@ -179,7 +242,6 @@
             </div>
           </div>
 
-          <!-- Título Principal -->
           <h1
             class="text-4xl md:text-6xl lg:text-7xl font-bold text-impulso-dark mb-6"
             data-aos="fade-up"
@@ -192,7 +254,6 @@
             </span>
           </h1>
 
-          <!-- Subtítulo -->
           <h2
             class="text-xl md:text-2xl lg:text-3xl text-impulso-teal mb-4"
             data-aos="fade-up"
@@ -201,7 +262,6 @@
             Tu Futuro Profesional Comienza acá
           </h2>
 
-          <!-- Descripción -->
           <p
             class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
             data-aos="fade-up"
@@ -212,7 +272,6 @@
             reales del mercado laboral.
           </p>
 
-          <!-- Botones CTA -->
           <div
             class="flex flex-col sm:flex-row gap-4 justify-center items-center"
             data-aos="fade-up"
@@ -238,20 +297,12 @@
             </a>
           </div>
 
-          <!-- Stats -->
           <div
             class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
             data-aos="fade-up"
             data-aos-delay="1000"
           >
-            <div class="text-center">
-              <div
-                class="text-2xl md:text-3xl font-bold text-impulso-green mb-2"
-              >
-                +5000
-              </div>
-              <div class="text-sm text-gray-600">Estudiantes Orientados</div>
-            </div>
+            <div class="text-center"></div>
             <div class="text-center">
               <div
                 class="text-2xl md:text-3xl font-bold text-impulso-teal mb-2"
@@ -273,7 +324,6 @@
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
       <div
         class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
       >
@@ -281,7 +331,6 @@
       </div>
     </section>
 
-    <!-- Services Section -->
     <section id="servicios" class="py-20 bg-white">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
@@ -302,7 +351,6 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-          <!-- Service 1 -->
           <div
             class="group bg-gradient-to-br from-impulso-light/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
             data-aos="fade-up"
@@ -314,7 +362,7 @@
               <i class="fas fa-brain text-impulso-teal text-2xl"></i>
             </div>
             <h3 class="text-xl font-semibold text-impulso-dark mb-4">
-              Test Vocacional
+              Test De Personalidad
             </h3>
             <p class="text-gray-600">
               Descubre tus aptitudes y preferencias profesionales con nuestros
@@ -322,7 +370,6 @@
             </p>
           </div>
 
-          <!-- Service 2 -->
           <div
             class="group bg-gradient-to-br from-impulso-green/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
             data-aos="fade-up"
@@ -342,7 +389,6 @@
             </p>
           </div>
 
-          <!-- Service 3 -->
           <div
             class="group bg-gradient-to-br from-impulso-gold/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
             data-aos="fade-up"
@@ -365,7 +411,6 @@
       </div>
     </section>
 
-    <!-- CTA Section -->
     <section
       class="py-20 bg-gradient-to-r from-impulso-green to-impulso-teal relative overflow-hidden"
     >
@@ -418,13 +463,10 @@
         <div
           id="carrerasContainer"
           class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          <!-- Las tarjetas de carreras se insertan aquí -->
-        </div>
+        ></div>
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-impulso-dark text-white py-12">
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
@@ -567,72 +609,76 @@
       });
     </script>
     <script>
-      const token = localStorage.getItem("authToken");
-      const user = JSON.parse(localStorage.getItem("user"));
+      // Lógica para mostrar/ocultar la barra de navegación y manejar el test vocacional
+      document.addEventListener("DOMContentLoaded", () => {
+        const loggedInNav = document.getElementById("logged-in-nav");
+        const loggedOutNav = document.getElementById("logged-out-nav");
+        const testLink = document.getElementById("test-link");
 
-      if (!token || !user) {
-        console.log("Usuario no logueado");
-        // window.location.href = "login.html"; // opcional
-      } else {
-        if (user.type === "estudiante") {
-          mostrarCarrerasDisponibles();
-        } else if (user.type === "universidad") {
-          mostrarCarrerasDeUniversidad();
+        // Mobile-specific elements
+        const loggedInMobile = document.getElementById("logged-in-mobile");
+        const loggedOutMobile = document.getElementById("logged-out-mobile");
+        const testMobileLink = document.getElementById("mobile-test-link");
+
+        // Botones de cerrar sesión
+        const logoutBtn = document.getElementById("logout-btn");
+        const logoutMobileBtn = document.getElementById("logout-mobile-btn");
+
+        const usuarioLogueado = localStorage.getItem("authToken");
+
+        if (usuarioLogueado) {
+          if (loggedInNav) loggedInNav.style.display = "block";
+          if (loggedOutNav) loggedOutNav.style.display = "none";
+          if (loggedInMobile) loggedInMobile.style.display = "block";
+          if (loggedOutMobile) loggedOutMobile.style.display = "none";
+
+          if (testLink) {
+            testLink.href = "test.html";
+            testLink.onclick = null;
+          }
+          if (testMobileLink) {
+            testMobileLink.href = "test.html";
+            testMobileLink.onclick = null;
+          }
+        } else {
+          if (loggedInNav) loggedInNav.style.display = "none";
+          if (loggedOutNav) loggedOutNav.style.display = "flex";
+          if (loggedInMobile) loggedInMobile.style.display = "none";
+          if (loggedOutMobile) loggedOutMobile.style.display = "block";
+
+          const alertMessage =
+            "Para acceder al test de Personalidad, debes iniciar sesión.";
+          if (testLink) {
+            testLink.href = "login.html";
+            testLink.onclick = (e) => {
+              e.preventDefault();
+              alert(alertMessage);
+            };
+          }
+          if (testMobileLink) {
+            testMobileLink.href = "login.html";
+            testMobileLink.onclick = (e) => {
+              e.preventDefault();
+              alert(alertMessage);
+            };
+          }
         }
-      }
 
-      async function mostrarCarrerasDisponibles() {
-        try {
-          const res = await fetch("http://localhost:3000/api/carreras", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        const handleLogout = (e) => {
+          e.preventDefault();
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("user");
+          window.location.reload();
+        };
 
-          const data = await res.json();
-          renderizarCarreras(data);
-        } catch (error) {
-          console.error("Error al obtener carreras:", error);
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", handleLogout);
         }
-      }
 
-      async function mostrarCarrerasDeUniversidad() {
-        try {
-          const res = await fetch(
-            "http://localhost:3000/api/universidades/mis-carreras",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          const data = await res.json();
-          renderizarCarreras(data);
-        } catch (error) {
-          console.error("Error al obtener carreras de universidad:", error);
+        if (logoutMobileBtn) {
+          logoutMobileBtn.addEventListener("click", handleLogout);
         }
-      }
-
-      function renderizarCarreras(carreras) {
-        const container = document.getElementById("carrerasContainer");
-        container.innerHTML = "";
-
-        carreras.forEach((carrera) => {
-          const card = document.createElement("div");
-          card.className =
-            "bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300";
-
-          card.innerHTML = `
-        <h3 class="text-xl font-bold text-impulso-dark mb-2">${carrera.name}</h3>
-        <p class="text-gray-600 mb-2">${carrera.description}</p>
-        <p class="text-sm text-impulso-teal mb-2">Modalidad: ${carrera.modality}</p>
-        <p class="text-sm text-gray-500">Duración: ${carrera.duration}</p>
-      `;
-
-          container.appendChild(card);
-        });
-      }
+      });
     </script>
   </body>
 </html>
