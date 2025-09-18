@@ -27,12 +27,10 @@ export const register = async (req, res) => {
     });
     res.cookie("token", token, { httpOnly: true });
 
-    res
-      .status(201)
-      .json({
-        mensaje: "Usuario registrado correctamente.",
-        usuario: nuevoUsuario,
-      });
+    res.status(201).json({
+      mensaje: "Usuario registrado correctamente.",
+      usuario: nuevoUsuario,
+    });
   } catch (error) {
     res.status(500).json({ mensaje: "Error en el registro.", error });
   }
@@ -53,8 +51,23 @@ export const login = async (req, res) => {
     const token = generarToken({ id: usuario.id, type: usuario.type });
     res.cookie("token", token, { httpOnly: true });
 
-    res.status(200).json({ mensaje: "Login exitoso.", usuario });
+    // La respuesta a enviar
+    const responseData = {
+      mensaje: "Login exitoso.",
+      user: {
+        id: usuario.id,
+        email: usuario.email,
+        type: usuario.type, // <-- Revisa si esta propiedad está definida
+      },
+      token: token,
+    };
+
+    // Esto te permitirá ver la respuesta completa en la consola del servidor
+    console.log("Respuesta del servidor:", responseData);
+
+    res.status(200).json(responseData);
   } catch (error) {
+    console.error("Error en el login:", error); // Muestra el error en la consola
     res.status(500).json({ mensaje: "Error en el login.", error });
   }
 };
