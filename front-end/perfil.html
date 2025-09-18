@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Perfil - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="overflow-x-hidden">
+    <!-- Contenedor para mensajes de alerta -->
+    <div
+      id="message-container"
+      class="fixed top-24 left-1/2 -translate-x-1/2 w-full max-w-sm z-[100] p-4 hidden"
+    >
+      <div
+        id="alertMessage"
+        class="rounded-lg text-sm px-4 py-3 flex items-center justify-between shadow-lg"
+        role="alert"
+      >
+        <span class="font-semibold" id="alert-text"></span>
+        <button
+          onclick="hideMessage()"
+          class="ml-3 text-current hover:text-gray-900 transition-colors"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <a href="index.html">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo"
+                class="w-10 h-10 animate-pulse-slow"
+              />
+            </a>
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test de Personalidad</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Explorá</a
+            >
+            <div class="flex items-center space-x-3" id="auth-buttons"></div>
+          </div>
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="index.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
+          >
+          <a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
+          >
+          <a
+            href="test.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            id="mobile-test-link"
+            >Test de Personalidad</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="contacto.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons"></div>
+        </div>
+      </div>
+    </nav>
+
+    <main
+      class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center pt-24 md:pt-16 p-4"
+    >
+      <div
+        class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-lg"
+      >
+        <div
+          class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
+        >
+          <div class="mb-4 flex justify-center">
+            <div
+              class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg"
+            >
+              <i class="fas fa-user-circle text-impulso-teal text-6xl"></i>
+            </div>
+          </div>
+          <h1 class="text-2xl font-bold text-white mb-1" id="profile-name">
+            Nombre del Usuario
+          </h1>
+          <p class="text-impulso-light" id="profile-email">email@ejemplo.com</p>
+        </div>
+
+        <div class="p-8">
+          <div id="profile-view" class="space-y-6">
+            <div
+              class="flex items-center p-4 bg-gray-50 rounded-lg shadow-inner"
+            >
+              <div class="flex-shrink-0">
+                <i class="fas fa-id-card text-impulso-teal text-2xl mr-4"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Nombre completo:</p>
+                <p
+                  class="text-lg font-semibold text-impulso-dark"
+                  id="display-name"
+                >
+                  Cargando...
+                </p>
+              </div>
+            </div>
+            <div
+              class="flex items-center p-4 bg-gray-50 rounded-lg shadow-inner"
+            >
+              <div class="flex-shrink-0">
+                <i class="fas fa-envelope text-impulso-teal text-2xl mr-4"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Correo electrónico:</p>
+                <p
+                  class="text-lg font-semibold text-impulso-dark"
+                  id="display-email"
+                >
+                  Cargando...
+                </p>
+              </div>
+            </div>
+            <div
+              class="flex items-center p-4 bg-gray-50 rounded-lg shadow-inner"
+            >
+              <div class="flex-shrink-0">
+                <i class="fas fa-user-tag text-impulso-teal text-2xl mr-4"></i>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Tipo de Usuario:</p>
+                <p
+                  class="text-lg font-semibold text-impulso-dark"
+                  id="profile-type"
+                >
+                  Cargando...
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-8 text-center">
+              <button
+                id="edit-profile-btn"
+                class="w-full bg-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:bg-impulso-green transition duration-200 transform hover:scale-[1.02] shadow-md"
+              >
+                <i class="fas fa-edit mr-2"></i> Editar Perfil
+              </button>
+            </div>
+          </div>
+
+          <form id="profile-edit-form" class="hidden space-y-6">
+            <div>
+              <label
+                for="edit-name"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+                >Nombre completo</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i class="fas fa-user-circle text-impulso-light"></i>
+                </div>
+                <input
+                  type="text"
+                  id="edit-name"
+                  name="edit-name"
+                  required
+                  class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                  placeholder="Tu nombre completo"
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="edit-email"
+                class="block text-sm font-medium text-impulso-dark mb-2"
+                >Correo electrónico</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i class="fas fa-envelope text-impulso-light"></i>
+                </div>
+                <input
+                  type="email"
+                  id="edit-email"
+                  name="edit-email"
+                  required
+                  class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                  placeholder="tu@email.com"
+                />
+              </div>
+            </div>
+            <div class="mt-8 flex justify-between space-x-4">
+              <button
+                type="button"
+                id="cancel-edit-btn"
+                class="w-1/2 bg-gray-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-600 transition duration-200 shadow-md"
+              >
+                <i class="fas fa-times mr-2"></i> Cancelar
+              </button>
+              <button
+                type="submit"
+                id="save-profile-btn"
+                class="w-1/2 bg-impulso-green text-white py-3 px-4 rounded-lg font-medium hover:bg-impulso-dark transition duration-200 transform hover:scale-[1.02] shadow-md"
+              >
+                <i class="fas fa-save mr-2"></i> Guardar Cambios
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 text-center">
+            <button
+              id="logout-button"
+              class="w-full bg-red-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-200 transform hover:scale-[1.02] shadow-md"
+            >
+              <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+
+      function showMessage(text, type = "success") {
+        const messageContainer = document.getElementById("message-container");
+        const alertMessage = document.getElementById("alertMessage");
+        const alertText = document.getElementById("alert-text");
+
+        alertText.textContent = text;
+        messageContainer.classList.remove("hidden");
+
+        if (type === "success") {
+          alertMessage.classList.remove(
+            "bg-red-100",
+            "border-red-400",
+            "text-red-700"
+          );
+          alertMessage.classList.add(
+            "bg-emerald-100",
+            "border-emerald-400",
+            "text-emerald-700"
+          );
+        } else if (type === "error") {
+          alertMessage.classList.remove(
+            "bg-emerald-100",
+            "border-emerald-400",
+            "text-emerald-700"
+          );
+          alertMessage.classList.add(
+            "bg-red-100",
+            "border-red-400",
+            "text-red-700"
+          );
+        }
+
+        setTimeout(() => {
+          hideMessage();
+        }, 3000);
+      }
+
+      function hideMessage() {
+        document.getElementById("message-container").classList.add("hidden");
+      }
+
+      function updateUIForUser(user, userType) {
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+        const userName = user && user.name ? user.name : "Mi Perfil";
+
+        if (authButtonsContainer) {
+          authButtonsContainer.innerHTML = `
+                <div class="relative group">
+                  <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                    <i class="fas fa-user-circle mr-2"></i> ${userName}
+                  </button>
+                  <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                    <a href="perfil.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                    <button id="logout-button-nav" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                  </div>
+                </div>
+              `;
+        }
+        if (mobileAuthButtonsContainer) {
+          mobileAuthButtonsContainer.innerHTML = `
+                <a href="perfil.html" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </a>
+                <button id="mobile-logout-button-nav" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                  Cerrar Sesión
+                </button>
+              `;
+        }
+        if (userType !== "estudiante") {
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        } else {
+          if (testLink) testLink.classList.remove("hidden");
+          if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+        }
+        const logoutButton = document.getElementById("logout-button-nav");
+        const mobileLogoutButton = document.getElementById(
+          "mobile-logout-button-nav"
+        );
+        function handleLogout() {
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("userType");
+          localStorage.removeItem("user");
+          window.location.href = "index.html";
+        }
+        if (logoutButton) logoutButton.addEventListener("click", handleLogout);
+        if (mobileLogoutButton)
+          mobileLogoutButton.addEventListener("click", handleLogout);
+      }
+
+      // Scripts específicos para la página de perfil
+      document.addEventListener("DOMContentLoaded", () => {
+        const userString = localStorage.getItem("user");
+        const authToken = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (!authToken || !userString) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const user = JSON.parse(userString);
+
+        // Elementos de la UI
+        const profileView = document.getElementById("profile-view");
+        const profileEditForm = document.getElementById("profile-edit-form");
+        const editProfileBtn = document.getElementById("edit-profile-btn");
+        const cancelEditBtn = document.getElementById("cancel-edit-btn");
+        const saveProfileBtn = document.getElementById("save-profile-btn");
+
+        // Funciones para actualizar el DOM
+        function updateProfileUI() {
+          const updatedUserString = localStorage.getItem("user");
+          const updatedUser = JSON.parse(updatedUserString);
+          const userName = updatedUser.name || "Usuario";
+          const userEmail = updatedUser.email || "email no disponible";
+
+          document.getElementById("profile-name").textContent = userName;
+          document.getElementById("profile-email").textContent = userEmail;
+          document.getElementById("display-name").textContent = userName;
+          document.getElementById("display-email").textContent = userEmail;
+          document.getElementById("edit-name").value = userName;
+          document.getElementById("edit-email").value = userEmail;
+          document.getElementById("profile-type").textContent =
+            userType.charAt(0).toUpperCase() + userType.slice(1);
+          if (updatedUser.registrationDate) {
+            const date = new Date(updatedUser.registrationDate);
+            document.getElementById(
+              "profile-date"
+            ).textContent = `${date.getDate()}/${
+              date.getMonth() + 1
+            }/${date.getFullYear()}`;
+          }
+          // Actualiza el nombre en la barra de navegación también
+          updateUIForUser(updatedUser, userType);
+        }
+
+        // Cargar los datos iniciales
+        updateProfileUI();
+
+        // Manejadores de eventos para los botones de edición
+        editProfileBtn.addEventListener("click", () => {
+          profileView.classList.add("hidden");
+          profileEditForm.classList.remove("hidden");
+        });
+
+        cancelEditBtn.addEventListener("click", () => {
+          profileView.classList.remove("hidden");
+          profileEditForm.classList.add("hidden");
+          // Revertir los valores del formulario si se cancela
+          const currentUser = JSON.parse(localStorage.getItem("user"));
+          document.getElementById("edit-name").value = currentUser.name;
+          document.getElementById("edit-email").value = currentUser.email;
+        });
+
+        profileEditForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const newName = document.getElementById("edit-name").value.trim();
+          const newEmail = document.getElementById("edit-email").value.trim();
+
+          if (!newName || !newEmail) {
+            showMessage("Por favor, completa todos los campos.", "error");
+            return;
+          }
+
+          // Obtener el objeto de usuario actual
+          let currentUser = JSON.parse(localStorage.getItem("user"));
+
+          // Actualizar los datos en el objeto de usuario
+          currentUser.name = newName;
+          currentUser.email = newEmail;
+
+          // Guardar el objeto de usuario actualizado en localStorage
+          localStorage.setItem("user", JSON.stringify(currentUser));
+
+          // Actualizar la interfaz de usuario con los nuevos datos
+          updateProfileUI();
+
+          // Ocultar el formulario de edición y mostrar la vista de perfil
+          profileView.classList.remove("hidden");
+          profileEditForm.classList.add("hidden");
+
+          showMessage("¡Tu perfil ha sido actualizado!", "success");
+        });
+
+        // Botón de cerrar sesión principal en la página
+        document
+          .getElementById("logout-button")
+          .addEventListener("click", () => {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userType");
+            localStorage.removeItem("user");
+            window.location.href = "index.html";
+          });
+      });
+    </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+    </style>
+  </body>
+</html>
