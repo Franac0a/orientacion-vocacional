@@ -115,21 +115,30 @@
             <div
               id="logged-in-nav"
               style="display: none"
-              class="flex items-center space-x-3"
+              class="relative group"
             >
-              <a
-                href="perfil.html"
+              <button
                 class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
               >
-                Mi Perfil
-              </a>
-              <a
-                href="#"
-                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
-                id="logout-btn"
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               >
-                Cerrar Sesión
-              </a>
+                <div class="py-1">
+                  <a
+                    href="perfil.html"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Mi Perfil</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    id="logout-btn"
+                    >Cerrar Sesión</a
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -189,16 +198,14 @@
             <a
               href="perfil.html"
               class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+              >Mi Perfil</a
             >
-              Mi Perfil
-            </a>
             <a
               href="#"
               id="logout-mobile-btn"
               class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+              >Cerrar Sesión</a
             >
-              Cerrar Sesión
-            </a>
           </div>
         </div>
       </div>
@@ -614,43 +621,38 @@
         const loggedInNav = document.getElementById("logged-in-nav");
         const loggedOutNav = document.getElementById("logged-out-nav");
         const testLink = document.getElementById("test-link");
-        const logoutBtn = document.getElementById("logout-btn");
 
         // Mobile-specific elements
         const loggedInMobile = document.getElementById("logged-in-mobile");
         const loggedOutMobile = document.getElementById("logged-out-mobile");
         const testMobileLink = document.getElementById("mobile-test-link");
+
+        // Botones de cerrar sesión
+        const logoutBtn = document.getElementById("logout-btn");
         const logoutMobileBtn = document.getElementById("logout-mobile-btn");
 
-        // Verificar si el usuario está logueado
         const usuarioLogueado = localStorage.getItem("authToken");
 
         if (usuarioLogueado) {
-          // Si el usuario está logueado, mostrar el menú de sesión
-          if (loggedInNav) loggedInNav.style.display = "flex";
+          if (loggedInNav) loggedInNav.style.display = "block";
           if (loggedOutNav) loggedOutNav.style.display = "none";
-
           if (loggedInMobile) loggedInMobile.style.display = "block";
           if (loggedOutMobile) loggedOutMobile.style.display = "none";
 
-          // Habilitar el enlace al test
           if (testLink) {
             testLink.href = "test.html";
-            testLink.onclick = null; // Eliminar el handler de click
+            testLink.onclick = null;
           }
           if (testMobileLink) {
             testMobileLink.href = "test.html";
             testMobileLink.onclick = null;
           }
         } else {
-          // Si el usuario NO está logueado, mostrar los botones de login/registro
           if (loggedInNav) loggedInNav.style.display = "none";
           if (loggedOutNav) loggedOutNav.style.display = "flex";
-
           if (loggedInMobile) loggedInMobile.style.display = "none";
           if (loggedOutMobile) loggedOutMobile.style.display = "block";
 
-          // Redirigir el enlace del test a la página de login
           const alertMessage =
             "Para acceder al test vocacional, debes iniciar sesión.";
           if (testLink) {
@@ -669,23 +671,19 @@
           }
         }
 
-        // Configurar el botón de cerrar sesión
+        const handleLogout = (e) => {
+          e.preventDefault();
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("user");
+          window.location.reload();
+        };
+
         if (logoutBtn) {
-          logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("user");
-            window.location.reload(); // Recargar la página para actualizar la interfaz
-          });
+          logoutBtn.addEventListener("click", handleLogout);
         }
 
         if (logoutMobileBtn) {
-          logoutMobileBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("user");
-            window.location.reload();
-          });
+          logoutMobileBtn.addEventListener("click", handleLogout);
         }
       });
     </script>

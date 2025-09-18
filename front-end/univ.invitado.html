@@ -2,84 +2,15 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Universidades - Listado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLpI4+X/NlQf+v/iP1g2qM5T1Jp/L5M/QoG5Q25Fj9T3O1j6m6w+H7n3w=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
+      rel="stylesheet"
     />
-    <style>
-      .university-card:hover {
-        transform: translateY(-5px);
-        transition: transform 0.3s ease;
-      }
-      .category-btn {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        transform: scale(1);
-      }
-      .category-btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.5)
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      .category-btn:hover::before {
-        opacity: 1;
-      }
-      .category-active {
-        background: linear-gradient(135deg, #14a085, #0d7377);
-        color: white !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transform: scale(1.02);
-      }
-      .category-active .filter-icon {
-        color: white;
-      }
-      .category-btn-content {
-        position: relative;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .nav-item-fancy {
-        position: relative;
-      }
-      .nav-item-fancy::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -5px;
-        width: 0;
-        height: 2px;
-        background-color: #f4d03f;
-        transition: all 0.3s ease-in-out;
-        transform: translateX(-50%);
-      }
-      .nav-item-fancy:hover::after {
-        width: 100%;
-      }
-      .nav-item-fancy.active::after {
-        width: 100%;
-        background-color: white;
-      }
-    </style>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <script>
       tailwind.config = {
         theme: {
@@ -91,76 +22,150 @@
               "impulso-gold": "#F4D03F",
               "impulso-dark": "#0A5D61",
             },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
           },
         },
       };
     </script>
   </head>
   <body
-    class="bg-gradient-to-br from-impulso-light to-emerald-100 min-h-screen"
+    class="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 overflow-x-hidden min-h-screen"
   >
     <nav
-      class="bg-gradient-to-r from-impulso-green to-impulso-teal text-white shadow-lg sticky top-0 z-50 backdrop-blur-sm bg-opacity-90"
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
     >
-      <div
-        class="container mx-auto px-4 py-3 flex justify-between items-center"
-      >
-        <div class="flex items-center space-x-2">
-          <img
-            src="src/img/logo.jpg"
-            alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
-            class="w-16 h-16 rounded-full ring-2 ring-impulso-gold p-1"
-          />
-          <h1 class="text-2xl font-bold select-none tracking-wide">
-            Educación Universitaria
-          </h1>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <img
+              src="src/img/logo.jpg"
+              alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+              class="w-10 h-10 animate-pulse-slow"
+            />
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
+
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test Vocacional</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
+            >
+              Explorá</a
+            >
+            <div class="flex items-center space-x-3" id="auth-buttons">
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="hidden md:flex space-x-6">
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
           <a
             href="index.html"
-            class="nav-item-fancy hover:text-impulso-light transition-colors"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Inicio</a
           >
           <a
-            href="#universidades"
-            class="nav-item-fancy hover:text-impulso-light transition-colors active"
-            >Universidades</a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
           >
           <a
-            href="#programas"
-            class="nav-item-fancy hover:text-impulso-light transition-colors"
-            >Programas</a
+            href="test.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            id="mobile-test-link"
+            >Test Vocacional</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
           >
           <a
             href="contacto.html"
-            class="nav-item-fancy hover:text-impulso-light transition-colors"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Contacto</a
           >
-        </div>
-
-        <button
-          class="md:hidden text-white hover:text-impulso-light transition-colors"
-          aria-label="Abrir menú"
-        >
-          <svg
-            class="w-8 h-8"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          <a
+            href="univ.invitado.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors border-b-2 border-impulso-teal"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
+            Explorá</a
+          >
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
+            <a
+              href="registro.html"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+            >
+              Registrarse
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
-
-    <header class="bg-impulso-green text-white py-12 px-4 shadow-inner">
+    <header
+      class="bg-impulso-green text-white py-20 px-4 shadow-inner mt-[80px]"
+    >
       <div class="container mx-auto text-center">
         <h2 class="text-4xl font-extrabold mb-4 select-none tracking-wide">
           Encontrá tu Universidad Ideal 🎓
@@ -268,17 +273,194 @@
       ></div>
     </main>
 
-    <footer
-      class="bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-8 mt-12 shadow-inner"
-    >
-      <div class="container mx-auto px-4 text-center select-none">
-        <p>
-          &copy; 2024 Educación Universitaria. Todos los derechos reservados.
-        </p>
+    <footer class="bg-impulso-dark text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
       </div>
     </footer>
 
     <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+
+        function updateUIForUser(userType) {
+          if (authButtonsContainer) {
+            authButtonsContainer.innerHTML = "";
+            const userMenuHtml = `
+              <div class="relative group">
+                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                </div>
+              </div>
+            `;
+            authButtonsContainer.innerHTML = userMenuHtml;
+          }
+
+          if (mobileAuthButtonsContainer) {
+            mobileAuthButtonsContainer.innerHTML = `
+              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </a>
+              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                Cerrar Sesión
+              </button>
+            `;
+          }
+
+          if (userType !== "estudiante") {
+            if (testLink) testLink.classList.add("hidden");
+            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+          } else {
+            if (testLink) testLink.classList.remove("hidden");
+            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+          }
+
+          const logoutButton = document.getElementById("logout-button");
+          const mobileLogoutButton = document.getElementById(
+            "mobile-logout-button"
+          );
+
+          if (logoutButton) {
+            logoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+
+          if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener("click", () => {
+              localStorage.removeItem("authToken");
+              localStorage.removeItem("userType");
+              window.location.href = "index.html";
+            });
+          }
+        }
+
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (token) {
+          updateUIForUser(userType);
+        } else {
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        }
+      });
       // Datos de las universidades
       const universities = [
         {
@@ -342,7 +524,6 @@
       let searchTerm = "";
 
       // Función para renderizar las universidades
-      // Función para renderizar las universidades
       function renderUniversities() {
         const container = document.getElementById("universitiesContainer");
         container.innerHTML = "";
@@ -358,13 +539,13 @@
 
         if (filtered.length === 0) {
           container.innerHTML = `
-      <div class="col-span-full text-center py-12">
-        <div class="text-gray-500 text-lg">
-          <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
-          <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
-        </div>
-      </div>
-    `;
+          <div class="col-span-full text-center py-12">
+            <div class="text-gray-500 text-lg">
+              <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
+              <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
+            </div>
+          </div>
+        `;
           return;
         }
 
@@ -373,69 +554,116 @@
           card.className =
             "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden university-card hover:shadow-2xl transition-all flex flex-col";
           card.innerHTML = `
-      <img src="${uni.image}" alt="${
-            uni.name
-          } campus view" class="w-full h-48 object-contain bg-white">
-      <div class="p-6 flex flex-col flex-grow">
-        <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
-        <span class="inline-block bg-impulso-light text-impulso-dark text-xs font-semibold px-3 py-1 rounded-full mb-3 tracking-wide">
-          <i class="fas fa-tag"></i> ${getCategoryName(uni.type)}
-        </span>
-        <p class="text-gray-600 mb-3 flex items-center gap-2"><i class="fas fa-map-marker-alt text-impulso-teal"></i> ${
-          uni.location
-        }</p>
-        <p class="text-gray-700 mb-4 text-sm">${uni.description}</p>
-        <div class="flex justify-between text-sm text-gray-500 border-t border-gray-200 pt-4 mt-auto">
-          <span class="flex items-center gap-1"><i class="fas fa-calendar-alt text-impulso-dark"></i> Fundada: ${
-            uni.founded
-          }</span>
-          <span class="flex items-center gap-1"><i class="fas fa-user-graduate text-impulso-dark"></i> ${uni.students.toLocaleString()} estudiantes</span>
-        </div>
-        <button class="w-full mt-4 bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-2 px-4 rounded-lg hover:from-impulso-dark hover:to-impulso-green transition-colors font-semibold shadow-md hover:shadow-lg">
-          Ver más información
-        </button>
-      </div>
-    `;
+          <img src="${uni.image}" alt="${uni.name}" class="w-full h-48 object-contain bg-white">
+          <div class="p-6 flex flex-col flex-grow">
+            <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
+            <p class="text-sm text-gray-500 mb-4"><i class="fas fa-map-marker-alt text-impulso-teal mr-2"></i>${uni.location}</p>
+            <p class="text-gray-600 flex-grow">${uni.description}</p>
+            <a href="#" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+          </div>
+        `;
           container.appendChild(card);
         });
       }
-      // Función para obtener el nombre de la categoría
-      function getCategoryName(type) {
-        const categories = {
-          sociales: "Ciencias Sociales",
-          naturales: "Ciencias Naturales",
-          tecnologicas: "Tecnológicas",
-          artes: "Artes y Humanidades",
-          medicina: "Ciencias de la Salud",
-        };
-        return categories[type] || type;
-      }
 
-      // Event listeners
-      document.addEventListener("DOMContentLoaded", function () {
-        // Filtros de categoría
-        document.querySelectorAll(".category-btn").forEach((btn) => {
-          btn.addEventListener("click", function () {
-            document
-              .querySelectorAll(".category-btn")
-              .forEach((b) => b.classList.remove("category-active"));
-            this.classList.add("category-active");
-            selectedCategory = this.dataset.category;
-            renderUniversities();
-          });
-        });
-
-        // Búsqueda
-        document
-          .getElementById("searchInput")
-          .addEventListener("input", function (e) {
-            searchTerm = e.target.value;
-            renderUniversities();
-          });
-
-        // Renderizar inicialmente
+      // Manejo de la búsqueda
+      document.getElementById("searchInput").addEventListener("input", (e) => {
+        searchTerm = e.target.value;
         renderUniversities();
       });
+
+      // Manejo de los filtros por categoría
+      document
+        .getElementById("categoryFilters")
+        .addEventListener("click", (e) => {
+          const button = e.target.closest("button");
+          if (!button) return;
+
+          // Quita la clase 'category-active' de todos los botones
+          document.querySelectorAll(".category-btn").forEach((btn) => {
+            btn.classList.remove("category-active");
+            btn.classList.remove(
+              "bg-gradient-to-r",
+              "from-impulso-teal",
+              "to-impulso-green"
+            );
+            btn.classList.add("bg-gray-100", "text-gray-700");
+            btn
+              .querySelector(".filter-icon")
+              .classList.add("text-impulso-dark");
+            btn.querySelector(".filter-icon").classList.remove("text-white");
+          });
+
+          // Añade la clase 'category-active' al botón clickeado
+          button.classList.add("category-active");
+          button.classList.remove("bg-gray-100", "text-gray-700");
+          button.classList.add(
+            "bg-gradient-to-r",
+            "from-impulso-teal",
+            "to-impulso-green",
+            "text-white"
+          );
+          button.querySelector(".filter-icon").classList.add("text-white");
+          button
+            .querySelector(".filter-icon")
+            .classList.remove("text-impulso-dark");
+
+          selectedCategory = button.dataset.category;
+          renderUniversities();
+        });
+
+      // Renderiza las universidades al cargar la página por primera vez
+      renderUniversities();
     </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+      .university-card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+      }
+      .category-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: scale(1);
+      }
+      .category-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.5)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .category-btn:hover::before {
+        opacity: 1;
+      }
+      .category-active {
+        background: linear-gradient(135deg, #14a085, #0d7377);
+        color: white !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+      }
+      .category-active .filter-icon {
+        color: white;
+      }
+      .category-btn-content {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    </style>
   </body>
 </html>
