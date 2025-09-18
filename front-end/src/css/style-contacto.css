@@ -5,6 +5,9 @@
   --text: #0f2024;
   --muted: #5e7d82;
 }
+img {
+  border-radius: 50px;
+}
 
 body {
   margin: 0;

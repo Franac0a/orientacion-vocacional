@@ -12,7 +12,9 @@ body {
   background: var(--bg);
   color: var(--text);
 }
-
+img {
+  border-radius: 50px;
+}
 /* HEADER */
 .topbar {
   display: flex;

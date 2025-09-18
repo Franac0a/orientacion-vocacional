@@ -163,10 +163,10 @@
     <header class="bg-impulso-green text-white py-12 px-4 shadow-inner">
       <div class="container mx-auto text-center">
         <h2 class="text-4xl font-extrabold mb-4 select-none tracking-wide">
-          Encuentra tu Universidad Ideal 🎓
+          Encontrá tu Universidad Ideal 🎓
         </h2>
         <p class="text-xl max-w-2xl mx-auto font-light">
-          Explora nuestras instituciones afiliadas y encuentra el lugar perfecto
+          Explorá nuestras instituciones afiliadas y conseguí el lugar perfecto
           para tu formación académica.
         </p>
       </div>
@@ -283,104 +283,65 @@
       const universities = [
         {
           id: 1,
-          name: "Universidad Nacional Autónoma",
-          type: "naturales",
-          location: "Ciudad Capital",
+          name: "Universidad Nacional de Formosa",
+          type: "sociales",
+          location: " Formosa , Formosa",
           description:
-            "Institución líder en investigación científica y desarrollo tecnológico.",
-          founded: 1950,
-          students: 35000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Modern%20university%20campus%20with%20green%20spaces%20and%20academic%20buildings&id=uni1&customer_id=cus_T22kga5NIKIS1R",
+            "UNaF, Universidad Nacional de Formosa, ofrece 36 títulos oficiales para estudiar en Argentina. líder en investigación científica y desarrollo tecnológico.",
+          founded: "-",
+          students: "-",
+          image: "src/img/unaf.jpg",
         },
         {
           id: 2,
-          name: "Instituto de Ciencias Sociales",
-          type: "sociales",
-          location: "Metrópolis",
+          name: "Instituto Politécnico Formosa",
+          type: "tecnologicas",
+          location: "Formosa, Formosa",
           description:
-            "Especializada en sociología, economía y ciencias políticas.",
-          founded: 1972,
-          students: 12000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Social%20sciences%20building%20with%20classical%20architecture&id=uni2&customer_id=cus_T22kga5NIKIS1R",
+            "Ofrece tecnicaturas superiores especializadas en áreas de alta tecnología y con salida laboral, como mecatrónica y desarrollo de software",
+          founded: "-",
+          students: "-",
+          image: "src/img/ipf.jpg",
         },
         {
           id: 3,
-          name: "Universidad Tecnológica Federal",
-          type: "tecnologicas",
-          location: "Centro Industrial",
+          name: "Universidad de la Cuenca del Plata",
+          type: "medicina",
+          location: "Formosa, Argentina",
           description:
-            "Enfoque en ingenierías y desarrollo de tecnología aplicada.",
-          founded: 1985,
-          students: 18000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Modern%20technology%20university%20with%20robotics%20lab&id=uni3&customer_id=cus_T22kga5NIKIS1R",
+            "Una universidad privada con una amplia oferta académica en el Nordeste Argentino, que incluye carreras en áreas de ciencias sociales, salud, ingeniería y derecho.",
+          founded: "-",
+          students: "-",
+          image: "src/img/cuenca.jpg", // Puedes usar una imagen representativa.
         },
         {
           id: 4,
-          name: "Academia de Bellas Artes",
-          type: "artes",
-          location: "Distrito Cultural",
-          description: "Formación en artes visuales, música, teatro y danza.",
-          founded: 1960,
-          students: 8000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Art%20academy%20with%20sculptures%20and%20creative%20spaces&id=uni4&customer_id=cus_T22kga5NIKIS1R",
+          name: "Universidad Tecnológica Nacional",
+          type: "tecnologicas",
+          location: "Formosa, Formosa",
+          description:
+            "La UTN es la única universidad en Argentina con un enfoque prioritario en la ingeniería. Su sede regional en Formosa ofrece tecnicaturas y licenciaturas con alta salida laboral, contribuyendo al desarrollo tecnológico loca",
+          founded: "-",
+          students: "-",
+          image: "src/img/logo-utn.jpg",
         },
         {
           id: 5,
-          name: "Facultad de Ciencias Médicas",
-          type: "medicina",
-          location: "Zona Hospitalaria",
-          description:
-            "Excelencia en medicina, enfermería y ciencias de la salud.",
-          founded: 1990,
-          students: 10000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Medical%20school%20with%20modern%20hospital%20facilities&id=uni5&customer_id=cus_T22kga5NIKIS1R",
-        },
-        {
-          id: 6,
-          name: "Universidad Verde Sustentable",
-          type: "naturales",
-          location: "Valle Ecológico",
-          description:
-            "Comprometida con la sostenibilidad y ciencias ambientales.",
-          founded: 2005,
-          students: 7500,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Sustainable%20eco-friendly%20university%20campus&id=uni6&customer_id=cus_T22kga5NIKIS1R",
-        },
-        {
-          id: 7,
-          name: "Instituto de Estudios Económicos",
-          type: "sociales",
-          location: "Centro Financiero",
-          description:
-            "Especialización en economía, finanzas y administración.",
-          founded: 1988,
-          students: 9500,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Economics%20institute%20with%20modern%20business%20facade&id=uni7&customer_id=cus_T22kga5NIKIS1R",
-        },
-        {
-          id: 8,
-          name: "Universidad Politécnica Avanzada",
+          name: "Instituto Superior Macedo Martínez",
           type: "tecnologicas",
-          location: "Parque Tecnológico",
+          location: "Formosa, Argentina",
           description:
-            "Vanguardia en ingeniería robótica e inteligencia artificial.",
-          founded: 2010,
-          students: 6000,
-          image:
-            "https://placeholder-image-service.onrender.com/image/400x300?prompt=Advanced%20polytechnic%20university%20with%20AI%20labs&id=uni8&customer_id=cus_T22kga5NIKIS1R",
+            "Institución pionera en la educación terciaria privada en Formosa, con una fuerte oferta en carreras técnicas como Analista de Sistemas de Información y profesorados.",
+          founded: "-",
+          students: "-",
+          image: "src/img/macedo.jpg", // Puedes usar una imagen representativa.
         },
       ];
 
       let selectedCategory = "todas";
       let searchTerm = "";
 
+      // Función para renderizar las universidades
       // Función para renderizar las universidades
       function renderUniversities() {
         const container = document.getElementById("universitiesContainer");
@@ -397,50 +358,47 @@
 
         if (filtered.length === 0) {
           container.innerHTML = `
-          <div class="col-span-full text-center py-12">
-            <div class="text-gray-500 text-lg">
-              <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
-              <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
-            </div>
-          </div>
-        `;
+      <div class="col-span-full text-center py-12">
+        <div class="text-gray-500 text-lg">
+          <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
+          <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
+        </div>
+      </div>
+    `;
           return;
         }
 
         filtered.forEach((uni) => {
           const card = document.createElement("div");
           card.className =
-            "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden university-card hover:shadow-2xl transition-all";
+            "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden university-card hover:shadow-2xl transition-all flex flex-col";
           card.innerHTML = `
-          <img src="${uni.image}" alt="${
+      <img src="${uni.image}" alt="${
             uni.name
-          } campus view with academic buildings and green spaces" class="w-full h-48 object-cover">
-          <div class="p-6">
-            <h4 class="text-2xl font-bold text-impulso-dark mb-2">${
-              uni.name
-            }</h4>
-            <span class="inline-block bg-impulso-light text-impulso-dark text-xs font-semibold px-3 py-1 rounded-full mb-3 tracking-wide">
-              <i class="fas fa-tag"></i> ${getCategoryName(uni.type)}
-            </span>
-            <p class="text-gray-600 mb-3 flex items-center gap-2"><i class="fas fa-map-marker-alt text-impulso-teal"></i> ${
-              uni.location
-            }</p>
-            <p class="text-gray-700 mb-4 text-sm">${uni.description}</p>
-            <div class="flex justify-between text-sm text-gray-500 border-t border-gray-200 pt-4">
-              <span class="flex items-center gap-1"><i class="fas fa-calendar-alt text-impulso-dark"></i> Fundada: ${
-                uni.founded
-              }</span>
-              <span class="flex items-center gap-1"><i class="fas fa-user-graduate text-impulso-dark"></i> ${uni.students.toLocaleString()} estudiantes</span>
-            </div>
-            <button class="w-full mt-4 bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-2 px-4 rounded-lg hover:from-impulso-dark hover:to-impulso-green transition-colors font-semibold shadow-md hover:shadow-lg">
-              Ver más información
-            </button>
-          </div>
-        `;
+          } campus view" class="w-full h-48 object-contain bg-white">
+      <div class="p-6 flex flex-col flex-grow">
+        <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
+        <span class="inline-block bg-impulso-light text-impulso-dark text-xs font-semibold px-3 py-1 rounded-full mb-3 tracking-wide">
+          <i class="fas fa-tag"></i> ${getCategoryName(uni.type)}
+        </span>
+        <p class="text-gray-600 mb-3 flex items-center gap-2"><i class="fas fa-map-marker-alt text-impulso-teal"></i> ${
+          uni.location
+        }</p>
+        <p class="text-gray-700 mb-4 text-sm">${uni.description}</p>
+        <div class="flex justify-between text-sm text-gray-500 border-t border-gray-200 pt-4 mt-auto">
+          <span class="flex items-center gap-1"><i class="fas fa-calendar-alt text-impulso-dark"></i> Fundada: ${
+            uni.founded
+          }</span>
+          <span class="flex items-center gap-1"><i class="fas fa-user-graduate text-impulso-dark"></i> ${uni.students.toLocaleString()} estudiantes</span>
+        </div>
+        <button class="w-full mt-4 bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-2 px-4 rounded-lg hover:from-impulso-dark hover:to-impulso-green transition-colors font-semibold shadow-md hover:shadow-lg">
+          Ver más información
+        </button>
+      </div>
+    `;
           container.appendChild(card);
         });
       }
-
       // Función para obtener el nombre de la categoría
       function getCategoryName(type) {
         const categories = {

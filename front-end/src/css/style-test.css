@@ -22,6 +22,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+img {
+  border-radius: 50px;
+}
 
 .topbar {
   position: sticky;
