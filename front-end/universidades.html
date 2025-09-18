@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Universidades - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex flex-col"
+  >
+    <!-- Navbar -->
+    <nav
+      class="bg-gradient-to-r from-impulso-green to-impulso-teal text-white shadow-md"
+    >
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16"
+      >
+        <div class="flex items-center space-x-4">
+          <img
+            src="src/img/logo.jpg"
+            alt="Logo Impulso Educativo"
+            class="w-10 h-10 rounded-full"
+          />
+          <span class="font-bold text-xl select-none">Impulso Educativo</span>
+        </div>
+        <div class="flex items-center space-x-6">
+          <span
+            id="userName"
+            class="hidden sm:inline text-white font-semibold select-none"
+          ></span>
+          <a href="perfil.html" class="hover:underline flex items-center gap-1">
+            <i class="fas fa-user-circle"></i> Perfil
+          </a>
+          <button
+            id="logoutBtn"
+            class="bg-impulso-gold text-impulso-dark px-3 py-1 rounded hover:bg-impulso-gold/90 transition font-semibold"
+          >
+            Cerrar sesión
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="flex-grow max-w-7xl mx-auto p-6 w-full">
+      <h1 class="text-3xl font-bold text-impulso-dark mb-6 text-center">
+        Universidades Disponibles
+      </h1>
+
+      <!-- Search and filter -->
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4"
+      >
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Buscar universidad..."
+          class="w-full md:w-1/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition"
+          aria-label="Buscar universidad"
+        />
+
+        <select
+          id="filterSelect"
+          class="w-full md:w-1/4 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition"
+          aria-label="Filtrar por región"
+        >
+          <option value="">Filtrar por región</option>
+          <option value="norte">Norte</option>
+          <option value="sur">Sur</option>
+          <option value="centro">Centro</option>
+        </select>
+      </div>
+
+      <!-- Universities list -->
+      <div
+        id="universitiesList"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+        aria-live="polite"
+        aria-label="Listado de universidades"
+      >
+        <!-- Cards se insertan aquí -->
+      </div>
+    </main>
+
+    <script>
+      // Logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      });
+
+      // Simulación de universidades (reemplazar con fetch a API real)
+      const universities = [
+        { id: 1, name: "Universidad Nacional", region: "centro" },
+        { id: 2, name: "Universidad Autónoma", region: "norte" },
+        { id: 3, name: "Instituto Tecnológico", region: "sur" },
+        { id: 4, name: "Universidad del Pacífico", region: "sur" },
+        { id: 5, name: "Universidad Andina", region: "norte" },
+        { id: 6, name: "Universidad Central", region: "centro" },
+      ];
+
+      const container = document.getElementById("universitiesList");
+      const searchInput = document.getElementById("searchInput");
+      const filterSelect = document.getElementById("filterSelect");
+
+      function renderUniversities() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterRegion = filterSelect.value;
+
+        const filtered = universities.filter((u) => {
+          const matchesName = u.name.toLowerCase().includes(searchTerm);
+          const matchesRegion = filterRegion ? u.region === filterRegion : true;
+          return matchesName && matchesRegion;
+        });
+
+        container.innerHTML = "";
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<p class="col-span-full text-center text-gray-500">No se encontraron universidades.</p>`;
+          return;
+        }
+
+        filtered.forEach((univ) => {
+          const card = document.createElement("div");
+          card.className =
+            "bg-white rounded-lg shadow p-5 flex flex-col justify-between hover:shadow-lg transition cursor-pointer";
+
+          card.innerHTML = `
+          <h2 class="text-xl font-semibold text-impulso-dark mb-3">${univ.name}</h2>
+          <p class="text-sm text-gray-600 mb-4 capitalize">Región: ${univ.region}</p>
+          <button
+            class="self-start bg-gradient-to-r from-impulso-green to-impulso-teal text-white px-4 py-2 rounded hover:from-impulso-dark hover:to-impulso-green transition"
+            aria-label="Ver carreras de ${univ.name}"
+            onclick="viewCareers(${univ.id})"
+          >
+            Ver Carreras
+          </button>
+        `;
+
+          container.appendChild(card);
+        });
+      }
+
+      function viewCareers(universityId) {
+        // Aquí puedes redirigir a la página de carreras o mostrar modal
+        alert(`Mostrar carreras para universidad ID: ${universityId}`);
+        // Ejemplo: window.location.href = `carreras.html?univId=${universityId}`;
+      }
+
+      searchInput.addEventListener("input", renderUniversities);
+      filterSelect.addEventListener("change", renderUniversities);
+
+      // Render inicial
+      renderUniversities();
+      // Mostrar nombre usuario logueado desde localStorage
+      const currentUser = JSON.parse(localStorage.getItem("user"));
+      if (currentUser && currentUser.name) {
+        document.getElementById(
+          "userName"
+        ).textContent = `Hola, ${currentUser.name}`;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="src/css/style-login.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center p-4"
+  >
+    <div class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md">
+      <!-- Alertas de éxito/error -->
+      <div
+        id="alertSuccess"
+        class="hidden bg-emerald-100 border border-emerald-400 text-emerald-700 px-4 py-3 rounded relative mb-4 mx-4 mt-4"
+      >
+        <span class="block sm:inline" id="alertSuccessMessage"></span>
+      </div>
+
+      <div
+        id="alertError"
+        class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 mx-4 mt-4"
+      >
+        <span class="block sm:inline" id="alertErrorMessage"></span>
+      </div>
+
+      <!-- Header con Logo -->
+      <div
+        class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
+      >
+        <!-- Logo de Impulso Educativo -->
+        <div class="mb-4 flex justify-center">
+          <div
+            class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg"
+          >
+            <img
+              src="src/img/logo.jpg"
+              alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+              class="w-20 h-20 rounded-full"
+            />
+          </div>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-1">Impulso Educativo</h1>
+        <p class="text-impulso-light">Bienvenido de vuelta</p>
+      </div>
+
+      <!-- Formulario de Login -->
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-impulso-dark mb-2 text-center">
+          Iniciar Sesión
+        </h2>
+        <p class="text-gray-600 mb-6 text-center">
+          Accede a tu cuenta para continuar
+        </p>
+
+        <form id="loginForm" class="space-y-5">
+          <div>
+            <label
+              for="email"
+              class="block text-sm font-medium text-impulso-dark mb-2"
+              >Correo electrónico</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i class="fas fa-envelope text-impulso-light"></i>
+              </div>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                placeholder="tu@email.com"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="password"
+              class="block text-sm font-medium text-impulso-dark mb-2"
+              >Contraseña</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i class="fas fa-lock text-impulso-light"></i>
+              </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="pl-10 pr-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                id="togglePassword"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                <i
+                  class="fas fa-eye text-impulso-light hover:text-impulso-teal transition duration-200"
+                ></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                id="remember"
+                name="remember"
+                class="h-4 w-4 text-impulso-teal focus:ring-impulso-teal border-gray-300 rounded"
+              />
+              <label
+                for="remember"
+                class="ml-2 block text-sm text-impulso-dark"
+              >
+                Recordarme
+              </label>
+            </div>
+            <a
+              href="#"
+              class="text-sm text-impulso-teal hover:text-impulso-green font-medium"
+            >
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+          <button
+            type="submit"
+            id="loginButton"
+            class="w-full bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
+          >
+            <i class="fas fa-sign-in-alt mr-2"></i>
+            Iniciar Sesión
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="mt-6 relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">O continúa con</span>
+          </div>
+        </div>
+
+        <!-- Social Login Buttons -->
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+          >
+            <i class="fab fa-google text-red-500 mr-2"></i>
+            Google
+          </button>
+          <button
+            type="button"
+            class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition duration-200"
+          >
+            <i class="fab fa-microsoft text-blue-500 mr-2"></i>
+            Microsoft
+          </button>
+        </div>
+
+        <div class="mt-6 text-center">
+          <p class="text-gray-600">
+            ¿No tienes una cuenta?
+            <a
+              href="registro.html"
+              class="text-impulso-teal font-medium hover:text-impulso-green"
+              >Regístrate aquí</a
+            >
+          </p>
+        </div>
+
+        <!-- Sección para instituciones educativas -->
+        <div class="mt-8 pt-6 border-t border-impulso-light/30 text-center">
+          <div
+            class="bg-gradient-to-r from-impulso-light/10 to-teal-50 p-4 rounded-lg"
+          >
+            <i class="fas fa-university text-impulso-gold text-xl mb-2"></i>
+            <p class="text-impulso-dark font-medium text-sm">
+              ¿Eres una institución educativa?
+            </p>
+            <a
+              href="mailto:info@impulsoeducativo.com"
+              class="inline-block mt-2 text-impulso-teal hover:text-impulso-green text-sm font-medium"
+            >
+              <i class="fas fa-envelope mr-1"></i>Contáctanos
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Configuración de la API
+      const API_BASE_URL = "http://localhost:3001"; // URL de tu backend
+
+      // Mostrar alertas
+      function showAlert(type, message) {
+        const alert = document.getElementById(`alert${type}`);
+        const messageElement = document.getElementById(`alert${type}Message`);
+
+        messageElement.textContent = message;
+        alert.classList.remove("hidden");
+
+        setTimeout(() => {
+          alert.classList.add("hidden");
+        }, 5000);
+      }
+
+      // Toggle mostrar/ocultar contraseña
+      document
+        .getElementById("togglePassword")
+        .addEventListener("click", function () {
+          const passwordField = document.getElementById("password");
+          const icon = this.querySelector("i");
+
+          if (passwordField.type === "password") {
+            passwordField.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+          } else {
+            passwordField.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+          }
+        });
+
+      // Validar email
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Login con backend
+      async function loginUser(loginData) {
+        try {
+          const response = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(loginData),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || "Credenciales incorrectas");
+          }
+
+          return data;
+        } catch (error) {
+          throw error;
+        }
+      }
+
+      // Manejar envío del formulario
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const loginBtn = document.getElementById("loginButton");
+          const originalHTML = loginBtn.innerHTML;
+
+          // Obtener valores del formulario
+          const loginData = {
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value,
+            remember: document.getElementById("remember").checked,
+          };
+
+          // Validaciones del frontend
+          if (!loginData.email || !loginData.password) {
+            showAlert("Error", "Por favor completa todos los campos");
+            return;
+          }
+
+          if (!isValidEmail(loginData.email)) {
+            showAlert("Error", "Por favor ingresa un email válido");
+            return;
+          }
+
+          try {
+            // Mostrar loading
+            loginBtn.disabled = true;
+            loginBtn.innerHTML =
+              '<i class="fas fa-spinner fa-spin mr-2"></i> Iniciando sesión...';
+
+            // Enviar al backend
+            const result = await loginUser(loginData);
+
+            // Éxito
+            showAlert("Success", "¡Login exitoso! Redirigiendo...");
+
+            // Guardar token en localStorage
+            localStorage.setItem("authToken", result.token);
+            localStorage.setItem("user", JSON.stringify(result.user));
+
+            // Recordar usuario si está marcado
+            if (loginData.remember) {
+              localStorage.setItem("rememberedEmail", loginData.email);
+            } else {
+              localStorage.removeItem("rememberedEmail");
+            }
+
+            // Redirigir después de 1.5 segundos
+            // Dentro del submit handler del formulario loginForm, reemplaza esta parte:
+
+            setTimeout(() => {
+              window.location.href = "universidades.html"; // Ruta a tu página de listado de universidades
+            }, 1500);
+          } catch (error) {
+            // Error
+            showAlert("Error", error.message);
+
+            // Restaurar botón
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = originalHTML;
+          }
+        });
+
+      // Recordar email si estaba guardado
+      window.addEventListener("load", function () {
+        const rememberedEmail = localStorage.getItem("rememberedEmail");
+        if (rememberedEmail) {
+          document.getElementById("email").value = rememberedEmail;
+          document.getElementById("remember").checked = true;
+        }
+      });
+
+      // Validación en tiempo real del email
+      document.getElementById("email").addEventListener("blur", function () {
+        if (this.value && !isValidEmail(this.value)) {
+          this.classList.add("border-red-500");
+          this.classList.remove("border-gray-300");
+        } else {
+          this.classList.remove("border-red-500");
+          this.classList.add("border-gray-300");
+        }
+      });
+
+      // Efectos visuales en focus/blur
+      const inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.addEventListener("focus", function () {
+          this.classList.add("ring-2", "ring-impulso-teal/30");
+        });
+
+        input.addEventListener("blur", function () {
+          this.classList.remove("ring-2", "ring-impulso-teal/30");
+        });
+      });
+    </script>
+  </body>
+</html>
