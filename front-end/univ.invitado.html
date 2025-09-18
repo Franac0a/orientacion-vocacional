@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Universidades - Listado</title>
+    <title>Universidades y Carreras - Impulso Educativo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -32,6 +32,73 @@
         },
       };
     </script>
+    <style>
+      .card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+      }
+      .filter-btn,
+      .tab-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: scale(1);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        background-color: #f3f4f6;
+        color: #4b5563;
+      }
+      .filter-btn:hover,
+      .tab-btn:hover {
+        background-color: #f4d03f;
+        color: white;
+      }
+      .filter-btn::before,
+      .tab-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.5)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .filter-btn:hover::before,
+      .tab-btn:hover::before {
+        opacity: 1;
+      }
+      .active-btn {
+        background: linear-gradient(135deg, #14a085, #0d7377);
+        color: white !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+      }
+      .active-btn .filter-icon {
+        color: white !important;
+      }
+      .btn-content {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .university-logo {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        background-color: white;
+        border-bottom: 1px solid #e5e7eb;
+      }
+    </style>
   </head>
   <body
     class="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 overflow-x-hidden min-h-screen"
@@ -73,7 +140,6 @@
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
               >Servicios</a
             >
-
             <a
               href="test.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
@@ -93,25 +159,27 @@
             <a
               href="univ.invitado.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
-            >
-              Explorá</a
+              >Explorá</a
             >
             <div class="flex items-center space-x-3" id="auth-buttons">
               <a
                 href="login.html"
                 class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+                >Iniciar Sesión</a
               >
-                Iniciar Sesión
-              </a>
               <a
                 href="registro.html"
                 class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+                >Registrarse</a
               >
-                Registrarse
-              </a>
             </div>
           </div>
         </div>
+        <style>
+          img {
+            border-radius: 50px;
+          }
+        </style>
 
         <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
           <a
@@ -127,16 +195,14 @@
           <a
             href="test.html"
             class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
-            id="test-link"
+            id="mobile-test-link"
             >Test de Personalidad</a
           >
-
           <a
             href="nosotros.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Nosotros</a
           >
-
           <a
             href="contacto.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
@@ -145,36 +211,33 @@
           <a
             href="univ.invitado.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors border-b-2 border-impulso-teal"
-          >
-            Explorá</a
+            >Explorá</a
           >
           <div class="pt-3 space-y-2" id="mobile-auth-buttons">
             <a
               href="login.html"
               class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+              >Iniciar Sesión</a
             >
-              Iniciar Sesión
-            </a>
             <a
               href="registro.html"
               class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+              >Registrarse</a
             >
-              Registrarse
-            </a>
           </div>
         </div>
       </div>
     </nav>
+
     <header
       class="bg-impulso-green text-white py-20 px-4 shadow-inner mt-[80px]"
     >
       <div class="container mx-auto text-center">
         <h2 class="text-4xl font-extrabold mb-4 select-none tracking-wide">
-          Encontrá tu Universidad Ideal 🎓
+          Explorá Opciones Educativas 🎓
         </h2>
         <p class="text-xl max-w-2xl mx-auto font-light">
-          Explorá nuestras instituciones afiliadas y conseguí el lugar perfecto
-          para tu formación académica.
+          Descubrí universidades y carreras que se adapten a tu futuro.
         </p>
       </div>
     </header>
@@ -186,93 +249,170 @@
         <h3
           class="text-2xl font-semibold text-impulso-dark mb-4 select-none flex items-center gap-2"
         >
-          <i class="fas fa-filter text-impulso-teal"></i> Filtrar Universidades
+          <i class="fas fa-filter text-impulso-teal"></i> Opciones de Búsqueda
         </h3>
 
-        <div class="mb-6 relative">
-          <i
-            class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-          ></i>
-          <input
-            type="text"
-            id="searchInput"
-            placeholder="Buscar por nombre o ubicación..."
-            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner"
-            aria-label="Buscar universidades"
-          />
+        <div class="flex space-x-4 mb-6" id="tab-controls">
+          <button
+            id="universities-tab-btn"
+            class="tab-btn active-btn"
+            type="button"
+          >
+            Universidades
+          </button>
+          <button id="careers-tab-btn" class="tab-btn" type="button">
+            Carreras
+          </button>
         </div>
 
-        <div
-          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
-          id="categoryFilters"
-        >
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300 category-active"
-            data-category="todas"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-globe-americas filter-icon text-impulso-dark"></i
-              >Todas
-            </span>
-          </button>
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300"
-            data-category="sociales"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-users filter-icon text-impulso-dark"></i>Ciencias
-              Sociales
-            </span>
-          </button>
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300"
-            data-category="naturales"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-leaf filter-icon text-impulso-dark"></i>Ciencias
-              Naturales
-            </span>
-          </button>
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300"
-            data-category="tecnologicas"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-microchip filter-icon text-impulso-dark"></i
-              >Tecnológicas
-            </span>
-          </button>
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300"
-            data-category="artes"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-paint-brush filter-icon text-impulso-dark"></i
-              >Artes y Humanidades
-            </span>
-          </button>
-          <button
-            class="category-btn p-3 rounded-lg text-center bg-gray-100 text-gray-700 hover:bg-impulso-gold hover:text-white transition-all duration-300"
-            data-category="medicina"
-            type="button"
-          >
-            <span class="category-btn-content">
-              <i class="fas fa-heartbeat filter-icon text-impulso-dark"></i
-              >Ciencias de la Salud
-            </span>
-          </button>
+        <div id="universities-view" class="filter-section">
+          <div class="mb-6 relative">
+            <i
+              class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+            <input
+              type="text"
+              id="searchUniInput"
+              placeholder="Buscar por universidad o ubicación..."
+              class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner"
+              aria-label="Buscar universidades"
+            />
+          </div>
+          <div
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
+            id="universitiesContainer"
+          ></div>
+        </div>
+
+        <div id="careers-view" class="filter-section hidden">
+          <div class="mb-6 relative">
+            <i
+              class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+            <input
+              type="text"
+              id="searchCareerInput"
+              placeholder="Buscar por carrera o área..."
+              class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner"
+              aria-label="Buscar carreras"
+            />
+          </div>
+          <div class="mb-6">
+            <h4 class="font-bold text-impulso-dark mb-2">
+              Por Área de Conocimiento
+            </h4>
+            <div
+              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
+              id="categoryFilters"
+            >
+              <button
+                class="filter-btn active-btn"
+                data-category="todas"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i
+                    class="fas fa-globe-americas filter-icon text-impulso-dark"
+                  ></i
+                  >Todas</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Ciencias Sociales"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-users filter-icon text-impulso-dark"></i
+                  >Ciencias Sociales</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Ciencias Naturales"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-leaf filter-icon text-impulso-dark"></i
+                  >Ciencias Naturales</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Ingeniería"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-tools filter-icon text-impulso-dark"></i
+                  >Ingeniería</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Tecnológicas"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-microchip filter-icon text-impulso-dark"></i
+                  >Tecnológicas</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Medicina y Biología"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-heartbeat filter-icon text-impulso-dark"></i
+                  >Medicina y Biología</span
+                >
+              </button>
+              <button
+                class="filter-btn"
+                data-category="Ciencias Exactas"
+                type="button"
+              >
+                <span class="btn-content"
+                  ><i class="fas fa-flask filter-icon text-impulso-dark"></i
+                  >Ciencias Exactas</span
+                >
+              </button>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-bold text-impulso-dark mb-2">
+              Por Tipo de Institución
+            </h4>
+            <div class="flex flex-wrap gap-3" id="institutionTypeFilters">
+              <button
+                class="filter-btn active-btn"
+                data-type="todas"
+                type="button"
+              >
+                Todas
+              </button>
+              <button
+                class="filter-btn"
+                data-type="universitarias"
+                type="button"
+              >
+                Universitarias
+              </button>
+              <button
+                class="filter-btn"
+                data-type="no-universitarias"
+                type="button"
+              >
+                No Universitarias
+              </button>
+            </div>
+          </div>
+          <div
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-6"
+            id="careersContainer"
+          ></div>
         </div>
       </div>
-
-      <div
-        class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
-        id="universitiesContainer"
-      ></div>
     </main>
 
     <footer class="bg-impulso-dark text-white py-12">
@@ -291,7 +431,6 @@
               Transformando el futuro educativo, una orientación a la vez.
             </p>
           </div>
-
           <div>
             <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
             <div class="space-y-2">
@@ -312,7 +451,6 @@
               >
             </div>
           </div>
-
           <div>
             <h4 class="font-semibold mb-4">Contacto</h4>
             <div class="space-y-2 text-impulso-light">
@@ -323,38 +461,32 @@
               <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
             </div>
           </div>
-
           <div>
             <h4 class="font-semibold mb-4">Síguenos</h4>
             <div class="flex space-x-4">
               <a
                 href="#"
                 class="text-impulso-light hover:text-impulso-gold transition-colors"
-              >
-                <i class="fab fa-facebook-f text-xl"></i>
-              </a>
+                ><i class="fab fa-facebook-f text-xl"></i
+              ></a>
               <a
                 href="#"
                 class="text-impulso-light hover:text-impulso-gold transition-colors"
-              >
-                <i class="fab fa-twitter text-xl"></i>
-              </a>
+                ><i class="fab fa-twitter text-xl"></i
+              ></a>
               <a
                 href="#"
                 class="text-impulso-light hover:text-impulso-gold transition-colors"
-              >
-                <i class="fab fa-instagram text-xl"></i>
-              </a>
+                ><i class="fab fa-instagram text-xl"></i
+              ></a>
               <a
                 href="#"
                 class="text-impulso-light hover:text-impulso-gold transition-colors"
-              >
-                <i class="fab fa-linkedin-in text-xl"></i>
-              </a>
+                ><i class="fab fa-linkedin-in text-xl"></i
+              ></a>
             </div>
           </div>
         </div>
-
         <div
           class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
         >
@@ -364,10 +496,7 @@
     </footer>
 
     <script>
-      AOS.init({
-        duration: 1000,
-        once: true,
-      });
+      AOS.init({ duration: 1000, once: true });
 
       document
         .getElementById("mobile-menu-btn")
@@ -397,32 +526,28 @@
 
         function updateUIForUser(userType) {
           if (authButtonsContainer) {
-            authButtonsContainer.innerHTML = "";
-            const userMenuHtml = `
-              <div class="relative group">
-                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
-                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
-                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
-                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
-                </div>
-              </div>
-            `;
-            authButtonsContainer.innerHTML = userMenuHtml;
+            authButtonsContainer.innerHTML = `
+                        <div class="relative group">
+                            <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                            </button>
+                            <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
+                                <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                                <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                            </div>
+                        </div>
+                    `;
           }
-
           if (mobileAuthButtonsContainer) {
             mobileAuthButtonsContainer.innerHTML = `
-              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
-                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-              </a>
-              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
-                Cerrar Sesión
-              </button>
-            `;
+                        <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                            <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                        </a>
+                        <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                            Cerrar Sesión
+                        </button>
+                    `;
           }
-
           if (userType !== "estudiante") {
             if (testLink) testLink.classList.add("hidden");
             if (mobileTestLink) mobileTestLink.classList.add("hidden");
@@ -430,242 +555,470 @@
             if (testLink) testLink.classList.remove("hidden");
             if (mobileTestLink) mobileTestLink.classList.remove("hidden");
           }
-
           const logoutButton = document.getElementById("logout-button");
           const mobileLogoutButton = document.getElementById(
             "mobile-logout-button"
           );
-
-          if (logoutButton) {
+          if (logoutButton)
             logoutButton.addEventListener("click", () => {
               localStorage.removeItem("authToken");
               localStorage.removeItem("userType");
               window.location.href = "index.html";
             });
-          }
-
-          if (mobileLogoutButton) {
+          if (mobileLogoutButton)
             mobileLogoutButton.addEventListener("click", () => {
               localStorage.removeItem("authToken");
               localStorage.removeItem("userType");
               window.location.href = "index.html";
             });
-          }
         }
 
         const token = localStorage.getItem("authToken");
         const userType = localStorage.getItem("userType");
-
-        if (token) {
-          updateUIForUser(userType);
-        } else {
+        if (token) updateUIForUser(userType);
+        else {
           if (testLink) testLink.classList.add("hidden");
           if (mobileTestLink) mobileTestLink.classList.add("hidden");
         }
-      });
-      // Datos de las universidades
-      const universities = [
-        {
-          id: 1,
-          name: "Universidad Nacional de Formosa",
-          type: "sociales",
-          location: " Formosa , Formosa",
-          description:
-            "UNaF, Universidad Nacional de Formosa, ofrece 36 títulos oficiales para estudiar en Argentina. líder en investigación científica y desarrollo tecnológico.",
-          founded: "-",
-          students: "-",
-          image: "src/img/unaf.jpg",
-        },
-        {
-          id: 2,
-          name: "Instituto Politécnico Formosa",
-          type: "tecnologicas",
-          location: "Formosa, Formosa",
-          description:
-            "Ofrece tecnicaturas superiores especializadas en áreas de alta tecnología y con salida laboral, como mecatrónica y desarrollo de software",
-          founded: "-",
-          students: "-",
-          image: "src/img/ipf.jpg",
-        },
-        {
-          id: 3,
-          name: "Universidad de la Cuenca del Plata",
-          type: "medicina",
-          location: "Formosa, Argentina",
-          description:
-            "Una universidad privada con una amplia oferta académica en el Nordeste Argentino, que incluye carreras en áreas de ciencias sociales, salud, ingeniería y derecho.",
-          founded: "-",
-          students: "-",
-          image: "src/img/cuenca.jpg", // Puedes usar una imagen representativa.
-        },
-        {
-          id: 4,
-          name: "Universidad Tecnológica Nacional",
-          type: "tecnologicas",
-          location: "Formosa, Formosa",
-          description:
-            "La UTN es la única universidad en Argentina con un enfoque prioritario en la ingeniería. Su sede regional en Formosa ofrece tecnicaturas y licenciaturas con alta salida laboral, contribuyendo al desarrollo tecnológico loca",
-          founded: "-",
-          students: "-",
-          image: "src/img/logo-utn.jpg",
-        },
-        {
-          id: 5,
-          name: "Instituto Superior Macedo Martínez",
-          type: "tecnologicas",
-          location: "Formosa, Argentina",
-          description:
-            "Institución pionera en la educación terciaria privada en Formosa, con una fuerte oferta en carreras técnicas como Analista de Sistemas de Información y profesorados.",
-          founded: "-",
-          students: "-",
-          image: "src/img/macedo.jpg", // Puedes usar una imagen representativa.
-        },
-      ];
 
-      let selectedCategory = "todas";
-      let searchTerm = "";
+        const universities = [
+          {
+            id: 1,
+            name: "Universidad Nacional de Formosa",
+            location: "Formosa, Formosa",
+            description:
+              "UNaF, Universidad Nacional de Formosa, ofrece 36 títulos oficiales para estudiar en Argentina. líder en investigación científica y desarrollo tecnológico.",
+            image: "src/img/unaf.jpg",
 
-      // Función para renderizar las universidades
-      function renderUniversities() {
-        const container = document.getElementById("universitiesContainer");
-        container.innerHTML = "";
+            isUniversity: true,
+          },
+          {
+            id: 2,
+            name: "Instituto Politécnico Formosa",
+            location: "Formosa, Formosa",
+            description:
+              "Ofrece tecnicaturas superiores especializadas en áreas de alta tecnología y con salida laboral, como mecatrónica y desarrollo de software",
+            image: "src/img/ipf.jpg",
+            isUniversity: false,
+          },
+          {
+            id: 3,
+            name: "Universidad de la Cuenca del Plata",
+            location: "Formosa, Argentina",
+            description:
+              "Una universidad privada con una amplia oferta académica en el Nordeste Argentino, que incluye carreras en áreas de ciencias sociales, salud, ingeniería y derecho.",
+            image: "src/img/cuenca.jpg",
+            isUniversity: true,
+          },
+          {
+            id: 4,
+            name: "Universidad Tecnológica Nacional",
+            location: "Formosa, Formosa",
+            description:
+              "La UTN es la única universidad en Argentina con un enfoque prioritario en la ingeniería. Su sede regional en Formosa ofrece tecnicaturas y licenciaturas con alta salida laboral, contribuyendo al desarrollo tecnológico local",
+            image: "src/img/logo-utn.jpg",
 
-        const filtered = universities.filter((uni) => {
-          const matchesCategory =
-            selectedCategory === "todas" || uni.type === selectedCategory;
-          const matchesSearch =
-            uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            uni.location.toLowerCase().includes(searchTerm.toLowerCase());
-          return matchesCategory && matchesSearch;
-        });
+            isUniversity: true,
+          },
+          {
+            id: 5,
+            name: "Instituto Superior Macedo Martínez",
+            location: "Formosa, Argentina",
+            description:
+              "Institución pionera en la educación terciaria privada en Formosa, con una fuerte oferta en carreras técnicas como Analista de Sistemas de Información y profesorados.",
+            image: "src/img/macedo.jpg",
+            isUniversity: false,
+          },
+          {
+            id: 6,
+            name: "Instituto de Educación Superior y Técnica",
+            location: "Formosa, Formosa",
+            description:
+              "Ofrece formación técnica y superior en diversas áreas de alta demanda en el mercado laboral local y regional.",
+            image: "src/img/iest.jpg",
+            isUniversity: false,
+          },
+          {
+            id: 7,
+            name: "Instituto Pedagógico Superior de Formosa",
+            location: "Formosa, Formosa",
+            description:
+              "Institución dedicada a la formación de docentes para los niveles inicial, primario y secundario, con un fuerte enfoque en la práctica pedagógica.",
+            image: "src/img/pedagogico.jpg",
+            isUniversity: false,
+          },
+        ];
 
-        if (filtered.length === 0) {
-          container.innerHTML = `
-          <div class="col-span-full text-center py-12">
-            <div class="text-gray-500 text-lg">
-              <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
-              <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
-            </div>
-          </div>
-        `;
-          return;
+        const careers = [
+          {
+            id: 1,
+            universityId: 1,
+            name: "Licenciatura en Psicopedagogía",
+            type: "Ciencias Sociales",
+            duration: "4 años",
+            subjects: [
+              "Neuropsicología",
+              "Diagnóstico Psicopedagógico",
+              "Inclusión Educativa",
+            ],
+            contact: "psicopedagogia@unaf.edu.ar",
+            hasScholarship: true,
+            isUniversity: true,
+          },
+          {
+            id: 2,
+            universityId: 1,
+            name: "Ingeniería Forestal",
+            type: "Ingeniería",
+            duration: "5 años",
+            subjects: [
+              "Silvicultura",
+              "Manejo de Bosques",
+              "Recursos Naturales",
+            ],
+            contact: "forestal@unaf.edu.ar",
+            hasScholarship: false,
+            isUniversity: true,
+          },
+          {
+            id: 3,
+            universityId: 2,
+            name: "Tecnicatura Superior en Desarrollo de Software",
+            type: "Tecnológicas",
+            duration: "3 años",
+            subjects: [
+              "Programación I y II",
+              "Bases de Datos",
+              "Metodologías Ágiles",
+            ],
+            contact: "info@ipf.edu.ar",
+            hasScholarship: true,
+            isUniversity: false,
+          },
+          {
+            id: 4,
+            universityId: 3,
+            name: "Licenciatura en Medicina",
+            type: "Medicina y Biología",
+            duration: "6 años",
+            subjects: ["Anatomía", "Fisiología", "Farmacología"],
+            contact: "medicina@ucp.edu.ar",
+            hasScholarship: false,
+            isUniversity: true,
+          },
+          {
+            id: 5,
+            universityId: 4,
+            name: "Ingeniería Química",
+            type: "Ingeniería",
+            duration: "5 años",
+            subjects: [
+              "Termodinámica",
+              "Balance de Materia y Energía",
+              "Operaciones Unitarias",
+            ],
+            contact: "quimica@utn.edu.ar",
+            hasScholarship: true,
+            isUniversity: true,
+          },
+          {
+            id: 6,
+            universityId: 5,
+            name: "Profesorado en Educación Secundaria en Matemática",
+            type: "Ciencias Exactas",
+            duration: "4 años",
+            subjects: ["Álgebra", "Geometría", "Didáctica de la Matemática"],
+            contact: "matematica@macedo.edu.ar",
+            hasScholarship: true,
+            isUniversity: false,
+          },
+          {
+            id: 7,
+            universityId: 5,
+            name: "Tecnicatura Superior en Contabilidad",
+            type: "Ciencias Sociales",
+            duration: "3 años",
+            subjects: [
+              "Contabilidad General",
+              "Derecho Comercial",
+              "Tributación",
+            ],
+            contact: "contabilidad@macedo.edu.ar",
+            hasScholarship: false,
+            isUniversity: false,
+          },
+          {
+            id: 8,
+            universityId: 6,
+            name: "Tecnicatura Superior en Gestión y Administración Pública",
+            type: "Ciencias Sociales",
+            duration: "3 años",
+            subjects: [
+              "Derecho Administrativo",
+              "Gestión de Recursos Humanos",
+              "Políticas Públicas",
+            ],
+            contact: "info@iest.edu.ar",
+            hasScholarship: true,
+            isUniversity: false,
+          },
+          {
+            id: 9,
+            universityId: 7,
+            name: "Profesorado en Educación Primaria",
+            type: "Ciencias Sociales",
+            duration: "4 años",
+            subjects: [
+              "Pedagogía",
+              "Práctica Docente",
+              "Psicología del Desarrollo",
+            ],
+            contact: "info@pedagogico.edu.ar",
+            hasScholarship: false,
+            isUniversity: false,
+          },
+          {
+            id: 10,
+            universityId: 1,
+            name: "Licenciatura en Enfermería",
+            type: "Medicina y Biología",
+            duration: "5 años",
+            subjects: [
+              "Salud Pública",
+              "Farmacología",
+              "Enfermería Comunitaria",
+            ],
+            contact: "enfermeria@unaf.edu.ar",
+            hasScholarship: true,
+            isUniversity: true,
+          },
+        ];
+
+        let currentView = "universities";
+        let searchTerm = "";
+        let selectedCategory = "todas";
+        let selectedType = "todas";
+
+        const universitiesContainer = document.getElementById(
+          "universitiesContainer"
+        );
+        const careersContainer = document.getElementById("careersContainer");
+        const universitiesView = document.getElementById("universities-view");
+        const careersView = document.getElementById("careers-view");
+        const searchUniInput = document.getElementById("searchUniInput");
+        const searchCareerInput = document.getElementById("searchCareerInput");
+        const categoryFilters = document.getElementById("categoryFilters");
+        const institutionTypeFilters = document.getElementById(
+          "institutionTypeFilters"
+        );
+
+        function renderUniversities() {
+          universitiesContainer.innerHTML = "";
+          const filtered = universities.filter(
+            (uni) =>
+              uni.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              uni.location.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          if (filtered.length === 0) {
+            universitiesContainer.innerHTML = `
+                        <div class="col-span-full text-center py-12" data-aos="fade-up">
+                            <div class="text-gray-500 text-lg">
+                                <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
+                                <p>No se encontraron universidades que coincidan con los criterios de búsqueda.</p>
+                            </div>
+                        </div>
+                    `;
+            return;
+          }
+          filtered.forEach((uni) => {
+            const card = document.createElement("div");
+            card.className =
+              "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden card flex flex-col";
+            card.innerHTML = `
+                        <img src="${uni.image}" alt="Logo de ${uni.name}" class="university-logo">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
+                            <p class="text-sm text-gray-500 mb-4"><i class="fas fa-map-marker-alt text-impulso-teal mr-2"></i>${uni.location}</p>
+                            <p class="text-gray-600 flex-grow">${uni.description}</p>
+                            <a href="" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                        </div>
+                    `;
+            universitiesContainer.appendChild(card);
+          });
         }
 
-        filtered.forEach((uni) => {
-          const card = document.createElement("div");
-          card.className =
-            "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden university-card hover:shadow-2xl transition-all flex flex-col";
-          card.innerHTML = `
-          <img src="${uni.image}" alt="${uni.name}" class="w-full h-48 object-contain bg-white">
-          <div class="p-6 flex flex-col flex-grow">
-            <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
-            <p class="text-sm text-gray-500 mb-4"><i class="fas fa-map-marker-alt text-impulso-teal mr-2"></i>${uni.location}</p>
-            <p class="text-gray-600 flex-grow">${uni.description}</p>
-            <a href="#" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
-          </div>
-        `;
-          container.appendChild(card);
-        });
-      }
-
-      // Manejo de la búsqueda
-      document.getElementById("searchInput").addEventListener("input", (e) => {
-        searchTerm = e.target.value;
-        renderUniversities();
-      });
-
-      // Manejo de los filtros por categoría
-      document
-        .getElementById("categoryFilters")
-        .addEventListener("click", (e) => {
-          const button = e.target.closest("button");
-          if (!button) return;
-
-          // Quita la clase 'category-active' de todos los botones
-          document.querySelectorAll(".category-btn").forEach((btn) => {
-            btn.classList.remove("category-active");
-            btn.classList.remove(
-              "bg-gradient-to-r",
-              "from-impulso-teal",
-              "to-impulso-green"
+        function renderCareers() {
+          careersContainer.innerHTML = "";
+          const filtered = careers.filter((career) => {
+            const university = universities.find(
+              (uni) => uni.id === career.universityId
             );
-            btn.classList.add("bg-gray-100", "text-gray-700");
-            btn
-              .querySelector(".filter-icon")
-              .classList.add("text-impulso-dark");
-            btn.querySelector(".filter-icon").classList.remove("text-white");
+            if (!university) return false;
+            const matchesCategory =
+              selectedCategory === "todas" || career.type === selectedCategory;
+            const matchesType =
+              selectedType === "todas" ||
+              (selectedType === "universitarias" && career.isUniversity) ||
+              (selectedType === "no-universitarias" && !career.isUniversity);
+            const matchesSearch =
+              career.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              university.name
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+              career.type.toLowerCase().includes(searchTerm.toLowerCase());
+            return matchesCategory && matchesType && matchesSearch;
+          });
+          if (filtered.length === 0) {
+            careersContainer.innerHTML = `
+                        <div class="col-span-full text-center py-12" data-aos="fade-up">
+                            <div class="text-gray-500 text-lg">
+                                <i class="fas fa-exclamation-triangle text-impulso-gold mb-2"></i>
+                                <p>No se encontraron carreras que coincidan con los criterios de búsqueda.</p>
+                            </div>
+                        </div>
+                    `;
+            return;
+          }
+          filtered.forEach((career) => {
+            const university = universities.find(
+              (uni) => uni.id === career.universityId
+            );
+            const card = document.createElement("div");
+            card.className =
+              "bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden card flex flex-col";
+            card.innerHTML = `
+                        <img src="${university.image}" alt="Logo de ${
+              university.name
+            }" class="university-logo">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h4 class="text-2xl font-bold text-impulso-dark mb-2">${
+                              career.name
+                            }</h4>
+                            <p class="text-sm text-gray-500 mb-2"><i class="fas fa-university text-impulso-teal mr-2"></i>${
+                              university.name
+                            }</p>
+                            <p class="text-sm text-gray-500 mb-2"><i class="fas fa-map-marker-alt text-impulso-teal mr-2"></i>${
+                              university.location
+                            }</p>
+                            <div class="flex-grow">
+                                <p class="text-gray-600 mb-1"><strong class="font-semibold text-impulso-dark">Área:</strong> ${
+                                  career.type
+                                }</p>
+                                <p class="text-gray-600 mb-1"><strong class="font-semibold text-impulso-dark">Duración:</strong> ${
+                                  career.duration
+                                }</p>
+                                <p class="text-gray-600 mb-1"><strong class="font-semibold text-impulso-dark">Beca:</strong> ${
+                                  career.hasScholarship ? "Sí" : "No"
+                                }</p>
+                                <p class="text-gray-600 mb-1"><strong class="font-semibold text-impulso-dark">Contacto:</strong> <a href="mailto:${
+                                  career.contact
+                                }" class="text-blue-500 hover:underline">${
+              career.contact
+            }</a></p>
+                                <div class="mt-3">
+                                    <strong class="font-semibold text-impulso-dark">Materias clave:</strong>
+                                    <ul class="list-disc list-inside text-gray-600 ml-4">
+                                        ${career.subjects
+                                          .map(
+                                            (subject) => `<li>${subject}</li>`
+                                          )
+                                          .join("")}
+                                    </ul>
+                                </div>
+                            </div>
+                            <a href="#" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                        </div>
+                    `;
+            careersContainer.appendChild(card);
+          });
+        }
+
+        function switchView(view) {
+          currentView = view;
+          if (view === "universities") {
+            universitiesView.classList.remove("hidden");
+            careersView.classList.add("hidden");
+            searchUniInput.value = "";
+            searchTerm = "";
+            renderUniversities();
+          } else {
+            universitiesView.classList.add("hidden");
+            careersView.classList.remove("hidden");
+            searchCareerInput.value = "";
+            searchTerm = "";
+            renderCareers();
+          }
+        }
+
+        document
+          .getElementById("universities-tab-btn")
+          .addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((btn) => btn.classList.remove("active-btn"));
+            document
+              .getElementById("universities-tab-btn")
+              .classList.add("active-btn");
+            switchView("universities");
           });
 
-          // Añade la clase 'category-active' al botón clickeado
-          button.classList.add("category-active");
-          button.classList.remove("bg-gray-100", "text-gray-700");
-          button.classList.add(
-            "bg-gradient-to-r",
-            "from-impulso-teal",
-            "to-impulso-green",
-            "text-white"
-          );
+        document
+          .getElementById("careers-tab-btn")
+          .addEventListener("click", () => {
+            document
+              .querySelectorAll(".tab-btn")
+              .forEach((btn) => btn.classList.remove("active-btn"));
+            document
+              .getElementById("careers-tab-btn")
+              .classList.add("active-btn");
+            switchView("careers");
+          });
+
+        searchUniInput.addEventListener("input", (e) => {
+          searchTerm = e.target.value;
+          renderUniversities();
+        });
+
+        searchCareerInput.addEventListener("input", (e) => {
+          searchTerm = e.target.value;
+          renderCareers();
+        });
+
+        categoryFilters.addEventListener("click", (e) => {
+          const button = e.target.closest("button");
+          if (!button) return;
+          document
+            .querySelectorAll("#categoryFilters .filter-btn")
+            .forEach((btn) => {
+              btn.classList.remove("active-btn");
+              btn.querySelector(".filter-icon").classList.remove("text-white");
+              btn
+                .querySelector(".filter-icon")
+                .classList.add("text-impulso-dark");
+            });
+          button.classList.add("active-btn");
           button.querySelector(".filter-icon").classList.add("text-white");
           button
             .querySelector(".filter-icon")
             .classList.remove("text-impulso-dark");
-
           selectedCategory = button.dataset.category;
-          renderUniversities();
+          renderCareers();
         });
 
-      // Renderiza las universidades al cargar la página por primera vez
-      renderUniversities();
+        institutionTypeFilters.addEventListener("click", (e) => {
+          const button = e.target.closest("button");
+          if (!button) return;
+          document
+            .querySelectorAll("#institutionTypeFilters .filter-btn")
+            .forEach((btn) => btn.classList.remove("active-btn"));
+          button.classList.add("active-btn");
+          selectedType = button.dataset.type;
+          renderCareers();
+        });
+
+        // Renderiza la vista inicial (Universidades)
+        switchView("universities");
+      });
     </script>
-    <style>
-      img {
-        border-radius: 50px;
-      }
-      .university-card:hover {
-        transform: translateY(-5px);
-        transition: transform 0.3s ease;
-      }
-      .category-btn {
-        position: relative;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        transform: scale(1);
-      }
-      .category-btn::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.5)
-        );
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      .category-btn:hover::before {
-        opacity: 1;
-      }
-      .category-active {
-        background: linear-gradient(135deg, #14a085, #0d7377);
-        color: white !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transform: scale(1.02);
-      }
-      .category-active .filter-icon {
-        color: white;
-      }
-      .category-btn-content {
-        position: relative;
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-      }
-    </style>
   </body>
 </html>
