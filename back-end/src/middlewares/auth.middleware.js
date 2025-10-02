@@ -1,16 +1,33 @@
-import { verificarToken } from "../helpers/jwt.helper.js";
+import jwt from "jsonwebtoken";
+import { UserModel } from "../models/user.model.js";
 
-export const verificarUsuario = (req, res, next) => {
-  const token = req.cookies.token;
-  if (!token)
-    return res.status(401).json({ mensaje: "No hay token, acceso denegado." });
+export const verificarUsuario = async (req, res, next) => {
+  try {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-  const datos = verificarToken(token);
-  if (!datos)
+    if (!token) {
+      return res
+        .status(401)
+        .json({ mensaje: "No hay token, acceso denegado." });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const usuario = await UserModel.findByPk(decoded.id);
+
+    if (!usuario) {
+      return res.status(401).json({ mensaje: "Usuario no válido." });
+    }
+
+    req.usuario = {
+      id: usuario.id,
+      type: usuario.type,
+      email: usuario.email,
+    };
+
+    next();
+  } catch (error) {
     return res.status(403).json({ mensaje: "Token inválido o expirado." });
-
-  req.usuario = datos;
-  next();
+  }
 };
 
 export const soloUniversidad = (req, res, next) => {
@@ -28,7 +45,7 @@ export const soloUniversidad = (req, res, next) => {
 };
 
 export const soloEstudiante = (req, res, next) => {
-  if (req.usuario.tipo !== "estudiante") {
+  if (req.usuario.type !== "estudiante") {
     return res
       .status(403)
       .json({ mensaje: "Solo estudiantes pueden acceder." });

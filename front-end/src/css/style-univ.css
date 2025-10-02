@@ -1,0 +1,98 @@
+/* ===== Estilos Generales ===== */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #f0fdfa, #e6fffa, #f0f9ff);
+  color: #0a5d61;
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+
+/* ===== Header ===== */
+.univ-header {
+  background: linear-gradient(135deg, #0d7377, #14a085);
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.univ-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* ===== Contenedor ===== */
+.univ-container {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: #ffffffcc; /* blanco semi-transparente */
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Títulos de secciones ===== */
+.univ-container h2 {
+  color: #0d7377;
+  font-size: 1.7rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  border-left: 6px solid #14a085;
+  padding-left: 12px;
+  font-weight: bold;
+}
+
+/* ===== Párrafos ===== */
+.univ-container p {
+  margin: 0.8rem 0;
+  color: #333;
+}
+
+/* ===== Listas ===== */
+.univ-container ul {
+  margin: 1rem 0 1.5rem 1.5rem;
+  padding: 0;
+}
+
+.univ-container li {
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.8rem;
+  background: #f0fdfa;
+  border-left: 4px solid #0d7377;
+  border-radius: 6px;
+  color: #0a5d61;
+  font-weight: 500;
+}
+
+/* ===== Botón volver ===== */
+.btn-volver {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #0d7377;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+  background: #14a085;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Footer ===== */
+.univ-footer {
+  background: #0a5d61;
+  color: #fff;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 3rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}

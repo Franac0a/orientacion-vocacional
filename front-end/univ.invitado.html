@@ -589,6 +589,7 @@
             description:
               "UNaF, Universidad Nacional de Formosa, ofrece 36 títulos oficiales para estudiar en Argentina. líder en investigación científica y desarrollo tecnológico.",
             image: "src/img/unaf.jpg",
+            link: "univ-unaf.html",
 
             isUniversity: true,
           },
@@ -599,6 +600,7 @@
             description:
               "Ofrece tecnicaturas superiores especializadas en áreas de alta tecnología y con salida laboral, como mecatrónica y desarrollo de software",
             image: "src/img/ipf.jpg",
+            link: "univ-ipf.html",
             isUniversity: false,
           },
           {
@@ -608,6 +610,7 @@
             description:
               "Una universidad privada con una amplia oferta académica en el Nordeste Argentino, que incluye carreras en áreas de ciencias sociales, salud, ingeniería y derecho.",
             image: "src/img/cuenca.jpg",
+            link: "univ-cuenca.html",
             isUniversity: true,
           },
           {
@@ -617,6 +620,7 @@
             description:
               "La UTN es la única universidad en Argentina con un enfoque prioritario en la ingeniería. Su sede regional en Formosa ofrece tecnicaturas y licenciaturas con alta salida laboral, contribuyendo al desarrollo tecnológico local",
             image: "src/img/logo-utn.jpg",
+            link: "univ-utn.html",
 
             isUniversity: true,
           },
@@ -627,24 +631,7 @@
             description:
               "Institución pionera en la educación terciaria privada en Formosa, con una fuerte oferta en carreras técnicas como Analista de Sistemas de Información y profesorados.",
             image: "src/img/macedo.jpg",
-            isUniversity: false,
-          },
-          {
-            id: 6,
-            name: "Instituto de Educación Superior y Técnica",
-            location: "Formosa, Formosa",
-            description:
-              "Ofrece formación técnica y superior en diversas áreas de alta demanda en el mercado laboral local y regional.",
-            image: "src/img/iest.jpg",
-            isUniversity: false,
-          },
-          {
-            id: 7,
-            name: "Instituto Pedagógico Superior de Formosa",
-            location: "Formosa, Formosa",
-            description:
-              "Institución dedicada a la formación de docentes para los niveles inicial, primario y secundario, con un fuerte enfoque en la práctica pedagógica.",
-            image: "src/img/pedagogico.jpg",
+            link: "univ-macedo.html",
             isUniversity: false,
           },
         ];
@@ -840,7 +827,7 @@
                             <h4 class="text-2xl font-bold text-impulso-dark mb-2">${uni.name}</h4>
                             <p class="text-sm text-gray-500 mb-4"><i class="fas fa-map-marker-alt text-impulso-teal mr-2"></i>${uni.location}</p>
                             <p class="text-gray-600 flex-grow">${uni.description}</p>
-                            <a href="" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
+                            <a href="${uni.link}" class="mt-4 inline-block text-impulso-teal hover:text-impulso-green transition-colors font-medium">Más información <i class="fas fa-arrow-right ml-1 text-xs"></i></a>
                         </div>
                     `;
             universitiesContainer.appendChild(card);

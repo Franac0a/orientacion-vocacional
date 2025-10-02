@@ -2,9 +2,9 @@ import { Router } from "express";
 import { register, login, logout } from "../controllers/auth.controller.js";
 import { body } from "express-validator";
 
-const router = Router();
+export const authRoutes = Router();
 
-router.post(
+authRoutes.post(
   "/register",
   [
     body("name").notEmpty().withMessage("El nombre es obligatorio."),
@@ -19,7 +19,7 @@ router.post(
   register
 );
 
-router.post(
+authRoutes.post(
   "/login",
   [
     body("email").isEmail().withMessage("Email inválido."),
@@ -28,6 +28,4 @@ router.post(
   login
 );
 
-router.post("/logout", logout);
-
-export default router;
+authRoutes.post("/logout", logout);
