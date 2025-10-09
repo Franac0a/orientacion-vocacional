@@ -4,4 +4,8 @@ import { verificarUsuario } from "../middlewares/auth.middleware.js";
 
 export const testResultadoRoutes = Router();
 
-testResultadoRoutes.post("/test-result", verificarUsuario, guardarResultado);
+testResultadoRoutes.post(
+  "/save-mbti-result",
+  verificarUsuario,
+  guardarResultado
+);

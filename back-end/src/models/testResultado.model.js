@@ -9,6 +9,11 @@ export const TestResultModel = sequelize.define(
       type: DataTypes.STRING(10),
       allowNull: false,
     },
+    mbtiType: {
+      // ¡Asegúrate de incluir este campo!
+      type: DataTypes.STRING(10),
+      allowNull: true, // Puede ser nulo si el usuario aún no ha hecho el test
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,

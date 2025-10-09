@@ -1,20 +1,39 @@
 import { UserModel } from "../models/user.model.js";
 
-export const getProfile = async (req, res) => {
+export const obtenerPerfil = async (req, res) => {
   try {
-    const usuario = await UserModel.findByPk(req.usuario.id, {
-      attributes: { exclude: ["password"] },
+    // El ID del usuario se adjuntó al objeto req por el middleware verificarUsuario
+    const userId = req.usuario.id;
+
+    // Buscar el usuario por ID
+    const usuario = await UserModel.findByPk(userId, {
+      // Opcional: Excluye datos sensibles como la contraseña
+      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
     });
 
-    if (!usuario)
-      return res.status(404).json({ mensaje: "Usuario no encontrado." });
+    if (!usuario) {
+      return res
+        .status(404)
+        .json({ error: "Perfil de usuario no encontrado." });
+    }
 
-    res.status(200).json({ usuario });
+    // Devolver los datos del perfil
+    return res.status(200).json({
+      mensaje: "Datos de perfil obtenidos correctamente",
+      perfil: {
+        id: usuario.id,
+        email: usuario.email,
+        type: usuario.type,
+        // ¡Este es el dato que queremos mostrar!
+        mbtiType: usuario.mbtiType,
+        // ...otros campos
+      },
+    });
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener el perfil.", error });
+    console.error("Error al obtener el perfil:", error);
+    return res.status(500).json({ mensaje: "Error interno del servidor." });
   }
 };
-
 export const getAllUsers = async (req, res) => {
   try {
     const usuarios = await UserModel.findAll({

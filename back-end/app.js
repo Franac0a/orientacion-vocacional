@@ -30,7 +30,7 @@ app.use("/api", testResultadoRoutes);
 
 // Sincronización de modelos con la base de datos
 sequelize
-  .sync({ force: false }) // Cambialo a { force: true } si querés reiniciar la DB
+  .sync({ force: false })
   .then(() => {
     console.log("🟢 Base de datos sincronizada correctamente.");
     const PORT = process.env.PORT || 3000;
