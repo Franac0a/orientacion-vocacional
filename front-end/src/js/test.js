@@ -1,5 +1,6 @@
 // Inicializa AOS (Animate On Scroll)
 AOS.init();
+// **Este código es un ejemplo para tu lógica de login/autenticación**
 
 // --- Variables y Selectores ---
 const mobileMenuBtn = document.getElementById("mobile-menu-btn");
