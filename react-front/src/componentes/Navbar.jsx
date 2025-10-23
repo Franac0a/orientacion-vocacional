@@ -85,7 +85,7 @@ export const Navbar = () => {
 
             <div
               id="logged-in-nav"
-              style="display: none"
+              style={{ display: "none" }}
               className="relative group"
             >
               <button className="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
@@ -167,7 +167,7 @@ export const Navbar = () => {
           </div>
           <div
             id="logged-in-mobile"
-            style="display: none"
+            style={{ display: "none" }}
             className="pt-3 space-y-2"
           >
             <a
