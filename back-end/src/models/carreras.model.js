@@ -5,25 +5,43 @@ import { UniversidadModel } from "./universidades.model.js";
 export const CarreraModel = sequelize.define(
   "Carrera",
   {
-    name: {
+    nombre: {
       type: DataTypes.STRING(150),
       allowNull: false,
     },
-    description: {
+    descripcion: {
       type: DataTypes.TEXT,
     },
-    duration: {
-      type: DataTypes.STRING(50),
+    tipo: {
+      type: DataTypes.ENUM("Grado", "Tecnicatura", "Posgrado"),
+      allowNull: false,
     },
-    modality: {
-      type: DataTypes.ENUM("presencial", "virtual", "mixta"),
+    area_estudio: {
+      type: DataTypes.ENUM(
+        "Tecnología",
+        "Salud",
+        "Humanidades",
+        "Artes",
+        "Ciencias Exactas",
+        "Ciencias Sociales"
+      ),
+      allowNull: false,
     },
+    duracion_anios: {
+      type: DataTypes.INTEGER,
+    },
+    perfiles_mbti_compatibles: {
+      type: DataTypes.JSON, // Guardará un array, ej: ["INTJ", "INTP"]
+    },
+    // 'universidadId' (la llave foránea) se crea automáticamente
   },
   {
     timestamps: true,
   }
 );
 
-// Relaciones
-CarreraModel.belongsTo(UniversidadModel, { foreignKey: "universityId" });
-UniversidadModel.hasMany(CarreraModel, { foreignKey: "universityId" });
+// --- Relaciones ---
+// Una Carrera pertenece a una Universidad
+CarreraModel.belongsTo(UniversidadModel, { foreignKey: "universidadId" });
+// Una Universidad tiene muchas Carreras
+UniversidadModel.hasMany(CarreraModel, { foreignKey: "universidadId" });
