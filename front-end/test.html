@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- ... (tu head sigue igual) ... -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test de Personalidad - Impulso Educativo</title>
+    <!-- Título actualizado -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -27,6 +29,13 @@
               "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
               "bounce-slow": "bounce 3s infinite",
               gradient: "gradient 15s ease infinite",
+              "fade-in": "fade-in 0.5s ease-out forwards",
+            },
+            keyframes: {
+              "fade-in": {
+                from: { opacity: 0, transform: "translateY(10px)" },
+                to: { opacity: 1, transform: "translateY(0)" },
+              },
             },
           },
         },
@@ -41,6 +50,22 @@
       }
       .question-container.active {
         display: block;
+        animation: fade-in 0.5s ease-out forwards; /* Animación al mostrar */
+      }
+      /* Estilos para el loader y las tarjetas */
+      .loader {
+        @apply w-12 h-12 border-4 border-impulso-teal border-t-transparent rounded-full animate-spin;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+      }
+      /* Estilo para separar secciones del test */
+      .section-divider {
+        @apply my-6 border-t-2 border-dashed border-gray-300;
+      }
+      .section-title {
+        @apply text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center;
       }
     </style>
   </head>
@@ -48,10 +73,12 @@
   <body
     class="overflow-x-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 min-h-screen flex flex-col"
   >
+    <!-- === NAVBAR === -->
     <nav
       class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
       id="navbar"
     >
+      <!-- ... (Tu navbar completo aquí) ... -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center space-x-3">
@@ -102,12 +129,13 @@
               >Contacto</a
             >
             <a
-              href="univ.invitado.html"
+              href="explorador.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
             >
               Explorá</a
             >
             <div class="flex items-center space-x-3" id="auth-buttons">
+              <!-- El script reemplazará esto según el login -->
               <a
                 href="login.html"
                 class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
@@ -150,7 +178,14 @@
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Contacto</a
           >
+          <a
+            href="explorador.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+          >
+            Explorá</a
+          >
           <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <!-- El script reemplazará esto según el login -->
             <a
               href="login.html"
               class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
@@ -168,10 +203,13 @@
       </div>
     </nav>
 
-    <main class="flex-grow flex items-center justify-center p-4 pt-24 md:pt-16">
+    <!-- === MAIN === -->
+    <main class="flex-grow flex items-center justify-center p-4 pt-24 md:pt-32">
+      <!-- Sección de Login (sin cambios) -->
       <div
         id="loginSection"
         class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md hidden"
+        data-aos="fade-up"
       >
         <div
           class="bg-gradient-to-r from-impulso-green to-impulso-teal py-8 px-8 text-center"
@@ -216,9 +254,10 @@
         </div>
       </div>
 
+      <!-- Sección del Test -->
       <div
         id="testSection"
-        class="w-full max-w-4xl bg-white rounded-xl shadow-xl p-8 hidden"
+        class="w-full max-w-4xl bg-white rounded-xl shadow-xl p-6 md:p-8 hidden"
         data-aos="fade-up"
       >
         <div class="text-center mb-8">
@@ -226,17 +265,18 @@
             Test de Personalidad
           </h2>
           <p class="text-gray-600 mt-2">
-            Responde estas preguntas para descubrir tus intereses y posibles
-            carreras.
+            Responde estas preguntas para descubrir tu perfil de personalidad.
           </p>
         </div>
 
+        <!-- Barra de Progreso -->
         <div class="mb-6">
           <div class="progress-top text-right text-sm text-gray-600 mb-2">
             <span
               ><strong>Progreso:</strong>
               <span id="progressText">1 / 16</span></span
             >
+            <!-- Asumiendo 16 preguntas -->
           </div>
           <div class="w-full bg-gray-200 rounded-full h-2.5">
             <div
@@ -247,8 +287,16 @@
           </div>
         </div>
 
+        <!-- Formulario del Test -->
         <form id="testForm">
-          <div class="question-container active" data-type="E" data-pair="I">
+          <!-- === PREGUNTAS MBTI (1-16) === -->
+          <!-- (Asegúrate de tener tus 16 preguntas aquí con data-section="mbti") -->
+          <div
+            class="question-container active"
+            data-section="mbti"
+            data-mbti-type="E"
+            data-mbti-pair="I"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 1. En eventos sociales, suelo…
@@ -256,33 +304,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q1"
                     value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Hablar con gente nueva</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Hablar con gente nueva</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q1"
                     value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Quedarme con pocos conocidos</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="E" data-pair="I">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="E"
+            data-mbti-pair="I"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 2. Me recargo de energía cuando…
@@ -290,31 +340,33 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q2"
                     value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Estoy con otros</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Estoy con otros</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q2"
                     value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Estoy a solas</span>
-                </label>
+                  /><span class="ml-3 text-gray-700">Estoy a solas</span></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="E" data-pair="I">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="E"
+            data-mbti-pair="I"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 3. Prefiero aprender…
@@ -322,31 +374,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q3"
                     value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Conversando en grupo</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Conversando en grupo</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q3"
                     value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Leyendo/reflexionando</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Leyendo/reflexionando</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="E" data-pair="I">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="E"
+            data-mbti-pair="I"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 4. En clase o reuniones, yo…
@@ -354,34 +410,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q4"
                     value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Participo espontáneamente</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q4"
                     value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Pienso antes de hablar</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Pienso antes de hablar</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-
-          <div class="question-container" data-type="S" data-pair="N">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="S"
+            data-mbti-pair="N"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 5. Me centro más en…
@@ -389,31 +446,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q5"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Hechos concretos</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Hechos concretos</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q5"
                     value="N"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Posibilidades e ideas</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Posibilidades e ideas</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="S" data-pair="N">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="S"
+            data-mbti-pair="N"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 6. Al aprender, prefiero…
@@ -421,35 +482,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q6"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Pasos claros y ejemplos</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q6"
                     value="N"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Ver el panorama general</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="S" data-pair="N">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="S"
+            data-mbti-pair="N"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 7. En proyectos, me siento cómodo…
@@ -457,35 +518,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q7"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Siguiendo procedimientos</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q7"
                     value="N"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Innovando caminos nuevos</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="S" data-pair="N">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="S"
+            data-mbti-pair="N"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 8. Descripciones que me atraen…
@@ -493,34 +554,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q8"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Precisas y detalladas</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Precisas y detalladas</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q8"
                     value="N"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Metafóricas y creativas</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-
-          <div class="question-container" data-type="T" data-pair="F">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="T"
+            data-mbti-pair="F"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 9. Al decidir, priorizo…
@@ -528,33 +590,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q9"
                     value="T"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Lógica y criterios</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Lógica y criterios</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q9"
                     value="F"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Impacto en las personas</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="T" data-pair="F">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="T"
+            data-mbti-pair="F"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 10. En discusiones, busco…
@@ -562,31 +626,33 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q10"
                     value="T"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Ser objetivo</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700">Ser objetivo</span></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q10"
                     value="F"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Mantener la armonía</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Mantener la armonía</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="T" data-pair="F">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="T"
+            data-mbti-pair="F"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 11. Feedback ideal…
@@ -594,31 +660,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q11"
                     value="T"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Directo y sincero</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Directo y sincero</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q11"
                     value="F"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Cuidadoso y empático</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Cuidadoso y empático</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="T" data-pair="F">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="T"
+            data-mbti-pair="F"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 12. Me motiva más…
@@ -626,32 +696,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q12"
                     value="T"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Lograr objetivos</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Lograr objetivos</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q12"
                     value="F"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Ayudar a otros</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Ayudar a otros</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-
-          <div class="question-container" data-type="J" data-pair="P">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="J"
+            data-mbti-pair="P"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 13. Mi organización…
@@ -659,35 +732,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q13"
                     value="J"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Planificada y con agenda</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q13"
                     value="P"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Flexible y sobre la marcha</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="J" data-pair="P">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="J"
+            data-mbti-pair="P"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 14. Un lugar de trabajo ideal…
@@ -695,35 +768,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q14"
                     value="J"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Tiene estructura y orden</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q14"
                     value="P"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Es flexible y adaptable</span
-                  >
-                </label>
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="J" data-pair="P">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="J"
+            data-mbti-pair="P"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 15. ¿Qué te hace sentir más cómodo?
@@ -731,31 +804,35 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q15"
                     value="J"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700">Terminar una tarea</span>
-                </label>
-                <label
+                  /><span class="ml-3 text-gray-700"
+                    >Terminar una tarea</span
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q15"
                     value="P"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Empezar una nueva</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Empezar una nueva</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="question-container" data-type="J" data-pair="P">
+          <div
+            class="question-container"
+            data-section="mbti"
+            data-mbti-type="J"
+            data-mbti-pair="P"
+          >
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
                 16. Mi rutina…
@@ -763,33 +840,32 @@
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q16"
                     value="J"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  />
-                  <span class="ml-3 text-gray-700"
+                  /><span class="ml-3 text-gray-700"
                     >Me ayuda a sentirme productivo</span
-                  >
-                </label>
-                <label
+                  ></label
+                ><label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                >
-                  <input
+                  ><input
                     type="radio"
                     name="q16"
                     value="P"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  />
-                  <span class="ml-3 text-gray-700">Me siento limitado</span>
-                </label>
+                  /><span class="ml-3 text-gray-700"
+                    >Me siento limitado</span
+                  ></label
+                >
               </div>
             </div>
           </div>
-          <div class="text-center">
+
+          <!-- Botones de Navegación -->
+          <div class="text-center mt-8">
             <button
               id="next-btn"
               type="button"
@@ -800,39 +876,100 @@
             <button
               id="submit-btn"
               type="button"
-              class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
+              class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md hidden"
             >
               <i class="fas fa-check-circle mr-2"></i>Ver Mis Resultados
             </button>
           </div>
         </form>
 
+        <!-- Sección de Resultados (Solo MBTI) -->
         <div
           id="resultSection"
-          class="hidden text-center mt-8 p-6 bg-white rounded-lg shadow-inner border-t-4 border-impulso-teal"
+          class="hidden mt-8 p-6 bg-white rounded-lg shadow-inner border-t-4 border-impulso-teal"
+          data-aos="fade-up"
         >
-          <h3 class="text-2xl font-bold text-impulso-dark mb-4">
+          <h3 class="text-2xl font-bold text-impulso-dark mb-4 text-center">
             Tus Resultados
           </h3>
-          <p
-            id="mbtiResult"
-            class="text-4xl font-extrabold text-impulso-teal mb-4"
+          <div class="mb-6 pb-6 border-b border-gray-200">
+            <h4
+              class="text-xl font-semibold text-impulso-dark mb-2 text-center"
+            >
+              Perfil de Personalidad (MBTI)
+            </h4>
+            <p
+              id="mbtiResult"
+              class="text-4xl font-extrabold text-impulso-teal mb-3 text-center"
+            >
+              [Tipo MBTI]
+            </p>
+            <p id="mbtiDescription" class="text-gray-700 text-center"></p>
+          </div>
+        </div>
+
+        <!-- Sección de Recomendaciones -->
+        <div
+          id="recommendationsSection"
+          class="hidden mt-12"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <hr class="my-8 border-gray-300" />
+          <h3 class="text-2xl font-bold text-impulso-dark mb-6 text-center">
+            <i class="fas fa-star text-impulso-gold mr-2"></i> Carreras
+            Recomendadas (Basado en MBTI)
+          </h3>
+          <div
+            id="loading-spinner-rec"
+            class="flex justify-center py-12 hidden"
           >
-            [Tipo MBTI]
-          </p>
-          <p id="mbtiDescription" class="text-gray-700 mb-4"></p>
-          <h4 class="text-xl font-semibold text-impulso-dark mb-2">
-            Carreras Sugeridas:
-          </h4>
-          <ul
-            id="careerList"
-            class="list-disc list-inside text-gray-600 text-left mx-auto max-w-lg"
-          ></ul>
+            <div class="loader"></div>
+          </div>
+          <div
+            id="error-message-rec"
+            class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg my-6"
+            role="alert"
+          >
+            <strong class="font-bold">¡Error!</strong>
+            <span class="block sm:inline" id="error-text-rec"
+              >No se pudieron cargar las recomendaciones.</span
+            >
+          </div>
+          <div
+            id="no-results-message-rec"
+            class="hidden text-center text-gray-500 py-12"
+          >
+            <i class="fas fa-box-open text-4xl mb-4 text-gray-400"></i>
+            <p class="text-lg font-semibold">
+              No se encontraron carreras recomendadas
+            </p>
+            <p>
+              Explora todas las opciones en la sección
+              <a href="explorador.html" class="text-impulso-teal underline"
+                >Explorá</a
+              >.
+            </p>
+          </div>
+          <div
+            id="recommendedCareersContainer"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-6"
+          ></div>
+          <div class="mt-8 text-center">
+            <a
+              href="explorador.html"
+              class="inline-block px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition duration-200"
+            >
+              <i class="fas fa-search mr-2"></i> Explorar Todas las Carreras
+            </a>
+          </div>
         </div>
       </div>
     </main>
 
+    <!-- === FOOTER === -->
     <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <!-- ... (Tu footer completo aquí) ... -->
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
           <div>
@@ -916,8 +1053,7 @@
       </div>
     </footer>
 
-    <!-- <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script> -->
-
+    <!-- Script se carga al final -->
     <script src="src/js/test.js"></script>
   </body>
 </html>
