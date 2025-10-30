@@ -21,6 +21,12 @@ export const UserModel = sequelize.define(
       type: DataTypes.ENUM("estudiante", "universidad"),
       allowNull: false,
     },
+    // 🔑 NUEVO CAMPO: Resultado del test MBTI
+    mbtiType: {
+      type: DataTypes.STRING(4), // EJ: 'INTJ', 'ESTP'
+      allowNull: true, // Es opcional al registrarse
+      defaultValue: null,
+    },
   },
   {
     timestamps: true,

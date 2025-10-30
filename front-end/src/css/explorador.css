@@ -1,0 +1,46 @@
+.card:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+}
+.filter-btn,
+.tab-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  transform: scale(1);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  font-weight: 500;
+}
+.filter-btn:hover,
+.tab-btn:hover {
+  background-color: #f4d03f;
+  color: white;
+}
+.tab-btn.active-btn {
+  background: linear-gradient(135deg, #14a085, #0d7377);
+  color: white !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+.university-logo {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+/* Estilo para el spinner de carga */
+.loader {
+  @apply w-12 h-12 border-4 border-impulso-teal border-t-transparent rounded-full animate-spin;
+}
+/* Estilo para los selectores de filtro */
+.filter-select {
+  @apply w-full pl-4 pr-10 py-3 text-base border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner bg-white;
+}
+.filter-label {
+  @apply block text-sm font-semibold text-impulso-dark mb-2;
+}

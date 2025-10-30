@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Impulso Educativo - Tu Futuro Comienza Aquí</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link rel="stylesheet" href="src/css/style-index.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="overflow-x-hidden bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50"
+  >
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <img
+              src="src/img/logo.jpg"
+              alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+              class="w-10 h-10 animate-pulse-slow"
+            />
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
+
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#inicio"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              id="test-link"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Test de Personalidad</a
+            >
+
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="explorador.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Explorá</a
+            >
+
+            <div id="logged-out-nav" class="flex items-center space-x-3">
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
+
+            <div
+              id="logged-in-nav"
+              style="display: none"
+              class="relative group"
+            >
+              <button
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </button>
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <div class="py-1">
+                  <a
+                    href="perfil.html"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >Mi Perfil</a
+                  >
+                  <a
+                    href="#"
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    id="logout-btn"
+                    >Cerrar Sesión</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="#inicio"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
+          >
+          <a
+            href="#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
+          >
+          <a
+            href="test.html"
+            id="mobile-test-link"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Test de Personalidad</a
+          >
+          <a
+            href="#sobre-nosotros"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="#contacto"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <a
+            href="explorador.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Explorá</a
+          >
+
+          <div id="logged-out-mobile" class="pt-3 space-y-2">
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
+            <a
+              href="registro.html"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+            >
+              Registrarse
+            </a>
+          </div>
+          <div
+            id="logged-in-mobile"
+            style="display: none"
+            class="pt-3 space-y-2"
+          >
+            <a
+              href="perfil.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+              >Mi Perfil</a
+            >
+            <a
+              href="#"
+              id="logout-mobile-btn"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+              >Cerrar Sesión</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section
+      id="inicio"
+      class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20"
+    >
+      <div class="absolute inset-0 overflow-hidden">
+        <div
+          class="absolute -top-40 -right-32 w-96 h-96 bg-impulso-light/20 rounded-full animate-float"
+        ></div>
+        <div
+          class="absolute -bottom-32 -left-40 w-80 h-80 bg-impulso-gold/20 rounded-full animate-bounce-slow"
+        ></div>
+        <div
+          class="absolute top-1/2 left-1/2 w-64 h-64 bg-impulso-teal/10 rounded-full animate-pulse-slow"
+        ></div>
+      </div>
+
+      <div class="container mx-auto px-4 z-10">
+        <div class="text-center">
+          <div class="mb-8" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="inline-block relative">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo principal de Impulso Educativo con libro abierto y birrete de graduación"
+                class="w-32 h-32 md:w-40 md:h-40 mx-auto animate-float drop-shadow-2xl"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-impulso-teal to-impulso-green opacity-20 rounded-full animate-pulse-slow"
+              ></div>
+            </div>
+          </div>
+
+          <h1
+            class="text-4xl md:text-6xl lg:text-7xl font-bold text-impulso-dark mb-6"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <span
+              class="bg-gradient-to-r from-impulso-green to-impulso-teal bg-clip-text text-transparent"
+            >
+              Impulso Educativo
+            </span>
+          </h1>
+
+          <h2
+            class="text-xl md:text-2xl lg:text-3xl text-impulso-teal mb-4"
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
+            Tu Futuro Profesional Comienza acá
+          </h2>
+
+          <p
+            class="text-lg md:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+            data-aos="fade-up"
+            data-aos-delay="600"
+          >
+            Descubrí tu verdadera vocación con nuestro sistema inteligente de
+            orientación educativa. Conectamos tus pasiones con oportunidades
+            reales del mercado laboral.
+          </p>
+
+          <div
+            class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            data-aos="fade-up"
+            data-aos-delay="800"
+          >
+            <a
+              href="registro.html"
+              class="group px-8 py-4 bg-gradient-to-r from-impulso-green to-impulso-teal text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            >
+              <i class="fas fa-user-plus mr-2 group-hover:animate-bounce"></i>
+              Comenzar Ahora
+              <i
+                class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"
+              ></i>
+            </a>
+
+            <a
+              href="login.html"
+              class="group px-8 py-4 border-2 border-impulso-teal text-impulso-teal text-lg font-semibold rounded-xl hover:bg-impulso-teal hover:text-white transition-all duration-300"
+            >
+              <i class="fas fa-sign-in-alt mr-2"></i>
+              Iniciar Sesión
+            </a>
+          </div>
+
+          <div
+            class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+            data-aos="fade-up"
+            data-aos-delay="1000"
+          >
+            <div class="text-center"></div>
+            <div class="text-center">
+              <div
+                class="text-2xl md:text-3xl font-bold text-impulso-teal mb-2"
+              >
+                98%
+              </div>
+              <div class="text-sm text-gray-600">Satisfacción</div>
+            </div>
+
+            <div class="text-center">
+              <div
+                class="text-2xl md:text-3xl font-bold text-impulso-teal mb-2"
+              >
+                24/7
+              </div>
+              <div class="text-sm text-gray-600">Soporte</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
+      >
+        <i class="fas fa-chevron-down text-impulso-teal text-2xl"></i>
+      </div>
+    </section>
+
+    <section id="servicios" class="py-20 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2
+            class="text-3xl md:text-4xl font-bold text-impulso-dark mb-4"
+            data-aos="fade-up"
+          >
+            Nuestros Servicios
+          </h2>
+          <p
+            class="text-lg text-gray-600 max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            Herramientas especializadas para guiar tu camino educativo y
+            profesional
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <div
+            class="group bg-gradient-to-br from-impulso-light/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div
+              class="bg-impulso-teal/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-brain text-impulso-teal text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-impulso-dark mb-4">
+              Test De Personalidad
+            </h3>
+            <p class="text-gray-600">
+              Descubre tus aptitudes y preferencias profesionales con nuestros
+              tests especializados y científicamente validados.
+            </p>
+          </div>
+
+          <div
+            class="group bg-gradient-to-br from-impulso-green/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+            data-aos="fade-up"
+            data-aos-delay="500"
+          >
+            <div
+              class="bg-impulso-green/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-graduation-cap text-impulso-green text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-impulso-dark mb-4">
+              Orientación Académica
+            </h3>
+            <p class="text-gray-600">
+              Recibe recomendaciones personalizadas sobre carreras
+              universitarias y técnicas que se alineen con tu perfil.
+            </p>
+          </div>
+
+          <div
+            class="group bg-gradient-to-br from-impulso-gold/10 to-impulso-teal/10 p-8 rounded-2xl hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
+            data-aos="fade-up"
+            data-aos-delay="700"
+          >
+            <div
+              class="bg-impulso-gold/20 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"
+            >
+              <i class="fas fa-chart-line text-impulso-gold text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-impulso-dark mb-4">
+              Perspectivas Laborales
+            </h3>
+            <p class="text-gray-600">
+              Conoce las tendencias del mercado laboral y las oportunidades de
+              crecimiento en diferentes sectores.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="py-20 bg-gradient-to-r from-impulso-green to-impulso-teal relative overflow-hidden"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-impulso-green/90 to-impulso-teal/90"
+      ></div>
+      <div class="container mx-auto px-4 relative z-10 text-center">
+        <h2
+          class="text-3xl md:text-4xl font-bold text-white mb-6"
+          data-aos="fade-up"
+        >
+          ¿Listo para Descubrir tu Futuro?
+        </h2>
+        <p
+          class="text-xl text-impulso-light mb-8 max-w-2xl mx-auto"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          Únete a miles de estudiantes que ya encontraron su camino con Impulso
+          Educativo
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <a
+            href="registro.html"
+            class="group px-8 py-4 bg-white text-impulso-teal text-lg font-semibold rounded-xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+          >
+            <i class="fas fa-rocket mr-2 group-hover:animate-bounce"></i>
+            Empezar Gratis
+          </a>
+          <a
+            href="#contacto"
+            class="group px-8 py-4 border-2 border-white text-white text-lg font-semibold rounded-xl hover:bg-white hover:text-impulso-teal transition-all duration-300"
+          >
+            <i class="fas fa-phone mr-2"></i>
+            Contactar
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="carreras" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-impulso-dark mb-8 text-center">
+          Carreras Disponibles
+        </h2>
+        <div
+          id="carrerasContainer"
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+        ></div>
+      </div>
+    </section>
+
+    <footer class="bg-impulso-dark text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="#inicio"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="#sobre-nosotros"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-facebook-f text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-twitter text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+              >
+                <i class="fab fa-linkedin-in text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Initialize AOS
+      AOS.init({
+        duration: 1000,
+        once: true,
+      });
+
+      // Mobile menu toggle
+      document
+        .getElementById("mobile-menu-btn")
+        .addEventListener("click", function () {
+          const menu = document.getElementById("mobile-menu");
+          menu.classList.toggle("hidden");
+        });
+
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("shadow-2xl");
+          navbar.classList.remove("shadow-lg");
+        } else {
+          navbar.classList.remove("shadow-2xl");
+          navbar.classList.add("shadow-lg");
+        }
+      });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Parallax effect for hero background elements
+      window.addEventListener("scroll", function () {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelectorAll(".animate-float");
+        const speed = 0.5;
+
+        parallax.forEach((element) => {
+          const yPos = -(scrolled * speed);
+          element.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+      });
+    </script>
+    <script>
+      // Lógica para mostrar/ocultar la barra de navegación y manejar el test vocacional
+      document.addEventListener("DOMContentLoaded", () => {
+        const loggedInNav = document.getElementById("logged-in-nav");
+        const loggedOutNav = document.getElementById("logged-out-nav");
+        const testLink = document.getElementById("test-link");
+
+        // Mobile-specific elements
+        const loggedInMobile = document.getElementById("logged-in-mobile");
+        const loggedOutMobile = document.getElementById("logged-out-mobile");
+        const testMobileLink = document.getElementById("mobile-test-link");
+
+        // Botones de cerrar sesión
+        const logoutBtn = document.getElementById("logout-btn");
+        const logoutMobileBtn = document.getElementById("logout-mobile-btn");
+
+        const usuarioLogueado = localStorage.getItem("authToken");
+
+        if (usuarioLogueado) {
+          if (loggedInNav) loggedInNav.style.display = "block";
+          if (loggedOutNav) loggedOutNav.style.display = "none";
+          if (loggedInMobile) loggedInMobile.style.display = "block";
+          if (loggedOutMobile) loggedOutMobile.style.display = "none";
+
+          if (testLink) {
+            testLink.href = "test.html";
+            testLink.onclick = null;
+          }
+          if (testMobileLink) {
+            testMobileLink.href = "test.html";
+            testMobileLink.onclick = null;
+          }
+        } else {
+          if (loggedInNav) loggedInNav.style.display = "none";
+          if (loggedOutNav) loggedOutNav.style.display = "flex";
+          if (loggedInMobile) loggedInMobile.style.display = "none";
+          if (loggedOutMobile) loggedOutMobile.style.display = "block";
+
+          const alertMessage =
+            "Para acceder al test de Personalidad, debes iniciar sesión.";
+          if (testLink) {
+            testLink.href = "login.html";
+            testLink.onclick = (e) => {
+              e.preventDefault();
+              alert(alertMessage);
+            };
+          }
+          if (testMobileLink) {
+            testMobileLink.href = "login.html";
+            testMobileLink.onclick = (e) => {
+              e.preventDefault();
+              alert(alertMessage);
+            };
+          }
+        }
+
+        const handleLogout = (e) => {
+          e.preventDefault();
+          localStorage.removeItem("authToken");
+          localStorage.removeItem("user");
+          window.location.reload();
+        };
+
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", handleLogout);
+        }
+
+        if (logoutMobileBtn) {
+          logoutMobileBtn.addEventListener("click", handleLogout);
+        }
+      });
+    </script>
+  </body>
+</html>

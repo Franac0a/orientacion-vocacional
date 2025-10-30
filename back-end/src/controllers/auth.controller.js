@@ -32,10 +32,12 @@ export const register = async (req, res) => {
       usuario: nuevoUsuario,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ mensaje: "Error en el registro.", error });
   }
 };
 
+// En tu controlador de login
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;

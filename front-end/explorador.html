@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!-- ... (tu head sigue igual) ... -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universidades y Carreras - Impulso Educativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script>
+      // Tu configuración de Tailwind (intacta)
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-green": "#0D7377",
+              "impulso-teal": "#14A085",
+              "impulso-light": "#7FCDCD",
+              "impulso-gold": "#F4D03F",
+              "impulso-dark": "#0A5D61",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "bounce-slow": "bounce 3s infinite",
+              gradient: "gradient 15s ease infinite",
+              "fade-in": "fade-in 0.5s ease-out forwards", // Añadí la animación aquí
+            },
+            keyframes: {
+              // Añadí los keyframes aquí
+              "fade-in": {
+                from: { opacity: 0, transform: "translateY(10px)" },
+                to: { opacity: 1, transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* ... (tus estilos siguen igual) ... */
+      .card:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease;
+      }
+      .filter-btn,
+      .tab-btn {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        transform: scale(1);
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        background-color: #f3f4f6;
+        color: #4b5563;
+      }
+      .filter-btn:hover,
+      .tab-btn:hover {
+        background-color: #f4d03f;
+        color: white;
+      }
+      .filter-btn::before,
+      .tab-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.5)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .filter-btn:hover::before,
+      .tab-btn:hover::before {
+        opacity: 1;
+      }
+      .tab-btn.active-btn {
+        /* Renombrado para evitar conflicto */
+        background: linear-gradient(135deg, #14a085, #0d7377);
+        color: white !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+      }
+      .active-btn .filter-icon {
+        color: white !important;
+      }
+      .btn-content {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .university-logo {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        background-color: white;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      /* Estilos del script anterior */
+      .loader {
+        @apply w-12 h-12 border-4 border-impulso-teal border-t-transparent rounded-full animate-spin;
+      }
+      .filter-select {
+        @apply w-full pl-4 pr-10 py-3 text-base border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner bg-white;
+      }
+      .filter-label {
+        @apply block text-sm font-semibold text-impulso-dark mb-2;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 overflow-x-hidden min-h-screen"
+  >
+    <!-- === TU NAVBAR === -->
+    <nav
+      class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
+      id="navbar"
+    >
+      <!-- ... (Tu navbar completo sigue aquí) ... -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-3">
+            <img
+              src="src/img/logo.jpg"
+              alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+              class="w-10 h-10 animate-pulse-slow"
+              style="border-radius: 30px"
+            />
+            <span class="text-xl font-bold text-impulso-dark"
+              >Impulso Educativo</span
+            >
+          </div>
+
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-btn"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+
+          <!-- Links del Navbar (completos) -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Inicio</a
+            >
+            <a
+              href="index.html#servicios"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Servicios</a
+            >
+            <a
+              href="test.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              id="test-link"
+              >Test de Personalidad</a
+            >
+            <a
+              href="nosotros.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Nosotros</a
+            >
+            <a
+              href="contacto.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+              >Contacto</a
+            >
+            <a
+              href="univ.invitado.html"
+              class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
+              >Explorá</a
+            >
+
+            <!-- CONTENEDOR DE BOTONES DE AUTH (ID CORREGIDO) -->
+            <div class="flex items-center space-x-3" id="auth-buttons">
+              <!-- El script de 'nosotros.html' espera encontrar estos botones por defecto -->
+              <a
+                href="login.html"
+                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
+              >
+                Iniciar Sesión
+              </a>
+              <a
+                href="registro.html"
+                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                Registrarse
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Menú Móvil (completo) -->
+        <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
+          <a
+            href="index.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Inicio</a
+          >
+          <a
+            href="index.html#servicios"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Servicios</a
+          >
+          <a
+            href="test.html"
+            class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
+            id="mobile-test-link"
+            >Test de Personalidad</a
+          >
+          <a
+            href="nosotros.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Nosotros</a
+          >
+          <a
+            href="contacto.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Contacto</a
+          >
+          <a
+            href="univ.invitado.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors border-b-2 border-impulso-teal"
+            >Explorá</a
+          >
+
+          <!-- CONTENEDOR DE BOTONES DE AUTH MÓVIL (ID CORREGIDO) -->
+          <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <!-- El script de 'nosotros.html' espera encontrar estos botones por defecto -->
+            <a
+              href="login.html"
+              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
+            >
+              Iniciar Sesión
+            </a>
+            <a
+              href="registro.html"
+              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
+            >
+              Registrarse
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Tu Header (intacto) -->
+    <header
+      class="bg-impulso-green text-white py-20 px-4 shadow-inner mt-[80px]"
+    >
+      <div class="container mx-auto text-center">
+        <h2 class="text-4xl font-extrabold mb-4 select-none tracking-wide">
+          Explorá Opciones Educativas 🎓
+        </h2>
+        <p class="text-xl max-w-2xl mx-auto font-light">
+          Descubrí universidades y carreras que se adapten a tu futuro.
+        </p>
+      </div>
+    </header>
+
+    <!-- === TU MAIN (Fusionado con mi lógica) === -->
+    <main class="container mx-auto py-8 px-4">
+      <div
+        class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 mb-8"
+      >
+        <h3
+          class="text-2xl font-semibold text-impulso-dark mb-4 select-none flex items-center gap-2"
+        >
+          <i class="fas fa-filter text-impulso-teal"></i> Opciones de Búsqueda
+        </h3>
+
+        <!-- Pestañas (Tabs) -->
+        <div class="flex space-x-4 mb-6" id="tab-controls">
+          <button id="careers-tab-btn" class="tab-btn active-btn" type="button">
+            Carreras
+          </button>
+          <button id="universities-tab-btn" class="tab-btn" type="button">
+            Universidades
+          </button>
+        </div>
+
+        <!-- Vista Universidades (¡ACTUALIZADA!) -->
+        <div id="universities-view" class="filter-section hidden">
+          <!-- ... (Vista de Universidades sin cambios) ... -->
+          <!-- Barra de búsqueda para Universidades -->
+          <div class="mb-6 relative">
+            <i
+              class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            ></i>
+            <input
+              type="text"
+              id="searchUniInput"
+              placeholder="Buscar por universidad o provincia..."
+              class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner"
+              aria-label="Buscar universidades"
+            />
+          </div>
+
+          <!-- Contenedores de estado (NUEVOS) -->
+          <div
+            id="loading-spinner-uni"
+            class="flex justify-center py-12 hidden"
+          >
+            <div class="loader"></div>
+          </div>
+          <div
+            id="error-message-uni"
+            class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"
+            role="alert"
+          >
+            <strong class="font-bold">¡Error!</strong>
+            <span class="block sm:inline" id="error-text-uni"
+              >No se pudieron cargar las universidades.</span
+            >
+          </div>
+          <div
+            id="no-results-message-uni"
+            class="hidden text-center text-gray-500 py-12"
+          >
+            <i class="fas fa-box-open text-4xl mb-4 text-gray-400"></i>
+            <p class="text-lg font-semibold">No se encontraron universidades</p>
+            <p>Intenta ajustar la búsqueda.</p>
+          </div>
+
+          <!-- Contenedor de resultados -->
+          <div
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
+            id="universitiesContainer"
+          ></div>
+        </div>
+
+        <!-- Vista Carreras (ACTUALIZADA CON FILTRO MBTI) -->
+        <div id="careers-view" class="filter-section">
+          <!-- Filtros de Búsqueda -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <!-- ... (Tus filtros select y search siguen igual) ... -->
+            <!-- Filtro de Búsqueda por Texto -->
+            <div class="md:col-span-4">
+              <div class="relative">
+                <i
+                  class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  type="text"
+                  id="searchCareerInput"
+                  placeholder="Buscar por carrera o área..."
+                  class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-transparent transition shadow-inner"
+                  aria-label="Buscar carreras"
+                />
+              </div>
+            </div>
+
+            <!-- Filtro por Área (MODIFICADO a Select) -->
+            <div>
+              <label for="filtro-area" class="filter-label"
+                >Área de Estudio</label
+              >
+              <select id="filtro-area" class="filter-select">
+                <option value="">Todas las Áreas</option>
+                <option value="Tecnología">Tecnología</option>
+                <option value="Salud">Salud</option>
+                <option value="Humanidades">Humanidades</option>
+                <option value="Artes">Artes</option>
+                <option value="Ciencias Exactas">Ciencias Exactas</option>
+                <option value="Ciencias Sociales">Ciencias Sociales</option>
+              </select>
+            </div>
+
+            <!-- Filtro por Tipo (MODIFICADO a Select) -->
+            <div>
+              <label for="filtro-tipo" class="filter-label"
+                >Tipo de Carrera</label
+              >
+              <select id="filtro-tipo" class="filter-select">
+                <option value="">Todos los Tipos</option>
+                <option value="Grado">Grado</option>
+                <option value="Tecnicatura">Tecnicatura</option>
+                <option value="Posgrado">Posgrado</option>
+              </select>
+            </div>
+
+            <!-- Filtro por Provincia (NUEVO, basado en el seeder) -->
+            <div>
+              <label for="filtro-provincia" class="filter-label"
+                >Provincia</label
+              >
+              <select id="filtro-provincia" class="filter-select">
+                <option value="">Todas las Provincias</option>
+                <option value="Formosa">Formosa</option>
+                <option value="Chaco">Chaco</option>
+                <option value="Corrientes">Corrientes</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- === INICIO: NUEVO FILTRO MBTI === -->
+          <div class="flex items-center justify-end mb-6">
+            <label for="filtro-mbti" class="flex items-center cursor-pointer">
+              <input type="checkbox" id="filtro-mbti" class="sr-only peer" />
+              <div
+                class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-impulso-light/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-impulso-teal"
+              ></div>
+              <span class="ms-3 text-sm font-medium text-gray-700"
+                >Mostrar solo mis recomendaciones</span
+              >
+            </label>
+          </div>
+          <!-- Mensaje de advertencia si no hay MBTI -->
+          <div
+            id="mbti-warning"
+            class="hidden bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6 rounded-md"
+            role="alert"
+          >
+            <p class="font-bold">¡Atención!</p>
+            <p>
+              Para ver tus recomendaciones, primero debes completar el
+              <a href="test.html" class="underline hover:text-yellow-800"
+                >Test de Personalidad</a
+              >.
+            </p>
+          </div>
+          <!-- === FIN: NUEVO FILTRO MBTI === -->
+
+          <!-- Contenedor para Resultados de Carreras -->
+          <div>
+            <!-- ... (Mensajes de carga, error y no-resultados siguen igual) ... -->
+            <!-- Mensaje de Carga -->
+            <div id="loading-spinner" class="flex justify-center py-12">
+              <div class="loader"></div>
+            </div>
+
+            <!-- Mensaje de Error -->
+            <div
+              id="error-message"
+              class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"
+              role="alert"
+            >
+              <strong class="font-bold">¡Error!</strong>
+              <span class="block sm:inline" id="error-text"
+                >No se pudieron cargar las carreras.</span
+              >
+            </div>
+
+            <!-- Mensaje de No Resultados -->
+            <div
+              id="no-results-message"
+              class="hidden text-center text-gray-500 py-12"
+            >
+              <i class="fas fa-box-open text-4xl mb-4 text-gray-400"></i>
+              <p class="text-lg font-semibold">No se encontraron carreras</p>
+              <p>Intenta ajustar los filtros de búsqueda.</p>
+            </div>
+
+            <!-- Tu contenedor de carreras -->
+            <div
+              id="careersContainer"
+              class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-6"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- === TU FOOTER === -->
+    <footer class="bg-impulso-dark text-white py-12">
+      <!-- ... (Tu footer completo sigue aquí) ... -->
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <div class="flex items-center space-x-3 mb-4">
+              <img
+                src="src/img/logo.jpg"
+                alt="Logo Impulso Educativo para footer"
+                class="w-8 h-8"
+                style="border-radius: 30px"
+              />
+              <span class="text-xl font-bold">Impulso Educativo</span>
+            </div>
+            <p class="text-impulso-light">
+              Transformando el futuro educativo, una orientación a la vez.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Enlaces Rápidos</h4>
+            <div class="space-y-2">
+              <a
+                href="index.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Inicio</a
+              >
+              <a
+                href="index.html#servicios"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Servicios</a
+              >
+              <a
+                href="nosotros.html"
+                class="block text-impulso-light hover:text-white transition-colors"
+                >Nosotros</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Contacto</h4>
+            <div class="space-y-2 text-impulso-light">
+              <p>
+                <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
+              </p>
+              <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
+              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Síguenos</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+                ><i class="fab fa-facebook-f text-xl"></i
+              ></a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+                ><i class="fab fa-twitter text-xl"></i
+              ></a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+                ><i class="fab fa-instagram text-xl"></i
+              ></a>
+              <a
+                href="#"
+                class="text-impulso-light hover:text-impulso-gold transition-colors"
+                ><i class="fab fa-linkedin-in text-xl"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-impulso-teal/30 mt-8 pt-8 text-center text-impulso-light"
+        >
+          <p>&copy; 2024 Impulso Educativo. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ======================================================= -->
+    <!-- === INICIO DEL SCRIPT DE LÓGICA (ACTUALIZADO CON MBTI) === -->
+    <!-- ======================================================= -->
+    <script>
+      // --- CONFIGURACIÓN ---
+      const API_CARRERAS_URL = "http://localhost:3000/api/carreras";
+      const API_UNIVERSIDADES_URL = "http://localhost:3000/api/universidades";
+
+      // --- SELECTORES DEL DOM ---
+      // Pestañas
+      const universitiesTabBtn = document.getElementById(
+        "universities-tab-btn"
+      );
+      const careersTabBtn = document.getElementById("careers-tab-btn");
+      const universitiesView = document.getElementById("universities-view");
+      const careersView = document.getElementById("careers-view");
+
+      // Contenedores de Carreras
+      const careersContainer = document.getElementById("careersContainer");
+      const loadingSpinner = document.getElementById("loading-spinner");
+      const errorMessage = document.getElementById("error-message");
+      const errorText = document.getElementById("error-text");
+      const noResultsMessage = document.getElementById("no-results-message");
+
+      // Filtros de Carreras
+      const searchCareerInput = document.getElementById("searchCareerInput");
+      const filtroArea = document.getElementById("filtro-area");
+      const filtroTipo = document.getElementById("filtro-tipo");
+      const filtroProvincia = document.getElementById("filtro-provincia");
+      const filtroMbtiSwitch = document.getElementById("filtro-mbti"); // <-- NUEVO SELECTOR
+      const mbtiWarning = document.getElementById("mbti-warning"); // <-- NUEVO SELECTOR
+
+      // Selectores de Universidades
+      const universitiesContainer = document.getElementById(
+        "universitiesContainer"
+      );
+      const loadingSpinnerUni = document.getElementById("loading-spinner-uni");
+      const errorMessageUni = document.getElementById("error-message-uni");
+      const errorTextUni = document.getElementById("error-text-uni");
+      const noResultsMessageUni = document.getElementById(
+        "no-results-message-uni"
+      );
+      const searchUniInput = document.getElementById("searchUniInput");
+
+      // Navbar y Auth
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      // --- LÓGICA DE PESTAÑAS (TABS) ---
+      const switchToCareers = () => {
+        careersView.classList.remove("hidden");
+        universitiesView.classList.add("hidden");
+        careersTabBtn.classList.add("active-btn");
+        universitiesTabBtn.classList.remove("active-btn");
+        fetchCarreras();
+      };
+
+      const switchToUniversities = () => {
+        universitiesView.classList.remove("hidden");
+        careersView.classList.add("hidden");
+        universitiesTabBtn.classList.add("active-btn");
+        careersTabBtn.classList.remove("active-btn");
+        fetchUniversidades();
+      };
+
+      // --- FUNCIÓN PRINCIPAL: OBTENER CARRERAS (ACTUALIZADA CON MBTI) ---
+      let debounceTimerCarreras;
+      const fetchCarreras = () => {
+        clearTimeout(debounceTimerCarreras);
+        debounceTimerCarreras = setTimeout(async () => {
+          loadingSpinner.classList.remove("hidden");
+          errorMessage.classList.add("hidden");
+          noResultsMessage.classList.add("hidden");
+          mbtiWarning.classList.add("hidden"); // Ocultar advertencia por defecto
+          careersContainer.innerHTML = "";
+
+          // Obtener valores de filtros
+          const search = searchCareerInput.value;
+          const area = filtroArea.value;
+          const tipo = filtroTipo.value;
+          const provincia = filtroProvincia.value;
+          const filtrarPorMbti = filtroMbtiSwitch.checked; // <-- Leer el estado del switch
+          const userMbti = localStorage.getItem("userMbti"); // <-- Leer MBTI guardado
+
+          // Construir parámetros de URL
+          const params = new URLSearchParams();
+          if (search) params.append("search", search);
+          if (area) params.append("area", area);
+          if (tipo) params.append("tipo", tipo);
+          if (provincia) params.append("provincia", provincia);
+
+          // --- LÓGICA DEL FILTRO MBTI ---
+          if (filtrarPorMbti) {
+            if (userMbti) {
+              params.append("mbti", userMbti); // <-- AÑADIR PARÁMETRO MBTI
+            } else {
+              // Si el filtro está activo pero no hay MBTI, mostrar advertencia y no filtrar
+              mbtiWarning.classList.remove("hidden");
+              // Podríamos optar por no hacer el fetch aquí si queremos forzar al usuario
+              // console.warn("Filtro MBTI activo pero no se encontró 'userMbti' en localStorage.");
+            }
+          }
+          // --- FIN LÓGICA MBTI ---
+
+          const url = `${API_CARRERAS_URL}?${params.toString()}`;
+
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(
+                `Error ${response.status}: ${response.statusText}`
+              );
+            }
+            const carreras = await response.json();
+            renderCarreras(carreras);
+          } catch (error) {
+            console.error("Error al obtener carreras:", error);
+            errorText.textContent = `No se pudieron cargar las carreras. ${error.message}`;
+            errorMessage.classList.remove("hidden");
+          } finally {
+            loadingSpinner.classList.add("hidden");
+          }
+        }, 300);
+      };
+
+      // --- FUNCIÓN: RENDERIZAR CARRERAS ---
+      const renderCarreras = (carreras) => {
+        // ... (Sin cambios aquí) ...
+        careersContainer.innerHTML = "";
+        if (carreras.length === 0) {
+          noResultsMessage.classList.remove("hidden");
+          return;
+        }
+        noResultsMessage.classList.add("hidden");
+
+        carreras.forEach((carrera) => {
+          const universidad = carrera.Universidad || {
+            nombre: "N/A",
+            sitio_web: "#",
+          };
+
+          const card = `
+            <div class="card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 animate-fade-in">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-impulso-dark mb-2">${
+                      carrera.nombre
+                    }</h3>
+                    <h4 class="text-md font-semibold text-impulso-green mb-3">${
+                      universidad.nombre
+                    }</h4>
+                    <p class="text-gray-600 text-sm mb-4 min-h-[60px]">${
+                      carrera.descripcion || "No hay descripción disponible."
+                    }</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4 pt-4 border-t border-gray-100">
+                        <span class="text-xs font-medium mr-2 px-2.5 py-1 rounded-full bg-impulso-light text-impulso-dark" title="Área de Estudio">
+                            <i class="fas fa-shapes mr-1"></i> ${
+                              carrera.area_estudio
+                            }
+                        </span>
+                        <span class="text-xs font-medium mr-2 px-2.5 py-1 rounded-full bg-gray-100 text-gray-700" title="Tipo">
+                            <i class="fas fa-graduation-cap mr-1"></i> ${
+                              carrera.tipo
+                            }
+                        </span>
+                        <span class="text-xs font-medium mr-2 px-2.5 py-1 rounded-full bg-gray-100 text-gray-700" title="Duración">
+                            <i class="fas fa-clock mr-1"></i> ${
+                              carrera.duracion_anios || "?"
+                            } años
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mt-auto bg-gray-50 p-4">
+                    <a href="${
+                      universidad.sitio_web
+                    }" target="_blank" rel="noopener noreferrer" class="font-medium text-impulso-teal hover:text-impulso-dark transition-colors">
+                        Visitar sitio web
+                        <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+          `;
+          careersContainer.innerHTML += card;
+        });
+      };
+
+      // --- FUNCIÓN: OBTENER UNIVERSIDADES ---
+      let debounceTimerUni;
+      const fetchUniversidades = () => {
+        // ... (Sin cambios aquí) ...
+        clearTimeout(debounceTimerUni);
+        debounceTimerUni = setTimeout(async () => {
+          loadingSpinnerUni.classList.remove("hidden"); // Mostrar spinner Uni
+          errorMessageUni.classList.add("hidden");
+          noResultsMessageUni.classList.add("hidden");
+          universitiesContainer.innerHTML = "";
+
+          const search = searchUniInput.value;
+
+          const params = new URLSearchParams();
+          if (search) params.append("search", search);
+
+          const url = `${API_UNIVERSIDADES_URL}?${params.toString()}`; // URL correcta
+
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(
+                `Error ${response.status}: ${response.statusText}`
+              );
+            }
+            const universidades = await response.json();
+            renderUniversidades(universidades);
+          } catch (error) {
+            console.error("Error al obtener universidades:", error);
+            errorTextUni.textContent = `No se pudieron cargar las universidades. ${error.message}`;
+            errorMessageUni.classList.remove("hidden");
+          } finally {
+            loadingSpinnerUni.classList.add("hidden"); // Ocultar spinner Uni
+          }
+        }, 300);
+      };
+
+      // --- FUNCIÓN: RENDERIZAR UNIVERSIDADES ---
+      const renderUniversidades = (universidades) => {
+        // ... (Sin cambios aquí) ...
+        universitiesContainer.innerHTML = "";
+        if (universidades.length === 0) {
+          noResultsMessageUni.classList.remove("hidden");
+          return;
+        }
+        noResultsMessageUni.classList.add("hidden");
+
+        universidades.forEach((uni) => {
+          const card = `
+            <div class="card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-300 animate-fade-in">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-impulso-dark mb-2">${
+                      uni.nombre
+                    } (${uni.alias || "N/A"})</h3>
+                    <p class="text-gray-600 text-sm mb-4">${
+                      uni.provincia || "Provincia no especificada"
+                    }</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4 pt-4 border-t border-gray-100">
+                        <span class="text-xs font-medium mr-2 px-2.5 py-1 rounded-full ${
+                          uni.tipo_gestion === "Pública"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-green-100 text-green-800"
+                        }" title="Gestión">
+                            <i class="fas fa-landmark mr-1"></i> ${
+                              uni.tipo_gestion
+                            }
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mt-auto bg-gray-50 p-4">
+                    <a href="${
+                      uni.sitio_web || "#"
+                    }" target="_blank" rel="noopener noreferrer" class="font-medium text-impulso-teal hover:text-impulso-dark transition-colors">
+                        Visitar sitio web
+                        <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+          `;
+          universitiesContainer.innerHTML += card;
+        });
+      };
+
+      // --- EVENT LISTENERS (FUSIONADOS Y ACTUALIZADOS) ---
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- INICIO: LÓGICA DE AUTH (de nosotros.html) ---
+        // ... (Tu lógica de autenticación sigue igual) ...
+        const authButtonsContainer = document.getElementById("auth-buttons");
+        const mobileAuthButtonsContainer = document.getElementById(
+          "mobile-auth-buttons"
+        );
+        const testLink = document.getElementById("test-link");
+        const mobileTestLink = document.getElementById("mobile-test-link");
+
+        function updateUIForUser(userType) {
+          if (authButtonsContainer) {
+            authButtonsContainer.innerHTML = "";
+            const userMenuHtml = `
+              <div class="relative group">
+                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                </button>
+                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-50">
+                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
+                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                </div>
+              </div>
+            `;
+            authButtonsContainer.innerHTML = userMenuHtml;
+          }
+
+          if (mobileAuthButtonsContainer) {
+            mobileAuthButtonsContainer.innerHTML = `
+              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+              </a>
+              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+                Cerrar Sesión
+              </button>
+            `;
+          }
+
+          if (userType !== "estudiante") {
+            if (testLink) testLink.classList.add("hidden");
+            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+            // Ocultar filtro MBTI si no es estudiante
+            if (
+              filtroMbtiSwitch &&
+              filtroMbtiSwitch.parentElement.parentElement
+            ) {
+              filtroMbtiSwitch.parentElement.parentElement.classList.add(
+                "hidden"
+              );
+            }
+          } else {
+            if (testLink) testLink.classList.remove("hidden");
+            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+            // Mostrar filtro MBTI si es estudiante
+            if (
+              filtroMbtiSwitch &&
+              filtroMbtiSwitch.parentElement.parentElement
+            ) {
+              filtroMbtiSwitch.parentElement.parentElement.classList.remove(
+                "hidden"
+              );
+            }
+          }
+
+          const logoutButton = document.getElementById("logout-button");
+          const mobileLogoutButton = document.getElementById(
+            "mobile-logout-button"
+          );
+          const profileLink = document.getElementById("profile-link");
+          const mobileProfileLink = document.getElementById(
+            "mobile-profile-link"
+          );
+
+          // Obtener los datos del usuario del localStorage
+          const user = JSON.parse(localStorage.getItem("user"));
+
+          if (profileLink && user) {
+            let profilePage = "";
+            if (user.type === "estudiante") {
+              profilePage = "perfil.html";
+            } else if (user.type === "universidad") {
+              profilePage = "dashboard-universidad.html";
+            }
+            profileLink.href = profilePage;
+            if (mobileProfileLink) mobileProfileLink.href = profilePage; // Añadido chequeo
+          }
+
+          const logoutFn = () => {
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("userType");
+            localStorage.removeItem("user");
+            localStorage.removeItem("userMbti"); // Borrar MBTI al cerrar sesión
+            window.location.href = "index.html";
+          };
+
+          if (logoutButton) {
+            logoutButton.addEventListener("click", logoutFn);
+          }
+
+          if (mobileLogoutButton) {
+            mobileLogoutButton.addEventListener("click", logoutFn);
+          }
+        }
+
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+
+        if (token) {
+          updateUIForUser(userType);
+        } else {
+          if (testLink) testLink.classList.add("hidden");
+          if (mobileTestLink) mobileTestLink.classList.add("hidden");
+          // Ocultar filtro MBTI si no está logueado
+          if (
+            filtroMbtiSwitch &&
+            filtroMbtiSwitch.parentElement.parentElement
+          ) {
+            filtroMbtiSwitch.parentElement.parentElement.classList.add(
+              "hidden"
+            );
+          }
+        }
+        // --- FIN: LÓGICA DE AUTH ---
+
+        // --- LÓGICA DE EXPLORADOR ---
+        AOS.init(); // Iniciar animaciones
+        switchToCareers(); // Iniciar en la pestaña de carreras
+
+        // Listeners de Pestañas
+        careersTabBtn.addEventListener("click", switchToCareers);
+        universitiesTabBtn.addEventListener("click", switchToUniversities);
+
+        // Listeners de Filtros de Carreras
+        searchCareerInput.addEventListener("input", fetchCarreras);
+        filtroArea.addEventListener("change", fetchCarreras);
+        filtroTipo.addEventListener("change", fetchCarreras);
+        filtroProvincia.addEventListener("change", fetchCarreras);
+        filtroMbtiSwitch.addEventListener("change", fetchCarreras); // <-- NUEVO LISTENER
+
+        // Listener de Búsqueda de Universidades
+        searchUniInput.addEventListener("input", fetchUniversidades);
+
+        // Listener del Menú Móvil
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+        });
+
+        // Listener de Scroll
+        window.addEventListener("scroll", function () {
+          const navbar = document.getElementById("navbar");
+          if (window.scrollY > 50) {
+            navbar.classList.add("shadow-2xl");
+            navbar.classList.remove("shadow-lg");
+          } else {
+            navbar.classList.remove("shadow-2xl");
+            navbar.classList.add("shadow-lg");
+          }
+        });
+      });
+    </script>
+    <!-- ======================================================= -->
+    <!-- === FIN DEL SCRIPT DE LÓGICA === -->
+  </body>
+</html>
