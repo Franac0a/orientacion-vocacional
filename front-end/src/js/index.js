@@ -1,10 +1,10 @@
-// Inicialización de AOS (Animate On Scroll)
+// Initialize AOS
 AOS.init({
   duration: 1000,
   once: true,
 });
 
-// Alternar menú móvil
+// Mobile menu toggle
 document
   .getElementById("mobile-menu-btn")
   .addEventListener("click", function () {
@@ -12,7 +12,7 @@ document
     menu.classList.toggle("hidden");
   });
 
-// Efecto de sombra de la barra de navegación al hacer scroll
+// Navbar scroll effect
 window.addEventListener("scroll", function () {
   const navbar = document.getElementById("navbar");
   if (window.scrollY > 50) {
@@ -24,7 +24,7 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// Desplazamiento suave para enlaces ancla (a[href="#..."])
+// Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", function (e) {
     e.preventDefault();
@@ -37,32 +37,10 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     }
   });
 });
-// **Este código es un ejemplo para tu lógica de login/autenticación**
 
-function manejarInicioSesionExitoso(tokenRecibido, datosUsuario) {
-  // 1. Almacena el token (esencial para la navegación)
-  localStorage.setItem("authToken", tokenRecibido);
-
-  // 2. Opcionalmente, almacena datos del usuario
-  localStorage.setItem("user", JSON.stringify(datosUsuario));
-
-  // 3. Redirige al usuario a la página principal o de perfil
-  window.location.href = "index.html";
-}
-// login.js (en la función que maneja la respuesta de POST /api/auth/login)
-if (response.ok) {
-  const data = await response.json();
-
-  // 🔑 CLAVE: Guarda el token para que otros scripts JS puedan acceder a él.
-  localStorage.setItem("authToken", data.token);
-  localStorage.setItem("userType", data.user.type); // Guarda el tipo de usuario
-
-  window.location.href = "perfil.html"; // O la página a donde redirijas
-}
-// Efecto Parallax para elementos de fondo en la sección de inicio
+// Parallax effect for hero background elements
 window.addEventListener("scroll", function () {
   const scrolled = window.pageYOffset;
-  // Solo se aplica a los elementos con la clase 'animate-float'
   const parallax = document.querySelectorAll(".animate-float");
   const speed = 0.5;
 
@@ -70,4 +48,75 @@ window.addEventListener("scroll", function () {
     const yPos = -(scrolled * speed);
     element.style.transform = `translate3d(0, ${yPos}px, 0)`;
   });
+});
+
+// Lógica para mostrar/ocultar la barra de navegación y manejar el test vocacional
+document.addEventListener("DOMContentLoaded", () => {
+  const loggedInNav = document.getElementById("logged-in-nav");
+  const loggedOutNav = document.getElementById("logged-out-nav");
+  const testLink = document.getElementById("test-link");
+
+  // Mobile-specific elements
+  const loggedInMobile = document.getElementById("logged-in-mobile");
+  const loggedOutMobile = document.getElementById("logged-out-mobile");
+  const testMobileLink = document.getElementById("mobile-test-link");
+
+  // Botones de cerrar sesión
+  const logoutBtn = document.getElementById("logout-btn");
+  const logoutMobileBtn = document.getElementById("logout-mobile-btn");
+
+  const usuarioLogueado = localStorage.getItem("authToken");
+
+  if (usuarioLogueado) {
+    if (loggedInNav) loggedInNav.style.display = "block";
+    if (loggedOutNav) loggedOutNav.style.display = "none";
+    if (loggedInMobile) loggedInMobile.style.display = "block";
+    if (loggedOutMobile) loggedOutMobile.style.display = "none";
+
+    if (testLink) {
+      testLink.href = "test.html";
+      testLink.onclick = null;
+    }
+    if (testMobileLink) {
+      testMobileLink.href = "test.html";
+      testMobileLink.onclick = null;
+    }
+  } else {
+    if (loggedInNav) loggedInNav.style.display = "none";
+    if (loggedOutNav) loggedOutNav.style.display = "flex";
+    if (loggedInMobile) loggedInMobile.style.display = "none";
+    if (loggedOutMobile) loggedOutMobile.style.display = "block";
+
+    const alertMessage =
+      "Para acceder al test de Personalidad, debes iniciar sesión.";
+    if (testLink) {
+      testLink.href = "login.html";
+      testLink.onclick = (e) => {
+        e.preventDefault();
+        alert(alertMessage);
+      };
+    }
+    if (testMobileLink) {
+      testMobileLink.href = "login.html";
+      testMobileLink.onclick = (e) => {
+        e.preventDefault();
+        alert(alertMessage);
+      };
+    }
+  }
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("user");
+    window.location.reload();
+  };
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogout);
+  }
+
+  if (logoutMobileBtn) {
+    logoutMobileBtn.addEventListener("click", handleLogout);
+  }
 });

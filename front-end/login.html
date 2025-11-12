@@ -32,6 +32,18 @@
         },
       };
     </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+      /* Estilos para el Dropdown del Navbar */
+      .profile-menu:hover .dropdown-content {
+        display: block;
+      }
+      .dropdown-content {
+        display: none;
+      }
+    </style>
   </head>
   <body class="overflow-x-hidden">
     <nav
@@ -44,7 +56,7 @@
             <a href="index.html">
               <img
                 src="src/img/logo.jpg"
-                alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+                alt="Logo Impulso Educativo"
                 class="w-10 h-10 animate-pulse-slow"
               />
             </a>
@@ -77,8 +89,9 @@
               href="test.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
               id="test-link"
-              >Test de Personalidad</a
+              >Test Vocacional</a
             >
+            <!-- ACTUALIZADO -->
             <a
               href="nosotros.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
@@ -95,7 +108,10 @@
             >
               Explorá</a
             >
+
+            <!-- CONTENEDOR DE AUTH UNIFICADO (Corregido) -->
             <div class="flex items-center space-x-3" id="auth-buttons">
+              <!-- JS llenará esto. Por defecto, muestra login/registro -->
               <a
                 href="login.html"
                 class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
@@ -109,6 +125,7 @@
                 Registrarse
               </a>
             </div>
+            <!-- FIN CONTENEDOR AUTH -->
           </div>
         </div>
 
@@ -127,8 +144,9 @@
             href="test.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             id="mobile-test-link"
-            >Test de Personalidad</a
+            >Test Vocacional</a
           >
+          <!-- ACTUALIZADO -->
           <a
             href="nosotros.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
@@ -139,7 +157,14 @@
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Contacto</a
           >
+          <a
+            href="explorador.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Explorá</a
+          >
+          <!-- CONTENEDOR AUTH MÓVIL UNIFICADO (Corregido) -->
           <div class="pt-3 space-y-2" id="mobile-auth-buttons">
+            <!-- JS llenará esto. -->
             <a
               href="login.html"
               class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
@@ -156,11 +181,14 @@
         </div>
       </div>
     </nav>
+
+    <!-- MAIN -->
     <main
       class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center pt-24 md:pt-16 p-4"
     >
       <div
         class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md"
+        data-aos="fade-up"
       >
         <div
           id="alertSuccess"
@@ -185,7 +213,7 @@
             >
               <img
                 src="src/img/logo.jpg"
-                alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+                alt="Logo Impulso Educativo"
                 class="w-20 h-20 rounded-full"
               />
             </div>
@@ -336,18 +364,17 @@
               <p class="text-impulso-dark font-medium text-sm">
                 ¿Eres una institución educativa?
               </p>
-              <a
-                href="mailto:info@impulsoeducativo.com"
-                class="inline-block mt-2 text-impulso-teal hover:text-impulso-green text-sm font-medium"
-              >
-                <i class="fas fa-envelope mr-1"></i>Contáctanos
+              <a href="registro-universidad.html">
+                <i class="fas fa-file-alt mr-1"></i>Regístrate aquí
               </a>
             </div>
           </div>
         </div>
       </div>
     </main>
+
     <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <!-- ... (Tu footer sigue igual) ... -->
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
           <div>
@@ -392,7 +419,9 @@
                 <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
               </p>
               <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
-              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+              <p>
+                <i class="fas fa-map-marker-alt mr-2"></i>Formosa, Argentina
+              </p>
             </div>
           </div>
 
@@ -434,31 +463,35 @@
         </div>
       </div>
     </footer>
+
+    <!-- === INICIO DEL SCRIPT === -->
     <script>
       AOS.init({
         duration: 1000,
         once: true,
       });
 
-      document
-        .getElementById("mobile-menu-btn")
-        .addEventListener("click", function () {
-          const menu = document.getElementById("mobile-menu");
-          menu.classList.toggle("hidden");
-        });
-
-      window.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        if (window.scrollY > 50) {
-          navbar.classList.add("shadow-2xl");
-          navbar.classList.remove("shadow-lg");
-        } else {
-          navbar.classList.remove("shadow-2xl");
-          navbar.classList.add("shadow-lg");
-        }
-      });
-
+      // --- Lógica del Navbar (Script Unificado) ---
       document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("authToken");
+        const userType = localStorage.getItem("userType");
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        // --- ¡REDIRECCIÓN SI YA ESTÁ LOGUEADO! ---
+        if (token) {
+          console.log("Usuario ya logueado, redirigiendo...");
+          if (userType === "universidad") {
+            window.location.href = "dashboard-universidad.html";
+            return;
+          } else {
+            // Estudiantes y Admins van al index o perfil
+            window.location.href = "index.html";
+            return;
+          }
+        }
+        // --- FIN DE REDIRECCIÓN ---
+
+        // Si no hay token, configurar botones de "Invitado" (ya están en el HTML)
         const authButtonsContainer = document.getElementById("auth-buttons");
         const mobileAuthButtonsContainer = document.getElementById(
           "mobile-auth-buttons"
@@ -466,81 +499,41 @@
         const testLink = document.getElementById("test-link");
         const mobileTestLink = document.getElementById("mobile-test-link");
 
-        function updateUIForUser(userType) {
-          if (authButtonsContainer) {
-            authButtonsContainer.innerHTML = "";
-            const userMenuHtml = `
-              <div class="relative group">
-                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
-                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
-                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
-                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
-                </div>
-              </div>
-            `;
-            authButtonsContainer.innerHTML = userMenuHtml;
-          }
+        // Ocultar links de test si no está logueado
+        if (testLink) testLink.classList.add("hidden");
+        if (mobileTestLink) mobileTestLink.classList.add("hidden");
 
-          if (mobileAuthButtonsContainer) {
-            mobileAuthButtonsContainer.innerHTML = `
-              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
-                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-              </a>
-              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
-                Cerrar Sesión
-              </button>
-            `;
-          }
+        // Configurar menú móvil
+        document
+          .getElementById("mobile-menu-btn")
+          .addEventListener("click", function () {
+            const menu = document.getElementById("mobile-menu");
+            menu.classList.toggle("hidden");
+          });
 
-          if (userType !== "estudiante") {
-            if (testLink) testLink.classList.add("hidden");
-            if (mobileTestLink) mobileTestLink.classList.add("hidden");
+        // Configurar scroll de navbar
+        window.addEventListener("scroll", function () {
+          const navbar = document.getElementById("navbar");
+          if (!navbar) return;
+          if (window.scrollY > 50) {
+            navbar.classList.add("shadow-2xl");
+            navbar.classList.remove("shadow-lg");
           } else {
-            if (testLink) testLink.classList.remove("hidden");
-            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
+            navbar.classList.remove("shadow-2xl");
+            navbar.classList.add("shadow-lg");
           }
-
-          const logoutButton = document.getElementById("logout-button");
-          const mobileLogoutButton = document.getElementById(
-            "mobile-logout-button"
-          );
-
-          if (logoutButton) {
-            logoutButton.addEventListener("click", () => {
-              localStorage.removeItem("authToken");
-              localStorage.removeItem("userType");
-              window.location.href = "index.html";
-            });
-          }
-
-          if (mobileLogoutButton) {
-            mobileLogoutButton.addEventListener("click", () => {
-              localStorage.removeItem("authToken");
-              localStorage.removeItem("userType");
-              window.location.href = "index.html";
-            });
-          }
-        }
-
-        const token = localStorage.getItem("authToken");
-        const userType = localStorage.getItem("userType");
-
-        if (token) {
-          updateUIForUser(userType);
-        } else {
-          if (testLink) testLink.classList.add("hidden");
-          if (mobileTestLink) mobileTestLink.classList.add("hidden");
-        }
+        });
       });
-    </script>
-    <script>
+      // --- FIN Lógica Navbar ---
+
+      // --- Lógica del Formulario de Login ---
+
       const API_BASE_URL = "http://localhost:3000";
 
       function showAlert(type, message) {
         const alert = document.getElementById(`alert${type}`);
         const messageElement = document.getElementById(`alert${type}Message`);
+        if (!alert || !messageElement) return;
         messageElement.textContent = message;
         alert.classList.remove("hidden");
         setTimeout(() => {
@@ -569,8 +562,6 @@
         return emailRegex.test(email);
       }
 
-      // ... (código anterior)
-
       async function loginUser(loginData) {
         try {
           const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
@@ -582,17 +573,15 @@
           });
           const data = await response.json();
 
-          // **Validación de la respuesta del servidor**
           if (!response.ok) {
-            throw new Error(data.error || "Credenciales incorrectas");
+            // Usar 'data.mensaje' como en tu auth.controller
+            throw new Error(data.mensaje || "Credenciales incorrectas");
           }
-
           if (!data.token || !data.user) {
             throw new Error(
               "Respuesta del servidor incompleta. Falta información del usuario."
             );
           }
-
           return data;
         } catch (error) {
           throw error;
@@ -627,7 +616,7 @@
 
             const result = await loginUser(loginData);
 
-            // **Guardar los datos si la validación fue exitosa**
+            // Guardar datos en localStorage
             localStorage.setItem("authToken", result.token);
             localStorage.setItem("userType", result.user.type);
             localStorage.setItem("user", JSON.stringify(result.user));
@@ -640,10 +629,16 @@
 
             showAlert("Success", "¡Login exitoso! Redirigiendo...");
 
-            // Redirigir al inicio después de 1.5 segundos
+            // --- ¡LÓGICA DE REDIRECCIÓN CORREGIDA! ---
+            let redirectTo = "index.html"; // Destino por defecto (estudiante)
+            if (result.user.type === "universidad") {
+              redirectTo = "dashboard-universidad.html"; // Destino para universidades
+            }
+
             setTimeout(() => {
-              window.location.href = "index.html";
+              window.location.href = redirectTo;
             }, 1500);
+            // --- FIN DE CORRECCIÓN ---
           } catch (error) {
             showAlert("Error", error.message);
           } finally {
@@ -651,7 +646,7 @@
             loginBtn.innerHTML = originalHTML;
           }
         });
-      // ... (código posterior)
+
       window.addEventListener("load", function () {
         const rememberedEmail = localStorage.getItem("rememberedEmail");
         if (rememberedEmail) {
@@ -659,6 +654,7 @@
           document.getElementById("remember").checked = true;
         }
       });
+
       document.getElementById("email").addEventListener("blur", function () {
         if (this.value && !isValidEmail(this.value)) {
           this.classList.add("border-red-500");
@@ -668,6 +664,7 @@
           this.classList.add("border-gray-300");
         }
       });
+
       const inputs = document.querySelectorAll("input");
       inputs.forEach((input) => {
         input.addEventListener("focus", function () {
@@ -678,10 +675,5 @@
         });
       });
     </script>
-    <style>
-      img {
-        border-radius: 50px;
-      }
-    </style>
   </body>
 </html>

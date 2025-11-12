@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Resultados
   const resultSection = document.getElementById("resultSection");
-  const mbtiResultEl = document.getElementById("mbtiResult");
-  const mbtiDescriptionEl = document.getElementById("mbtiDescription");
+  const riasecResultEl = document.getElementById("riasecResult");
+  const riasecDescriptionEl = document.getElementById("riasecDescription");
 
   // Recomendaciones
   const recommendationsSection = document.getElementById(
@@ -37,100 +37,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenu = document.getElementById("mobile-menu");
 
   const API_CARRERAS_URL = "http://localhost:3000/api/carreras";
-  // Asegúrate que este sea tu endpoint correcto para guardar
-  const API_SAVE_RESULTS_URL = "http://localhost:3000/api/save-mbti-result";
+  // --- ENDPOINT ACTUALIZADO ---
+  const API_SAVE_RESULTS_URL =
+    "http://localhost:3000/api/users/save-vocational-result";
 
   let currentQuestionIndex = 0;
-  // Se adapta automáticamente a 16 o 32 preguntas
-  const totalQuestions = questionContainers.length;
+  const totalQuestions = questionContainers.length; // 18
 
-  // --- Datos de Descripciones (MBTI) ---
-  const mbtiData = {
-    /* ... Tu objeto mbtiData completo ... */
-    ISTJ: {
-      description:
-        "El Logista. Práctico, orientado a los hechos, fiable y responsable...",
-      careers: ["Contador", "Analista de Sistemas" /*...*/],
-    },
-    INFJ: {
-      description:
-        "El Consejero. Idealista, misterioso, tranquilo, pero inspirador...",
-      careers: ["Psicólogo", "Escritor/Autor" /*...*/],
-    },
-    ENFP: {
-      description:
-        "El Activista. Entusiasta, creativo y sociable espíritu libre...",
-      careers: ["Diseñador Gráfico", "Periodista" /*...*/],
-    },
-    ESTP: {
-      description: "El Emprendedor. Inteligente, enérgico y perceptivo...",
-      careers: ["Vendedor", "Bombero/Paramédico" /*...*/],
-    },
-    INTJ: {
-      description:
-        "El Arquitecto. Pensadores estratégicos con un plan para todo...",
-      careers: ["Científico", "Estratega Corporativo" /*...*/],
-    },
-    ESFJ: {
-      description: "El Cónsul. Extremadamente social, popular y protector...",
-      careers: ["Maestro de Primaria", "Organizador de Eventos" /*...*/],
-    },
-    INTP: {
-      description:
-        "El Lógico. Innovadores con una sed insaciable de conocimiento...",
-      careers: ["Físico/Matemático", "Desarrollador de IA" /*...*/],
-    },
-    ENTJ: {
-      description:
-        "El Comandante. Líderes audaces, imaginativos y de voluntad fuerte...",
-      careers: ["CEO/Ejecutivo", "Gerente de Proyectos" /*...*/],
-    },
-    ISFP: {
-      description: "El Aventurero. Artistas flexibles y encantadores...",
-      careers: ["Diseñador de Moda", "Fisioterapeuta" /*...*/],
-    },
-    ESTJ: {
-      description: "El Ejecutivo. Administradores excelentes...",
-      careers: ["Militar", "Gerente de Logística" /*...*/],
-    },
-    ENFJ: {
-      description: "El Protagonista. Líderes carismáticos e inspiradores...",
-      careers: ["Orador Motivacional", "Líder Comunitario" /*...*/],
-    },
-    ISFJ: {
-      description: "El Defensor. Protectores y cálidos...",
-      careers: ["Bibliotecario", "Archivista" /*...*/],
-    },
-    ENTP: {
-      description: "El Debatiente. Pensadores inteligentes y curiosos...",
-      careers: ["Emprendedor (Startup)", "Consultor Estratégico" /*...*/],
-    },
-    INFP: {
-      description: "El Mediador. Personas poéticas, amables y altruistas...",
-      careers: ["Poeta/Escritor", "Musicoterapeuta" /*...*/],
-    },
-    ISTP: {
-      description: "El Virtuoso. Experimentadores audaces y prácticos...",
-      careers: ["Mecánico", "Piloto" /*...*/],
-    },
-    ESFP: {
-      description: "El Animador. Espontáneos, enérgicos y entusiastas...",
-      careers: ["Actor/Actriz", "Planificador de Fiestas" /*...*/],
-    },
+  // --- Datos de Descripciones (RIASEC) ---
+  const riasecData = {
+    R: "Realista: Personas prácticas, con habilidades mecánicas. Disfrutan trabajar al aire libre, con animales, herramientas o máquinas.",
+    I: "Investigador: Personas analíticas, curiosas y observadoras. Disfrutan resolver problemas complejos y trabajar con ideas.",
+    A: "Artístico: Personas creativas, expresivas e intuitivas. Disfrutan trabajar en situaciones no estructuradas usando su imaginación.",
+    S: "Social: Personas amables, generosas y cooperativas. Disfrutan ayudar, enseñar o cuidar a otros.",
+    E: "Emprendedor: Personas persuasivas, enérgicas y ambiciosas. Disfrutan liderar, vender o influir en otros.",
+    C: "Convencional: Personas organizadas, detallistas y eficientes. Disfrutan trabajar con datos y seguir procedimientos establecidos.",
   };
 
-  // --- LÓGICA DE AUTENTICACIÓN DEL NAVBAR (de nosotros.html) ---
-  function updateUIForUser(userType) {
+  // --- LÓGICA DE AUTENTICACIÓN DEL NAVBAR ---
+  function updateUIForUser(user, userType) {
     if (authButtonsContainer) {
       authButtonsContainer.innerHTML = ""; // Limpiar botones existentes
+      const userName = user && user.name ? user.name : "Mi Perfil";
       const userMenuHtml = `
               <div class="relative group">
                 <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
-                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
+                  <i class="fas fa-user-circle mr-2"></i> ${userName}
                 </button>
                 <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block z-50">
-                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
-                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                  <a href="perfil.html" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link-nav">Perfil</a>
+                  <button id="logout-button-nav" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
                 </div>
               </div>
             `;
@@ -139,75 +75,75 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (mobileAuthButtonsContainer) {
       mobileAuthButtonsContainer.innerHTML = `
-              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
+              <a href="perfil.html" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link-nav">
                 <i class="fas fa-user-circle mr-2"></i> Mi Perfil
               </a>
-              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
+              <button id="mobile-logout-button-nav" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
                 Cerrar Sesión
               </button>
             `;
     }
 
-    // --- Lógica específica para test.html ---
     if (userType !== "estudiante") {
-      console.log("Usuario no estudiante intentando acceder al test.");
       if (testLink) testLink.classList.add("hidden");
       if (mobileTestLink) mobileTestLink.classList.add("hidden");
     } else {
       if (testLink) testLink.classList.remove("hidden");
       if (mobileTestLink) mobileTestLink.classList.remove("hidden");
     }
-    // --- Fin lógica específica ---
 
-    // --- Configuración de links de perfil y botones de logout ---
-    const logoutButton = document.getElementById("logout-button");
-    const mobileLogoutButton = document.getElementById("mobile-logout-button");
-    const profileLink = document.getElementById("profile-link");
-    const mobileProfileLink = document.getElementById("mobile-profile-link");
+    const logoutButton = document.getElementById("logout-button-nav");
+    const mobileLogoutButton = document.getElementById(
+      "mobile-logout-button-nav"
+    );
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    if (logoutButton) logoutButton.addEventListener("click", handleLogout);
+    if (mobileLogoutButton)
+      mobileLogoutButton.addEventListener("click", handleLogout);
+  }
 
-    if (profileLink && user) {
-      let profilePage = "perfil.html";
-      if (user.type === "universidad") {
-        profilePage = "dashboard-universidad.html";
-      }
-      profileLink.href = profilePage;
-      if (mobileProfileLink) mobileProfileLink.href = profilePage;
-    }
-
-    const logoutFn = () => {
+  async function handleLogout() {
+    const token = localStorage.getItem("authToken");
+    try {
+      await fetch("http://localhost:3000/api/auth/logout", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (error) {
+      console.error(
+        "Error al notificar logout (se deslogueará localmente):",
+        error
+      );
+    } finally {
       localStorage.removeItem("authToken");
       localStorage.removeItem("userType");
       localStorage.removeItem("user");
-      localStorage.removeItem("userMbti"); // Borrar MBTI al cerrar sesión
+      localStorage.removeItem("userRiasec"); // Limpiar RIASEC
       window.location.href = "index.html";
-    };
-
-    if (logoutButton) logoutButton.addEventListener("click", logoutFn);
-    if (mobileLogoutButton)
-      mobileLogoutButton.addEventListener("click", logoutFn);
+    }
   }
 
   // --- VERIFICACIÓN INICIAL DE LOGIN Y TIPO DE USUARIO ---
   const token = localStorage.getItem("authToken");
   const userType = localStorage.getItem("userType");
+  const user = JSON.parse(localStorage.getItem("user"));
 
   if (token) {
-    updateUIForUser(userType);
+    updateUIForUser(user, userType); // Configurar navbar
     if (userType === "estudiante") {
-      loginSection.classList.add("hidden");
-      testSection.classList.remove("hidden");
-      showCurrentQuestion();
+      if (loginSection) loginSection.classList.add("hidden");
+      if (testSection) testSection.classList.remove("hidden");
+      showCurrentQuestion(); // Iniciar el test
     } else {
-      loginSection.classList.remove("hidden");
-      testSection.classList.add("hidden");
-      const loginMessage = loginSection.querySelector(".p-8 p.text-gray-600");
+      // Logueado pero NO es estudiante
+      if (loginSection) loginSection.classList.remove("hidden");
+      if (testSection) testSection.classList.add("hidden");
+      const loginMessage = loginSection?.querySelector(".p-8 p.text-gray-600");
       if (loginMessage)
         loginMessage.textContent =
-          "El test de personalidad está disponible solo para estudiantes.";
-      const loginBtn = loginSection.querySelector('a[href="login.html"]');
-      const registerLink = loginSection.querySelector(
+          "El test vocacional está disponible solo para estudiantes.";
+      const loginBtn = loginSection?.querySelector('a[href="login.html"]');
+      const registerLink = loginSection?.querySelector(
         'a[href="registro.html"]'
       );
       if (loginBtn) loginBtn.classList.add("hidden");
@@ -215,8 +151,9 @@ document.addEventListener("DOMContentLoaded", () => {
         registerLink.parentElement.classList.add("hidden");
     }
   } else {
-    loginSection.classList.remove("hidden");
-    testSection.classList.add("hidden");
+    // No logueado
+    if (loginSection) loginSection.classList.remove("hidden");
+    if (testSection) testSection.classList.add("hidden");
     if (testLink) testLink.classList.add("hidden");
     if (mobileTestLink) mobileTestLink.classList.add("hidden");
   }
@@ -224,9 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- LÓGICA DEL TEST ---
   function updateProgress() {
     const progress = currentQuestionIndex + 1;
-    progressText.textContent = `${progress} / ${totalQuestions}`;
+    if (progressText)
+      progressText.textContent = `${progress} / ${totalQuestions}`;
     const percentage = (progress / totalQuestions) * 100;
-    progressFill.style.width = `${percentage}%`;
+    if (progressFill) progressFill.style.width = `${percentage}%`;
   }
 
   function showCurrentQuestion() {
@@ -234,14 +172,16 @@ document.addEventListener("DOMContentLoaded", () => {
       container.classList.toggle("active", index === currentQuestionIndex);
     });
     updateProgress();
-    nextBtn.classList.toggle(
-      "hidden",
-      currentQuestionIndex === totalQuestions - 1
-    );
-    submitBtn.classList.toggle(
-      "hidden",
-      currentQuestionIndex !== totalQuestions - 1
-    );
+    if (nextBtn)
+      nextBtn.classList.toggle(
+        "hidden",
+        currentQuestionIndex === totalQuestions - 1
+      );
+    if (submitBtn)
+      submitBtn.classList.toggle(
+        "hidden",
+        currentQuestionIndex !== totalQuestions - 1
+      );
   }
 
   function isCurrentQuestionAnswered() {
@@ -266,35 +206,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- FUNCIÓN calculateResult ---
+  // --- FUNCIÓN calculateResult (¡ACTUALIZADA A RIASEC!) ---
   async function calculateResult() {
     if (!isCurrentQuestionAnswered()) {
       alert("Por favor, selecciona una opción para la última pregunta.");
       return;
     }
 
-    const mbtiScores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+    // 1. Calcular puntajes RIASEC
+    const riasecScores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
     questionContainers.forEach((container, index) => {
       const radioName = `q${index + 1}`;
       const selectedOption = container.querySelector(
         `input[name="${radioName}"]:checked`
       );
       if (selectedOption) {
-        const value = selectedOption.value;
-        if (mbtiScores.hasOwnProperty(value)) {
-          mbtiScores[value]++;
+        const value = selectedOption.value; // El valor es "R", "I", "A", etc.
+        if (riasecScores.hasOwnProperty(value)) {
+          riasecScores[value]++;
         }
       }
     });
 
-    let mbtiType = "";
-    mbtiType += mbtiScores["E"] >= mbtiScores["I"] ? "E" : "I";
-    mbtiType += mbtiScores["S"] >= mbtiScores["N"] ? "S" : "N";
-    mbtiType += mbtiScores["T"] >= mbtiScores["F"] ? "T" : "F";
-    mbtiType += mbtiScores["J"] >= mbtiScores["P"] ? "J" : "P";
-    mbtiType = mbtiType.toUpperCase();
+    // 2. Determinar Perfil RIASEC (Top 3)
+    const riasecArray = Object.entries(riasecScores); // [ ['R', 2], ['I', 5], ... ]
+    riasecArray.sort((a, b) => b[1] - a[1]); // Ordenar de mayor a menor puntaje
+    const riasecProfile = riasecArray
+      .slice(0, 3)
+      .map((item) => item[0])
+      .join(""); // Ej: "SAI"
+    const primaryRiasecCode = riasecProfile.charAt(0); // Ej: "S"
 
-    // --- GUARDAR EN BACKEND ---
+    // --- 3. GUARDAR EN BACKEND (¡Ruta y body actualizados!) ---
     const currentToken = localStorage.getItem("authToken");
     if (!currentToken) {
       alert("Debes iniciar sesión para guardar tus resultados.");
@@ -303,15 +246,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let saveSuccessful = false;
     try {
-      console.log("Intentando guardar resultado MBTI:", mbtiType); // Log antes de fetch
+      console.log("Intentando guardar resultado RIASEC:", riasecProfile);
       const response = await fetch(API_SAVE_RESULTS_URL, {
+        // Llama a /api/users/save-vocational-result
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${currentToken}`,
         },
         body: JSON.stringify({
-          mbtiResult: mbtiType,
+          riasecProfile: riasecProfile, // <-- Envía el perfil RIASEC
           dateCompleted: new Date().toISOString(),
         }),
       });
@@ -319,11 +263,11 @@ document.addEventListener("DOMContentLoaded", () => {
         "Respuesta del servidor (guardar):",
         response.status,
         response.statusText
-      ); // Log después de fetch
+      );
 
       if (response.ok) {
-        console.log("Resultado MBTI guardado exitosamente.");
-        localStorage.setItem("userMbti", mbtiType);
+        console.log("Resultado RIASEC guardado exitosamente.");
+        localStorage.setItem("userRiasec", riasecProfile); // <-- Guarda RIASEC en localStorage
         saveSuccessful = true;
       } else {
         const errorText = await response.text();
@@ -342,38 +286,48 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("No se pudo conectar con el servidor para guardar el resultado.");
     }
 
-    // --- MOSTRAR RESULTADOS LOCALES ---
-    console.log("Mostrando resultados para:", mbtiType); // Log antes de mostrar
-    const mbtiDescData = mbtiData[mbtiType] || {
-      description: "Descripción no disponible.",
-    };
-    mbtiResultEl.textContent = mbtiType;
-    mbtiDescriptionEl.textContent = mbtiDescData.description;
+    // --- 4. MOSTRAR RESULTADOS LOCALES ---
+    console.log("Mostrando resultados para:", riasecProfile);
+    const desc1 = riasecData[riasecProfile[0]] || "";
+    const desc2 = riasecData[riasecProfile[1]] || "";
+    const desc3 = riasecData[riasecProfile[2]] || "";
 
-    // --- Transición de vistas ---
-    console.log("Ocultando formulario, mostrando resultados..."); // Log antes de cambiar vistas
-    testForm.style.display = "none";
-    // Ocultar barra de progreso
-    progressFill.parentElement.parentElement.classList.add("hidden"); // <<<--- POSIBLE PUNTO DE FALLO (TypeError)
-    resultSection.classList.remove("hidden"); // <<<--- POSIBLE PUNTO DE FALLO (TypeError)
-    recommendationsSection.classList.remove("hidden"); // <<<--- POSIBLE PUNTO DE FALLO (TypeError)
-    window.scrollTo({ top: testSection.offsetTop, behavior: "smooth" });
-    console.log("Vistas cambiadas."); // Log después de cambiar vistas
+    if (riasecResultEl) riasecResultEl.textContent = riasecProfile;
+    if (riasecDescriptionEl) {
+      riasecDescriptionEl.innerHTML = `
+            <p class="mb-2">Tu código principal es <strong>${riasecProfile[0]}</strong>: ${desc1}</p>
+            <p class="text-sm text-gray-600 mb-1">Secundario <strong>${riasecProfile[1]}</strong>: ${desc2}</p>
+            <p class="text-sm text-gray-600">Terciario <strong>${riasecProfile[2]}</strong>: ${desc3}</p>
+        `;
+    }
 
-    // --- LLAMAR A FETCH RECOMENDACIONES ---
-    console.log("Llamando a fetchRecommendedCareers con:", mbtiType); // Log antes de fetch rec
-    fetchRecommendedCareers(mbtiType);
+    // --- 5. Transición de vistas ---
+    console.log("Ocultando formulario, mostrando resultados...");
+    if (testForm) testForm.style.display = "none";
+    const progressBarContainer = progressFill?.parentElement?.parentElement;
+    if (progressBarContainer) progressBarContainer.classList.add("hidden");
+    if (resultSection) resultSection.classList.remove("hidden");
+    if (recommendationsSection)
+      recommendationsSection.classList.remove("hidden");
+    window.scrollTo({ top: testSection?.offsetTop || 0, behavior: "smooth" });
+    console.log("Vistas cambiadas.");
+
+    // --- 6. LLAMAR A FETCH RECOMENDACIONES (¡con RIASEC!) ---
+    console.log("Llamando a fetchRecommendedCareers con:", primaryRiasecCode);
+    fetchRecommendedCareers(primaryRiasecCode); // Llama con la letra principal
   }
 
   // --- FUNCIÓN: OBTENER RECOMENDACIONES ---
-  async function fetchRecommendedCareers(mbtiType) {
-    console.log("fetchRecommendedCareers iniciado para:", mbtiType); // Log inicio fetch rec
-    loadingSpinnerRec.classList.remove("hidden");
-    errorMessageRec.classList.add("hidden");
-    noResultsMessageRec.classList.add("hidden");
-    recommendedCareersContainer.innerHTML = "";
-    const url = `${API_CARRERAS_URL}?mbti=${mbtiType}`;
-    console.log("URL para recomendaciones:", url); // Log URL
+  async function fetchRecommendedCareers(riasecCode) {
+    console.log("fetchRecommendedCareers iniciado para:", riasecCode);
+    if (loadingSpinnerRec) loadingSpinnerRec.classList.remove("hidden");
+    if (errorMessageRec) errorMessageRec.classList.add("hidden");
+    if (noResultsMessageRec) noResultsMessageRec.classList.add("hidden");
+    if (recommendedCareersContainer) recommendedCareersContainer.innerHTML = "";
+
+    // --- URL ACTUALIZADA A RIASEC ---
+    const url = `${API_CARRERAS_URL}?riasec=${riasecCode}`;
+    console.log("URL para recomendaciones:", url);
 
     try {
       const response = await fetch(url);
@@ -381,19 +335,20 @@ document.addEventListener("DOMContentLoaded", () => {
         "Respuesta del servidor (recomendaciones):",
         response.status,
         response.statusText
-      ); // Log resp rec
+      );
       if (!response.ok)
         throw new Error(`Error ${response.status}: ${response.statusText}`);
       const carreras = await response.json();
-      console.log("Carreras recibidas:", carreras.length); // Log carreras recibidas
+      console.log("Carreras recibidas:", carreras.length);
       renderRecommendedCareers(carreras);
     } catch (error) {
       console.error("Error al obtener recomendaciones:", error);
-      errorTextRec.textContent = `No se pudieron cargar las recomendaciones. ${error.message}`;
-      errorMessageRec.classList.remove("hidden");
+      if (errorTextRec)
+        errorTextRec.textContent = `No se pudieron cargar las recomendaciones. ${error.message}`;
+      if (errorMessageRec) errorMessageRec.classList.remove("hidden");
     } finally {
-      loadingSpinnerRec.classList.add("hidden");
-      console.log("fetchRecommendedCareers finalizado."); // Log fin fetch rec
+      if (loadingSpinnerRec) loadingSpinnerRec.classList.add("hidden");
+      console.log("fetchRecommendedCareers finalizado.");
     }
   }
 
@@ -403,17 +358,15 @@ document.addEventListener("DOMContentLoaded", () => {
       "renderRecommendedCareers iniciado con",
       carreras.length,
       "carreras."
-    ); // Log inicio render
-    recommendedCareersContainer.innerHTML = "";
+    );
+    if (recommendedCareersContainer) recommendedCareersContainer.innerHTML = "";
     if (carreras.length === 0) {
-      noResultsMessageRec.classList.remove("hidden");
-      console.log("Mostrando mensaje 'sin resultados'."); // Log sin resultados
+      if (noResultsMessageRec) noResultsMessageRec.classList.remove("hidden");
+      console.log("Mostrando mensaje 'sin resultados'.");
       return;
     }
-    noResultsMessageRec.classList.add("hidden");
-    carreras.forEach((carrera, index) => {
-      // Añadido index para log
-      // console.log("Renderizando tarjeta para:", carrera.nombre); // Log por cada tarjeta (puede ser mucho)
+    if (noResultsMessageRec) noResultsMessageRec.classList.add("hidden");
+    carreras.forEach((carrera) => {
       const universidad = carrera.Universidad || {
         nombre: "N/A",
         sitio_web: "#",
@@ -437,9 +390,10 @@ document.addEventListener("DOMContentLoaded", () => {
               universidad.sitio_web || "#"
             }" target="_blank" rel="noopener noreferrer" class="font-medium text-impulso-teal hover:text-impulso-dark transition-colors"> Visitar sitio web <i class="fas fa-external-link-alt ml-1 text-xs"></i> </a> </div>
         </div> `;
-      recommendedCareersContainer.innerHTML += card;
+      if (recommendedCareersContainer)
+        recommendedCareersContainer.innerHTML += card;
     });
-    console.log("renderRecommendedCareers finalizado."); // Log fin render
+    console.log("renderRecommendedCareers finalizado.");
   }
 
   // --- EVENT LISTENERS ---

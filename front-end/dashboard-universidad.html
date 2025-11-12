@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Gestión - Impulso Vocacional</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (para íconos) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- Estilos personalizados para el dropdown y modales -->
+    <style>
+      /* Estilos para el menú desplegable del perfil */
+      .profile-menu .dropdown-content {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateY(-10px);
+      }
+
+      .profile-menu:hover .dropdown-content,
+      .profile-menu .dropdown-content:hover {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Estilos para la transición del modal */
+      .modal-content {
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      }
+
+      /* Ocultar scrollbar pero permitir scroll */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+    <!-- Script de Tailwind (puedes personalizarlo) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "impulso-teal": "#008080", // Ejemplo
+              "impulso-dark": "#005050", // Ejemplo
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="bg-gray-100 font-sans">
+    <!-- Alerta Flotante -->
+    <div
+      id="message-container"
+      class="fixed top-5 right-5 w-auto max-w-sm z-[100] hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        id="alertMessage"
+        class="border-l-4 p-4 rounded-md shadow-lg"
+        role="alert"
+      >
+        <div class="flex items-center">
+          <div class="py-1">
+            <svg
+              class="h-6 w-6 mr-4"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <p class="font-bold" id="alert-text">Mensaje de prueba.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <div class="flex-shrink-0 flex items-center">
+              <!-- Tu Logo -->
+              <h1 class="text-2xl font-bold text-impulso-teal">
+                Impulso<span class="text-gray-700">Vocacional</span>
+              </h1>
+            </div>
+          </div>
+          <!-- Botones de Auth (Escritorio) -->
+          <div class="hidden sm:ml-6 sm:flex sm:items-center" id="auth-buttons">
+            <!-- Contenido dinámico por JS -->
+          </div>
+          <!-- Botón de Menú Móvil -->
+          <div class="-mr-2 flex items-center sm:hidden">
+            <button
+              id="mobile-menu-btn"
+              type="button"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-impulso-teal"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Abrir menú principal</span>
+              <!-- Icono Hamburguesa -->
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <!-- Icono X (cerrar) -->
+              <svg
+                class="hidden h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Menú Móvil -->
+      <div class="sm:hidden hidden" id="mobile-menu">
+        <div
+          class="pt-4 pb-3 border-t border-gray-200"
+          id="mobile-auth-buttons"
+        >
+          <!-- Contenido dinámico por JS -->
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <!-- Tabs de Navegación -->
+      <div class="mb-6">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <button
+              id="tab-perfil"
+              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-impulso-teal text-impulso-teal"
+              aria-current="page"
+            >
+              Mi Perfil
+            </button>
+
+            <button
+              id="tab-carreras"
+              class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled
+            >
+              <!-- El 'disabled' se quita por JS cuando el perfil existe -->
+              Gestionar Carreras
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Vista: Mi Perfil -->
+      <div id="view-perfil" class="">
+        <!-- Formulario: CREAR Perfil (se oculta si ya existe) -->
+        <div
+          id="crear-perfil-container"
+          class="bg-white p-6 sm:p-8 rounded-lg shadow-md hidden"
+        >
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">¡Bienvenido!</h2>
+          <p class="text-gray-600 mb-6">
+            Parece que es tu primera vez aquí. Por favor, completa el perfil de
+            tu institución para poder empezar a cargar carreras.
+          </p>
+          <form id="form-crear-institucion" class="space-y-4">
+            <!-- Campos del formulario (Nombre, Alias, Gestión, etc.) -->
+            <div>
+              <label
+                for="perfil-nombre"
+                class="block text-sm font-medium text-gray-700"
+                >Nombre de la Institución</label
+              >
+              <input
+                type="text"
+                id="perfil-nombre"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                required
+              />
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="perfil-alias"
+                  class="block text-sm font-medium text-gray-700"
+                  >Siglas o Alias (Ej: UBA)</label
+                >
+                <input
+                  type="text"
+                  id="perfil-alias"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  for="perfil-gestion"
+                  class="block text-sm font-medium text-gray-700"
+                  >Tipo de Gestión</label
+                >
+                <select
+                  id="perfil-gestion"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                >
+                  <option value="Estatal">Estatal</option>
+                  <option value="Privada">Privada</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label
+                for="perfil-provincia"
+                class="block text-sm font-medium text-gray-700"
+                >Provincia</label
+              >
+              <input
+                type="text"
+                id="perfil-provincia"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+            </div>
+            <div>
+              <label
+                for="perfil-sitio-web"
+                class="block text-sm font-medium text-gray-700"
+                >Sitio Web (Opcional)</label
+              >
+              <input
+                type="url"
+                id="perfil-sitio-web"
+                placeholder="https://www.miuniversidad.edu.ar"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+            </div>
+            <div class="text-right">
+              <button
+                type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-impulso-teal hover:bg-impulso-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal"
+              >
+                Guardar Perfil y Continuar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Formulario: EDITAR Perfil (se muestra si ya existe) -->
+        <div
+          id="editar-perfil-container"
+          class="bg-white p-6 sm:p-8 rounded-lg shadow-md hidden"
+        >
+          <h2
+            class="text-2xl font-bold text-gray-800 mb-6"
+            id="institucion-nombre-titulo"
+          >
+            Editando Perfil
+          </h2>
+          <form id="form-editar-institucion" class="space-y-4">
+            <!-- Campos del formulario (Nombre, Alias, Gestión, etc.) -->
+            <div>
+              <label
+                for="edit-perfil-nombre"
+                class="block text-sm font-medium text-gray-700"
+                >Nombre de la Institución</label
+              >
+              <input
+                type="text"
+                id="edit-perfil-nombre"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                required
+              />
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="edit-perfil-alias"
+                  class="block text-sm font-medium text-gray-700"
+                  >Siglas o Alias (Ej: UBA)</label
+                >
+                <input
+                  type="text"
+                  id="edit-perfil-alias"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  for="edit-perfil-gestion"
+                  class="block text-sm font-medium text-gray-700"
+                  >Tipo de Gestión</label
+                >
+                <select
+                  id="edit-perfil-gestion"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                >
+                  <option value="Estatal">Estatal</option>
+                  <option value="Privada">Privada</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label
+                for="edit-perfil-provincia"
+                class="block text-sm font-medium text-gray-700"
+                >Provincia</label
+              >
+              <input
+                type="text"
+                id="edit-perfil-provincia"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+            </div>
+            <div>
+              <label
+                for="edit-perfil-sitio-web"
+                class="block text-sm font-medium text-gray-700"
+                >Sitio Web (Opcional)</label
+              >
+              <input
+                type="url"
+                id="edit-perfil-sitio-web"
+                placeholder="https://www.miuniversidad.edu.ar"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+            </div>
+            <div class="text-right">
+              <button
+                type="submit"
+                class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-impulso-teal hover:bg-impulso-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal"
+              >
+                Actualizar Perfil
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Vista: Gestionar Carreras -->
+      <div id="view-carreras" class="hidden">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold text-gray-800">Mis Carreras</h2>
+          <button
+            id="btn-abrir-modal-crear"
+            class="inline-flex items-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-impulso-teal hover:bg-impulso-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal"
+          >
+            <i class="fas fa-plus mr-2"></i>
+            Añadir Carrera
+          </button>
+        </div>
+
+        <!-- Tabla de Carreras -->
+        <div class="flex flex-col">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div
+              class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+            >
+              <div
+                class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+              >
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Nombre
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Tipo
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Área
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Duración
+                      </th>
+                      <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Acciones</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="tabla-carreras-body"
+                    class="bg-white divide-y divide-gray-200"
+                  >
+                    <!-- Fila de Carga (Spinner) -->
+                    <tr id="carreras-loading" class="hidden">
+                      <td colspan="5" class="px-6 py-12 text-center">
+                        <div
+                          class="flex justify-center items-center text-gray-500"
+                        >
+                          <svg
+                            class="animate-spin -ml-1 mr-3 h-6 w-6 text-impulso-teal"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              class="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              stroke-width="4"
+                            ></circle>
+                            <path
+                              class="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          <span>Cargando carreras...</span>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Fila de Vacío -->
+                    <tr id="carreras-empty" class="hidden">
+                      <td colspan="5" class="px-6 py-12 text-center">
+                        <div
+                          class="flex flex-col justify-center items-center text-gray-500"
+                        >
+                          <i
+                            class="fas fa-folder-open fa-3x mb-3 text-gray-400"
+                          ></i>
+                          <h3 class="font-medium text-gray-700">
+                            No hay carreras cargadas
+                          </h3>
+                          <p class="text-sm">
+                            Usa el botón "Añadir Carrera" para empezar.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <!-- Filas dinámicas de carreras van aquí -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: CREAR Carrera -->
+    <div
+      id="modal-crear-carrera"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="modal-content bg-white w-full max-w-2xl rounded-lg shadow-xl overflow-hidden transform scale-95 transition-transform duration-300"
+      >
+        <form id="form-crear-carrera">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              Añadir Nueva Carrera
+            </h3>
+          </div>
+          <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
+            <!-- Campo: Nombre -->
+            <div>
+              <label
+                for="carrera-nombre"
+                class="block text-sm font-medium text-gray-700"
+                >Nombre de la Carrera</label
+              >
+              <input
+                type="text"
+                id="carrera-nombre"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                required
+              />
+            </div>
+            <!-- Campo: Descripción -->
+            <div>
+              <label
+                for="carrera-descripcion"
+                class="block text-sm font-medium text-gray-700"
+                >Descripción Breve</label
+              >
+              <textarea
+                id="carrera-descripcion"
+                rows="3"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              ></textarea>
+            </div>
+            <!-- Campos: Tipo, Área, Duración -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label
+                  for="carrera-tipo"
+                  class="block text-sm font-medium text-gray-700"
+                  >Tipo</label
+                >
+                <select
+                  id="carrera-tipo"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                >
+                  <option value="Grado">Grado</option>
+                  <option value="Tecnicatura">Tecnicatura</option>
+                  <option value="Posgrado">Posgrado</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="carrera-area"
+                  class="block text-sm font-medium text-gray-700"
+                  >Área de Estudio</label
+                >
+                <input
+                  type="text"
+                  id="carrera-area"
+                  placeholder="Ej: Informática"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="carrera-duracion"
+                  class="block text-sm font-medium text-gray-700"
+                  >Duración (años)</label
+                >
+                <input
+                  type="number"
+                  id="carrera-duracion"
+                  min="1"
+                  max="10"
+                  step="0.5"
+                  placeholder="Ej: 5"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                  required
+                />
+              </div>
+            </div>
+            <!-- Campo: RIASEC -->
+            <div>
+              <label
+                for="carrera-riasec"
+                class="block text-sm font-medium text-gray-700"
+                >Perfiles RIASEC Compatibles</label
+              >
+              <input
+                type="text"
+                id="carrera-riasec"
+                placeholder="R, I, A, S, E, C (separados por coma)"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+              <p class="mt-1 text-xs text-gray-500">
+                Ej: R, I, C (Realista, Investigador, Convencional)
+              </p>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="submit"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-impulso-teal text-base font-medium text-white hover:bg-impulso-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Guardar Carrera
+            </button>
+            <button
+              type="button"
+              id="btn-cancelar-modal-crear"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Cancelar
+            </button>
+            <!-- Botón oculto para cerrar (para JS) -->
+            <button
+              type="button"
+              id="btn-cerrar-modal-crear"
+              class="hidden"
+            ></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal: EDITAR Carrera -->
+    <div
+      id="modal-editar-carrera"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden opacity-0 transition-opacity duration-300"
+    >
+      <div
+        class="modal-content bg-white w-full max-w-2xl rounded-lg shadow-xl overflow-hidden transform scale-95 transition-transform duration-300"
+      >
+        <form id="form-editar-carrera">
+          <input type="hidden" id="edit-carrera-id" />
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">
+              Editar Carrera
+            </h3>
+          </div>
+          <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
+            <!-- Campo: Nombre -->
+            <div>
+              <label
+                for="edit-carrera-nombre"
+                class="block text-sm font-medium text-gray-700"
+                >Nombre de la Carrera</label
+              >
+              <input
+                type="text"
+                id="edit-carrera-nombre"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                required
+              />
+            </div>
+            <!-- Campo: Descripción -->
+            <div>
+              <label
+                for="edit-carrera-descripcion"
+                class="block text-sm font-medium text-gray-700"
+                >Descripción Breve</label
+              >
+              <textarea
+                id="edit-carrera-descripcion"
+                rows="3"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              ></textarea>
+            </div>
+            <!-- Campos: Tipo, Área, Duración -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label
+                  for="edit-carrera-tipo"
+                  class="block text-sm font-medium text-gray-700"
+                  >Tipo</label
+                >
+                <select
+                  id="edit-carrera-tipo"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                >
+                  <option value="Grado">Grado</option>
+                  <option value="Tecnicatura">Tecnicatura</option>
+                  <option value="Posgrado">Posgrado</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="edit-carrera-area"
+                  class="block text-sm font-medium text-gray-700"
+                  >Área de Estudio</label
+                >
+                <input
+                  type="text"
+                  id="edit-carrera-area"
+                  placeholder="Ej: Informática"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="edit-carrera-duracion"
+                  class="block text-sm font-medium text-gray-700"
+                  >Duración (años)</label
+                >
+                <input
+                  type="number"
+                  id="edit-carrera-duracion"
+                  min="1"
+                  max="10"
+                  step="0.5"
+                  placeholder="Ej: 5"
+                  class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+                  required
+                />
+              </div>
+            </div>
+            <!-- Campo: RIASEC -->
+            <div>
+              <label
+                for="edit-carrera-riasec"
+                class="block text-sm font-medium text-gray-700"
+                >Perfiles RIASEC Compatibles</label
+              >
+              <input
+                type="text"
+                id="edit-carrera-riasec"
+                placeholder="R, I, A, S, E, C (separados por coma)"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-impulso-teal focus:border-impulso-teal sm:text-sm"
+              />
+              <p class="mt-1 text-xs text-gray-500">
+                Ej: R, I, C (Realista, Investigador, Convencional)
+              </p>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button
+              type="submit"
+              class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-impulso-teal text-base font-medium text-white hover:bg-impulso-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Actualizar Carrera
+            </button>
+            <button
+              type="button"
+              id="btn-cancelar-modal-editar"
+              class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!--
+  ******************************************************************
+  * *
+  * INICIO DEL SCRIPT CORREGIDO                    *
+  * *
+  ******************************************************************
+  -->
+    <script>
+      // --- URLs y Estado Global ---
+      const API_BASE_URL = "http://localhost:3000/api";
+      const token = localStorage.getItem("authToken");
+      let userType = localStorage.getItem("userType");
+      let user = JSON.parse(localStorage.getItem("user"));
+
+      // Guardará el ID de la institución una vez que la traigamos
+      let institucionGlobalId = null;
+
+      // --- Selectores del DOM ---
+      const authButtons = document.getElementById("auth-buttons");
+      const mobileAuthButtons = document.getElementById("mobile-auth-buttons");
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      const tabPerfil = document.getElementById("tab-perfil");
+      const tabCarreras = document.getElementById("tab-carreras");
+      const viewPerfil = document.getElementById("view-perfil");
+      const viewCarreras = document.getElementById("view-carreras");
+
+      const crearPerfilContainer = document.getElementById(
+        "crear-perfil-container"
+      );
+      const editarPerfilContainer = document.getElementById(
+        "editar-perfil-container"
+      );
+      const institucionNombreTitulo = document.getElementById(
+        "institucion-nombre-titulo"
+      );
+
+      // Formularios
+      const formCrearInstitucion = document.getElementById(
+        "form-crear-institucion"
+      );
+      const formEditarInstitucion = document.getElementById(
+        "form-editar-institucion"
+      );
+
+      // Tabla de Carreras
+      const tablaCarrerasBody = document.getElementById("tabla-carreras-body");
+      const carrerasLoading = document.getElementById("carreras-loading");
+      const carrerasEmpty = document.getElementById("carreras-empty");
+
+      // Modales
+      const modalCrearCarrera = document.getElementById("modal-crear-carrera");
+      const modalEditarCarrera = document.getElementById(
+        "modal-editar-carrera"
+      );
+
+      // --- Alertas ---
+      const messageContainer = document.getElementById("message-container");
+      const alertMessage = document.getElementById("alertMessage");
+      const alertText = document.getElementById("alert-text");
+      let alertTimer;
+
+      function showMessage(message, type = "success", duration = 3000) {
+        clearTimeout(alertTimer);
+        alertText.innerHTML = message; // Se cambia a innerHTML para aceptar el botón
+        alertMessage.classList.remove(
+          "bg-green-100",
+          "border-green-400",
+          "text-green-700",
+          "bg-red-100",
+          "border-red-400",
+          "text-red-700",
+          "bg-yellow-100",
+          "border-yellow-400",
+          "text-yellow-700"
+        );
+
+        if (type === "success") {
+          alertMessage.classList.add(
+            "bg-green-100",
+            "border-green-400",
+            "text-green-700"
+          );
+        } else if (type === "error") {
+          alertMessage.classList.add(
+            "bg-red-100",
+            "border-red-400",
+            "text-red-700"
+          );
+        } else {
+          // 'loading'
+          alertMessage.classList.add(
+            "bg-yellow-100",
+            "border-yellow-400",
+            "text-yellow-700"
+          );
+        }
+
+        messageContainer.classList.remove("hidden", "opacity-0");
+        messageContainer.classList.remove("animate-pulse");
+        if (type === "loading") {
+          messageContainer.classList.add("animate-pulse");
+        } else {
+          alertTimer = setTimeout(hideMessage, duration);
+        }
+      }
+      function hideMessage() {
+        messageContainer.classList.add("opacity-0");
+        setTimeout(() => messageContainer.classList.add("hidden"), 300); // Esperar transición
+      }
+
+      // --- Lógica de Autenticación y Navegación ---
+
+      function checkAuth() {
+        console.log("Verificando autenticación...");
+        if (!token || !userType) {
+          console.log("No hay token o userType. Redirigiendo a login.");
+          window.location.href = "login.html";
+          return false;
+        }
+        if (userType !== "universidad") {
+          console.log(
+            "Usuario no es 'universidad'. Redirigiendo a perfil de estudiante."
+          );
+          window.location.href = "perfil.html"; // Redirige al perfil de estudiante
+          return false;
+        }
+        console.log("Autenticación de universidad OK.");
+        return true;
+      }
+
+      async function handleLogout() {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("user");
+        localStorage.removeItem("userRiasec");
+        try {
+          await fetch(`${API_BASE_URL}/auth/logout`, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+        } catch (err) {
+          console.error("Fallo al notificar logout al servidor", err);
+        }
+        window.location.href = "index.html";
+      }
+
+      function setupNavbar() {
+        const userName = user && user.name ? user.name : "Panel";
+        if (authButtons) {
+          authButtons.innerHTML = `
+                <div class="relative group profile-menu">
+                  <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
+                    <i class="fas fa-user-circle mr-2"></i> ${userName}
+                  </button>
+                  <div class="dropdown-content absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                    <button id="logout-button-nav" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
+                  </div>
+                </div>`;
+        }
+        if (mobileAuthButtons) {
+          mobileAuthButtons.innerHTML = `
+                    <button id="mobile-logout-button-nav" class="block w-full text-center px-4 py-2 bg-red-500 text-white rounded-lg">
+                      Cerrar Sesión
+                    </button>`;
+        }
+        // Asignar eventos de logout
+        document
+          .getElementById("logout-button-nav")
+          ?.addEventListener("click", handleLogout);
+        document
+          .getElementById("mobile-logout-button-nav")
+          ?.addEventListener("click", handleLogout);
+        // Menú móvil
+        mobileMenuBtn.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          // Alternar íconos
+          mobileMenuBtn.querySelector("svg.block").classList.toggle("hidden");
+          mobileMenuBtn.querySelector("svg.hidden").classList.toggle("hidden");
+        });
+      }
+
+      function setupTabs() {
+        tabPerfil.addEventListener("click", () => {
+          viewPerfil.classList.remove("hidden");
+          viewCarreras.classList.add("hidden");
+          tabPerfil.classList.add("border-impulso-teal", "text-impulso-teal");
+          tabPerfil.classList.remove(
+            "border-transparent",
+            "text-gray-500",
+            "hover:text-gray-700",
+            "hover:border-gray-300"
+          );
+          tabCarreras.classList.add(
+            "border-transparent",
+            "text-gray-500",
+            "hover:text-gray-700",
+            "hover:border-gray-300"
+          );
+          tabCarreras.classList.remove(
+            "border-impulso-teal",
+            "text-impulso-teal"
+          );
+        });
+
+        tabCarreras.addEventListener("click", () => {
+          viewCarreras.classList.remove("hidden");
+          viewPerfil.classList.add("hidden");
+          tabCarreras.classList.add("border-impulso-teal", "text-impulso-teal");
+          tabCarreras.classList.remove(
+            "border-transparent",
+            "text-gray-500",
+            "hover:text-gray-700",
+            "hover:border-gray-300"
+          );
+          tabPerfil.classList.add(
+            "border-transparent",
+            "text-gray-500",
+            "hover:text-gray-700",
+            "hover:border-gray-300"
+          );
+          tabPerfil.classList.remove(
+            "border-impulso-teal",
+            "text-impulso-teal"
+          );
+
+          // Si la tabla no tiene filas (solo la de loading y empty), busca las carreras
+          if (tablaCarrerasBody.childElementCount <= 2) {
+            fetchMisCarreras();
+          }
+        });
+      }
+
+      // --- LÓGICA DE PERFIL DE INSTITUCIÓN (CORREGIDA) ---
+
+      // --- ¡NUEVA FUNCIÓN HELPER! ---
+      /**
+       * Esta función revisa la respuesta del backend y devuelve el objeto
+       * del perfil, sin importar si viene en la raíz, en .institucion o .universidad
+       */
+      function detectarPerfilEnRespuesta(data) {
+        if (data && data.institucion && data.institucion.id) {
+          console.log("Perfil detectado en 'data.institucion'");
+          return data.institucion;
+        }
+        if (data && data.universidad && data.universidad.id) {
+          console.log("Perfil detectado en 'data.universidad'");
+          return data.universidad;
+        }
+        if (data && data.id) {
+          console.log("Perfil detectado en la raíz 'data'");
+          return data;
+        }
+        console.log(
+          "No se pudo detectar un perfil válido en la respuesta:",
+          data
+        );
+        return null;
+      }
+      // --- FIN DE NUEVA FUNCIÓN HELPER ---
+
+      /**
+       * Esta función toma los datos de una institución y actualiza la UI
+       * para mostrar el modo "Edición" y desbloquear las carreras.
+       */
+      function actualizarUIPerfilExistente(institucion) {
+        console.log("Perfil encontrado/creado, actualizando UI:", institucion);
+
+        // Esta validación ahora recibe el objeto perfil directamente
+        if (!institucion || !institucion.id) {
+          console.error(
+            "actualizarUIPerfilExistente fue llamada con data nula o inválida."
+          );
+          // Si la data es inválida, forzamos a mostrar el formulario de creación
+          crearPerfilContainer.classList.remove("hidden");
+          editarPerfilContainer.classList.add("hidden");
+          tabCarreras.disabled = true;
+          tabCarreras.classList.add("cursor-not-allowed", "opacity-50");
+          return;
+        }
+
+        institucionGlobalId = institucion.id; // ¡Guardamos el ID global!
+
+        // Rellenar y mostrar el formulario de EDICIÓN
+        document.getElementById("edit-perfil-nombre").value =
+          institucion.nombre;
+        document.getElementById("edit-perfil-alias").value = institucion.alias;
+        document.getElementById("edit-perfil-gestion").value =
+          institucion.tipo_gestion;
+        document.getElementById("edit-perfil-provincia").value =
+          institucion.provincia;
+        document.getElementById("edit-perfil-sitio-web").value =
+          institucion.sitio_web;
+
+        institucionNombreTitulo.textContent = institucion.nombre; // Actualizar título
+
+        crearPerfilContainer.classList.add("hidden");
+        editarPerfilContainer.classList.remove("hidden");
+        tabCarreras.disabled = false; // ¡Habilitar pestaña de carreras!
+        tabCarreras.classList.remove("cursor-not-allowed", "opacity-50"); // Quitar estilo deshabilitado
+      }
+
+      async function handleCrearPerfil(e) {
+        e.preventDefault();
+        showMessage("Guardando perfil...", "loading");
+        const payload = {
+          nombre: document.getElementById("perfil-nombre").value,
+          alias: document.getElementById("perfil-alias").value,
+          tipo_gestion: document.getElementById("perfil-gestion").value,
+          provincia: document.getElementById("perfil-provincia").value,
+          sitio_web: document.getElementById("perfil-sitio-web").value,
+        };
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/universidades`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          });
+          const data = await response.json();
+          if (!response.ok) {
+            // El error 400 "Ya existe" será capturado aquí
+            throw new Error(data.mensaje || "No se pudo crear el perfil.");
+          }
+
+          showMessage("¡Perfil creado exitosamente!", "success");
+
+          // --- ¡CAMBIO APLICADO! ---
+          // Usamos la nueva función helper para encontrar el perfil
+          const perfil = detectarPerfilEnRespuesta(data);
+          actualizarUIPerfilExistente(perfil);
+          // --- FIN DEL CAMBIO ---
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+        }
+      }
+
+      async function handleEditarPerfil(e) {
+        e.preventDefault();
+        showMessage("Actualizando perfil...", "loading");
+        const payload = {
+          nombre: document.getElementById("edit-perfil-nombre").value,
+          alias: document.getElementById("edit-perfil-alias").value,
+          tipo_gestion: document.getElementById("edit-perfil-gestion").value,
+          provincia: document.getElementById("edit-perfil-provincia").value,
+          sitio_web: document.getElementById("edit-perfil-sitio-web").value,
+        };
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/universidades/mi-perfil`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.mensaje || "No se pudo actualizar el perfil.");
+          }
+
+          showMessage("¡Perfil actualizado exitosamente!", "success");
+
+          // --- ¡CAMBIO APLICADO! ---
+          // Usamos la nueva función helper para encontrar el perfil
+          const perfil = detectarPerfilEnRespuesta(data);
+          actualizarUIPerfilExistente(perfil);
+          // --- FIN DEL CAMBIO ---
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+        }
+      }
+
+      // --- Lógica de Gestión de Carreras ---
+
+      async function fetchMisCarreras() {
+        // Si el ID de la institución no está, no podemos buscar carreras.
+        if (!institucionGlobalId) {
+          console.warn(
+            "No hay institucionGlobalId, no se puede buscar carreras."
+          );
+          return;
+        }
+        carrerasLoading.classList.remove("hidden");
+        carrerasEmpty.classList.add("hidden");
+        tablaCarrerasBody.innerHTML = ""; // Limpiar tabla
+        tablaCarrerasBody.appendChild(carrerasLoading); // Añadir spinner
+        tablaCarrerasBody.appendChild(carrerasEmpty); // Añadir (oculto)
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/carreras/mis-carreras`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(
+              err.mensaje || "No se pudieron cargar las carreras."
+            );
+          }
+
+          const carreras = await response.json();
+          renderTablaCarreras(carreras);
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+          tablaCarrerasBody.innerHTML = ""; // Limpiar spinner
+          tablaCarrerasBody.appendChild(carrerasEmpty);
+          carrerasEmpty.classList.remove("hidden");
+        }
+      }
+
+      function renderTablaCarreras(carreras) {
+        // Limpiar todo excepto los elementos persistentes
+        tablaCarrerasBody.innerHTML = "";
+        tablaCarrerasBody.appendChild(carrerasLoading);
+        tablaCarrerasBody.appendChild(carrerasEmpty);
+
+        carrerasLoading.classList.add("hidden"); // Ocultar spinner
+
+        if (carreras.length === 0) {
+          carrerasEmpty.classList.remove("hidden");
+          return;
+        }
+
+        carrerasEmpty.classList.add("hidden"); // Ocultar mensaje vacío
+
+        carreras.forEach((carrera) => {
+          const tr = document.createElement("tr");
+          tr.setAttribute("data-id", carrera.id);
+          tr.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm font-medium text-gray-900">${
+                      carrera.nombre
+                    }</div>
+                    <div class="text-xs text-gray-500">${(
+                      carrera.descripcion || ""
+                    ).substring(0, 40)}...</div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        ${carrera.tipo}
+                    </span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${
+                  carrera.area_estudio
+                }</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${
+                  carrera.duracion_anios
+                } años</td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button data-action="edit" class="text-impulso-teal hover:text-impulso-dark mr-3"><i class="fas fa-edit"></i> Editar</button>
+                    <button data-action="delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i> Eliminar</button>
+                </td>
+              `;
+          // Añadir listeners a los botones de la fila
+          tr.querySelector('[data-action="edit"]').addEventListener(
+            "click",
+            () => handleAbrirModalEditar(carrera)
+          );
+          tr.querySelector('[data-action="delete"]').addEventListener(
+            "click",
+            () => handleEliminarCarrera(carrera.id, carrera.nombre)
+          );
+
+          tablaCarrerasBody.appendChild(tr);
+        });
+      }
+
+      // --- Lógica de Modales (Crear/Editar Carrera) ---
+
+      function setupModalListeners() {
+        // Abrir/Cerrar Modal CREAR
+        document
+          .getElementById("btn-abrir-modal-crear")
+          .addEventListener("click", () => {
+            modalCrearCarrera.classList.remove("hidden", "opacity-0");
+            modalCrearCarrera
+              .querySelector(".modal-content")
+              .classList.remove("scale-95");
+          });
+        document
+          .getElementById("btn-cerrar-modal-crear")
+          .addEventListener("click", () => {
+            modalCrearCarrera.classList.add("opacity-0");
+            modalCrearCarrera
+              .querySelector(".modal-content")
+              .classList.add("scale-95");
+            setTimeout(() => modalCrearCarrera.classList.add("hidden"), 300);
+          });
+        document
+          .getElementById("btn-cancelar-modal-crear")
+          .addEventListener("click", () => {
+            document.getElementById("btn-cerrar-modal-crear").click();
+          });
+
+        // Abrir/Cerrar Modal EDITAR
+        const cerrarModalEditarBtn = document.getElementById(
+          "btn-cancelar-modal-editar"
+        );
+        cerrarModalEditarBtn.addEventListener("click", () => {
+          modalEditarCarrera.classList.add("opacity-0");
+          modalEditarCarrera
+            .querySelector(".modal-content")
+            .classList.add("scale-95");
+          setTimeout(() => modalEditarCarrera.classList.add("hidden"), 300);
+        });
+
+        // Handlers de Submit de Formularios de Carrera
+        document
+          .getElementById("form-crear-carrera")
+          .addEventListener("submit", handleCrearCarrera);
+        document
+          .getElementById("form-editar-carrera")
+          .addEventListener("submit", handleEditarCarrera);
+      }
+
+      async function handleCrearCarrera(e) {
+        e.preventDefault();
+
+        // --- CAMBIO CLAVE #2 (Problema 2) ---
+        // Verificamos que tenemos el ID de la institución antes de enviar.
+        if (!institucionGlobalId) {
+          showMessage(
+            "Error: No se encontró el ID de la institución. Recargue la página.",
+            "error"
+          );
+          return;
+        }
+        // --- FIN DEL CAMBIO ---
+
+        showMessage("Guardando carrera...", "loading");
+
+        const payload = {
+          nombre: document.getElementById("carrera-nombre").value,
+          descripcion: document.getElementById("carrera-descripcion").value,
+          tipo: document.getElementById("carrera-tipo").value,
+          area_estudio: document.getElementById("carrera-area").value,
+          duracion_anios: parseInt(
+            document.getElementById("carrera-duracion").value
+          ),
+          perfiles_riasec_compatibles: document
+            .getElementById("carrera-riasec")
+            .value.split(",")
+            .map((s) => s.trim().toUpperCase())
+            .filter(Boolean), // Filtra strings vacíos
+
+          // --- CAMBIO CLAVE #2 (Problema 2) ---
+          // Añadimos el ID de la institución al payload.
+          institucion_id: institucionGlobalId,
+          // --- FIN DEL CAMBIO ---
+        };
+
+        try {
+          const response = await fetch(`${API_BASE_URL}/carreras`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          });
+          const data = await response.json();
+          if (!response.ok)
+            throw new Error(data.mensaje || "No se pudo crear la carrera.");
+
+          showMessage("¡Carrera creada!", "success");
+          document.getElementById("btn-cerrar-modal-crear").click();
+          document.getElementById("form-crear-carrera").reset();
+          fetchMisCarreras(); // Recargar la tabla
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+        }
+      }
+
+      function handleAbrirModalEditar(carrera) {
+        console.log("Editando:", carrera);
+        document.getElementById("edit-carrera-id").value = carrera.id;
+        document.getElementById("edit-carrera-nombre").value = carrera.nombre;
+        document.getElementById("edit-carrera-descripcion").value =
+          carrera.descripcion;
+        document.getElementById("edit-carrera-tipo").value = carrera.tipo;
+        document.getElementById("edit-carrera-area").value =
+          carrera.area_estudio;
+        document.getElementById("edit-carrera-duracion").value =
+          carrera.duracion_anios;
+
+        let riasec_string = "";
+        try {
+          let perfiles = carrera.perfiles_riasec_compatibles;
+          // Manejar perfiles que pueden ser string JSON o array
+          if (typeof perfiles === "string") {
+            try {
+              perfiles = JSON.parse(perfiles);
+            } catch (e) {
+              perfiles = []; // Si no es JSON válido, tratar como vacío
+            }
+          }
+          if (Array.isArray(perfiles)) {
+            riasec_string = perfiles.join(", ");
+          }
+        } catch (e) {
+          console.warn("No se pudo parsear perfiles RIASEC:", e);
+        }
+        document.getElementById("edit-carrera-riasec").value = riasec_string;
+
+        modalEditarCarrera.classList.remove("hidden", "opacity-0");
+        modalEditarCarrera
+          .querySelector(".modal-content")
+          .classList.remove("scale-95");
+      }
+
+      async function handleEditarCarrera(e) {
+        e.preventDefault();
+        showMessage("Actualizando carrera...", "loading");
+
+        const carreraId = document.getElementById("edit-carrera-id").value;
+        const payload = {
+          nombre: document.getElementById("edit-carrera-nombre").value,
+          descripcion: document.getElementById("edit-carrera-descripcion")
+            .value,
+          tipo: document.getElementById("edit-carrera-tipo").value,
+          area_estudio: document.getElementById("edit-carrera-area").value,
+          duracion_anios: parseInt(
+            document.getElementById("edit-carrera-duracion").value
+          ),
+          perfiles_riasec_compatibles: document
+            .getElementById("edit-carrera-riasec")
+            .value.split(",")
+            .map((s) => s.trim().toUpperCase())
+            .filter(Boolean), // Filtra strings vacíos
+        };
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/carreras/${carreraId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+          const data = await response.json();
+          if (!response.ok)
+            throw new Error(
+              data.mensaje || "No se pudo actualizar la carrera."
+            );
+
+          showMessage("¡Carrera actualizada!", "success");
+          document.getElementById("btn-cancelar-modal-editar").click();
+          document.getElementById("form-editar-carrera").reset();
+          fetchMisCarreras(); // Recargar la tabla
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+        }
+      }
+
+      async function handleEliminarCarrera(id, nombre) {
+        showMessage(
+          `¿Seguro que quieres eliminar "${nombre}"? Esta acción es irreversible. <button id="confirm-delete" class="font-bold underline ml-2 hover:text-red-900">Sí, eliminar</button>`,
+          "error",
+          10000
+        );
+
+        const confirmBtn = document.getElementById("confirm-delete");
+        if (confirmBtn) {
+          confirmBtn.onclick = async () => {
+            hideMessage();
+            showMessage("Eliminando carrera...", "loading");
+
+            try {
+              const response = await fetch(`${API_BASE_URL}/carreras/${id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+              });
+              const data = await response.json();
+              if (!response.ok)
+                throw new Error(
+                  data.mensaje || "No se pudo eliminar la carrera."
+                );
+
+              showMessage("¡Carrera eliminada!", "success");
+              fetchMisCarreras(); // Recargar la tabla
+            } catch (error) {
+              console.error(error);
+              showMessage(error.message, "error");
+            }
+          };
+        }
+      }
+
+      // --- INICIALIZACIÓN ---
+      document.addEventListener("DOMContentLoaded", () => {
+        if (checkAuth()) {
+          // Si es universidad, configurar todo
+          setupNavbar();
+          setupTabs();
+          setupModalListeners();
+
+          formCrearInstitucion.addEventListener("submit", handleCrearPerfil);
+          formEditarInstitucion.addEventListener("submit", handleEditarPerfil);
+
+          // Esta es la función que se ejecuta al cargar la página
+          fetchMiPerfil_Modificado();
+        }
+      });
+
+      // --- FUNCIÓN DE CARGA INICIAL (MODIFICADA) ---
+      async function fetchMiPerfil_Modificado() {
+        console.log("Buscando perfil de institución...");
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/universidades/mi-perfil`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
+          if (response.status === 404) {
+            // Si el backend dice 404, mostramos el formulario de creación
+            console.log(
+              "No se encontró perfil. Mostrando formulario de creación."
+            );
+            crearPerfilContainer.classList.remove("hidden");
+            editarPerfilContainer.classList.add("hidden");
+            tabCarreras.disabled = true;
+            tabCarreras.classList.add("cursor-not-allowed", "opacity-50");
+            return;
+          }
+          if (!response.ok) {
+            const err = await response.json();
+            throw new Error(
+              err.mensaje || "Error al cargar el perfil de la institución."
+            );
+          }
+
+          // Si la respuesta es OK (200), significa que SÍ tiene perfil
+          const data = await response.json();
+
+          console.log("Perfil existente encontrado (respuesta cruda):", data);
+
+          // --- ¡CAMBIO APLICADO! ---
+          // Usamos la nueva función helper para encontrar el perfil
+          const perfil = detectarPerfilEnRespuesta(data);
+          actualizarUIPerfilExistente(perfil);
+          // --- FIN DEL CAMBIO ---
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message, "error");
+          // Si falla la carga, igual mostramos "crear" para que no quede en blanco
+          crearPerfilContainer.classList.remove("hidden");
+          editarPerfilContainer.classList.add("hidden");
+          tabCarreras.disabled = true;
+          tabCarreras.classList.add("cursor-not-allowed", "opacity-50");
+        }
+      }
+    </script>
+  </body>
+</html>

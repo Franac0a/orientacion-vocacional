@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <!-- ... (tu head sigue igual) ... -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Test de Personalidad - Impulso Educativo</title>
-    <!-- Título actualizado -->
+    <title>Test Vocacional - Impulso Educativo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -50,22 +48,14 @@
       }
       .question-container.active {
         display: block;
-        animation: fade-in 0.5s ease-out forwards; /* Animación al mostrar */
+        animation: fade-in 0.5s ease-out forwards;
       }
-      /* Estilos para el loader y las tarjetas */
       .loader {
         @apply w-12 h-12 border-4 border-impulso-teal border-t-transparent rounded-full animate-spin;
       }
       .card:hover {
         transform: translateY(-5px);
         transition: transform 0.3s ease;
-      }
-      /* Estilo para separar secciones del test */
-      .section-divider {
-        @apply my-6 border-t-2 border-dashed border-gray-300;
-      }
-      .section-title {
-        @apply text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 text-center;
       }
     </style>
   </head>
@@ -78,7 +68,6 @@
       class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
       id="navbar"
     >
-      <!-- ... (Tu navbar completo aquí) ... -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center space-x-3">
@@ -116,7 +105,7 @@
               href="test.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium border-b-2 border-impulso-teal"
               id="test-link"
-              >Test de Personalidad</a
+              >Test Vocacional</a
             >
             <a
               href="nosotros.html"
@@ -135,19 +124,7 @@
               Explorá</a
             >
             <div class="flex items-center space-x-3" id="auth-buttons">
-              <!-- El script reemplazará esto según el login -->
-              <a
-                href="login.html"
-                class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300"
-              >
-                Iniciar Sesión
-              </a>
-              <a
-                href="registro.html"
-                class="px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                Registrarse
-              </a>
+              <!-- JS llenará esto -->
             </div>
           </div>
         </div>
@@ -166,7 +143,7 @@
             href="test.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             id="mobile-test-link"
-            >Test de Personalidad</a
+            >Test Vocacional</a
           >
           <a
             href="nosotros.html"
@@ -185,19 +162,7 @@
             Explorá</a
           >
           <div class="pt-3 space-y-2" id="mobile-auth-buttons">
-            <!-- El script reemplazará esto según el login -->
-            <a
-              href="login.html"
-              class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg"
-            >
-              Iniciar Sesión
-            </a>
-            <a
-              href="registro.html"
-              class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg"
-            >
-              Registrarse
-            </a>
+            <!-- JS llenará esto -->
           </div>
         </div>
       </div>
@@ -205,7 +170,7 @@
 
     <!-- === MAIN === -->
     <main class="flex-grow flex items-center justify-center p-4 pt-24 md:pt-32">
-      <!-- Sección de Login (sin cambios) -->
+      <!-- Sección de Login (si no está logueado) -->
       <div
         id="loginSection"
         class="bg-white rounded-xl shadow-xl overflow-hidden w-full max-w-md hidden"
@@ -220,14 +185,12 @@
             >
               <img
                 src="src/img/logo.jpg"
-                alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+                alt="Logo Impulso Educativo"
                 class="w-20 h-20 rounded-full"
               />
             </div>
           </div>
-          <h1 class="text-2xl font-bold text-white mb-1">
-            Test de Personalidad
-          </h1>
+          <h1 class="text-2xl font-bold text-white mb-1">Test Vocacional</h1>
           <p class="text-impulso-light">Inicia sesión para comenzar</p>
         </div>
         <div class="p-8">
@@ -254,7 +217,7 @@
         </div>
       </div>
 
-      <!-- Sección del Test -->
+      <!-- Sección del Test (si está logueado) -->
       <div
         id="testSection"
         class="w-full max-w-4xl bg-white rounded-xl shadow-xl p-6 md:p-8 hidden"
@@ -262,10 +225,11 @@
       >
         <div class="text-center mb-8">
           <h2 class="text-3xl font-bold text-impulso-dark">
-            Test de Personalidad
+            Test de Intereses Vocacionales
           </h2>
           <p class="text-gray-600 mt-2">
-            Responde estas preguntas para descubrir tu perfil de personalidad.
+            Responde estas preguntas para descubrir tus intereses y carreras
+            afines.
           </p>
         </div>
 
@@ -274,9 +238,9 @@
           <div class="progress-top text-right text-sm text-gray-600 mb-2">
             <span
               ><strong>Progreso:</strong>
-              <span id="progressText">1 / 16</span></span
+              <span id="progressText">1 / 18</span></span
             >
-            <!-- Asumiendo 16 preguntas -->
+            <!-- Actualizado a 18 -->
           </div>
           <div class="w-full bg-gray-200 rounded-full h-2.5">
             <div
@@ -287,584 +251,680 @@
           </div>
         </div>
 
-        <!-- Formulario del Test -->
+        <!-- Formulario del Test (NUEVAS PREGUNTAS RIASEC) -->
         <form id="testForm">
-          <!-- === PREGUNTAS MBTI (1-16) === -->
-          <!-- (Asegúrate de tener tus 16 preguntas aquí con data-section="mbti") -->
-          <div
-            class="question-container active"
-            data-section="mbti"
-            data-mbti-type="E"
-            data-mbti-pair="I"
-          >
+          <!-- Pregunta 1 (R vs S) -->
+          <div class="question-container active" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                1. En eventos sociales, suelo…
+                1. Prefiero:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q1"
-                    value="E"
+                    value="R"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Hablar con gente nueva</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Arreglar un electrodoméstico o un motor. (R)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q1"
-                    value="I"
+                    value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Quedarme con pocos conocidos</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Enseñar o explicarle algo a un compañero. (S)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="E"
-            data-mbti-pair="I"
-          >
+          <!-- Pregunta 2 (I vs E) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                2. Me recargo de energía cuando…
+                2. Me siento más cómodo:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
-                    type="radio"
-                    name="q2"
-                    value="E"
-                    class="form-radio h-5 w-5 text-impulso-teal"
-                    required
-                  /><span class="ml-3 text-gray-700"
-                    >Estoy con otros</span
-                  ></label
-                ><label
-                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q2"
                     value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700">Estoy a solas</span></label
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="E"
-            data-mbti-pair="I"
-          >
-            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
-              <p class="text-lg font-semibold text-impulso-dark mb-4">
-                3. Prefiero aprender…
-              </p>
-              <div class="space-y-3">
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Analizando datos y buscando patrones. (I)</span
+                  >
+                </label>
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
-                    name="q3"
+                    name="q2"
                     value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                    required
-                  /><span class="ml-3 text-gray-700"
-                    >Conversando en grupo</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Organizando y liderando un evento o grupo. (E)</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Pregunta 3 (A vs C) -->
+          <div class="question-container" data-section="riasec">
+            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+              <p class="text-lg font-semibold text-impulso-dark mb-4">
+                3. Disfruto más:
+              </p>
+              <div class="space-y-3">
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q3"
-                    value="I"
-                    class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Leyendo/reflexionando</span
-                  ></label
-                >
-              </div>
-            </div>
-          </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="E"
-            data-mbti-pair="I"
-          >
-            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
-              <p class="text-lg font-semibold text-impulso-dark mb-4">
-                4. En clase o reuniones, yo…
-              </p>
-              <div class="space-y-3">
-                <label
-                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
-                    type="radio"
-                    name="q4"
-                    value="E"
+                    value="A"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Participo espontáneamente</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Diseñando un folleto o dibujando. (A)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
-                    type="radio"
-                    name="q4"
-                    value="I"
-                    class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Pienso antes de hablar</span
-                  ></label
                 >
+                  <input
+                    type="radio"
+                    name="q3"
+                    value="C"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Organizando planillas y archivos. (C)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="S"
-            data-mbti-pair="N"
-          >
+          <!-- Pregunta 4 (R vs A) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                5. Me centro más en…
+                4. Me gustaría un trabajo donde pueda:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
+                    type="radio"
+                    name="q4"
+                    value="R"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Trabajar al aire libre o con las manos. (R)</span
+                  >
+                </label>
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q4"
+                    value="A"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Expresar mis ideas de forma creativa. (A)</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Pregunta 5 (I vs S) -->
+          <div class="question-container" data-section="riasec">
+            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+              <p class="text-lg font-semibold text-impulso-dark mb-4">
+                5. Soy bueno para:
+              </p>
+              <div class="space-y-3">
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q5"
+                    value="I"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Resolver problemas lógicos o científicos. (I)</span
+                  >
+                </label>
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
                     type="radio"
                     name="q5"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                    required
-                  /><span class="ml-3 text-gray-700"
-                    >Hechos concretos</span
-                  ></label
-                ><label
-                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
-                    type="radio"
-                    name="q5"
-                    value="N"
-                    class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Posibilidades e ideas</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Escuchar y dar consejo a las personas. (S)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="S"
-            data-mbti-pair="N"
-          >
+          <!-- Pregunta 6 (E vs C) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                6. Al aprender, prefiero…
+                6. En un proyecto grupal, prefiero:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q6"
-                    value="S"
+                    value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Pasos claros y ejemplos</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Ser el líder y convencer al grupo. (E)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q6"
-                    value="N"
+                    value="C"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Ver el panorama general</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Encargarme de los detalles y el cronograma. (C)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="S"
-            data-mbti-pair="N"
-          >
+          <!-- Pregunta 7 (R vs I) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                7. En proyectos, me siento cómodo…
+                7. Me interesa más:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q7"
-                    value="S"
+                    value="R"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Siguiendo procedimientos</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Saber cómo funciona un sistema (ej. un auto). (R)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q7"
-                    value="N"
+                    value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Innovando caminos nuevos</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Saber por qué funciona (ej. las leyes de la física).
+                    (I)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="S"
-            data-mbti-pair="N"
-          >
+          <!-- Pregunta 8 (A vs S) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                8. Descripciones que me atraen…
+                8. Mi entorno ideal es:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
+                    type="radio"
+                    name="q8"
+                    value="A"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Un estudio o taller para crear libremente. (A)</span
+                  >
+                </label>
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
                     type="radio"
                     name="q8"
                     value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                    required
-                  /><span class="ml-3 text-gray-700"
-                    >Precisas y detalladas</span
-                  ></label
-                ><label
-                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
-                    type="radio"
-                    name="q8"
-                    value="N"
-                    class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Metafóricas y creativas</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Un lugar donde pueda interactuar y ayudar a otros.
+                    (S)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="T"
-            data-mbti-pair="F"
-          >
+          <!-- Pregunta 9 (E vs I) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                9. Al decidir, priorizo…
+                9. Me veo a mí mismo como:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q9"
-                    value="T"
+                    value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Lógica y criterios</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Ambicioso y persuasivo. (E)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q9"
-                    value="F"
+                    value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Impacto en las personas</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Analítico y reservado. (I)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="T"
-            data-mbti-pair="F"
-          >
+          <!-- Pregunta 10 (C vs R) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                10. En discusiones, busco…
+                10. Prefiero seguir:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q10"
-                    value="T"
+                    value="C"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700">Ser objetivo</span></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Instrucciones claras y precisas. (C)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q10"
-                    value="F"
+                    value="R"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Mantener la armonía</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Un plano o un diagrama físico. (R)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="T"
-            data-mbti-pair="F"
-          >
+          <!-- Pregunta 11 (S vs E) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                11. Feedback ideal…
+                11. Me motiva más:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q11"
-                    value="T"
+                    value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Directo y sincero</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Contribuir al bienestar de la comunidad. (S)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q11"
-                    value="F"
+                    value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Cuidadoso y empático</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Alcanzar una posición de liderazgo o estatus. (E)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="T"
-            data-mbti-pair="F"
-          >
+          <!-- Pregunta 12 (A vs I) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                12. Me motiva más…
+                12. En mi tiempo libre, prefiero:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q12"
-                    value="T"
+                    value="A"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Lograr objetivos</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Visitar un museo de arte o ir a un concierto. (A)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q12"
-                    value="F"
+                    value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Ayudar a otros</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Visitar un museo de ciencia o ver un documental. (I)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="J"
-            data-mbti-pair="P"
-          >
+          <!-- Pregunta 13 (C vs S) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                13. Mi organización…
+                13. Se me da bien:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q13"
-                    value="J"
+                    value="C"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Planificada y con agenda</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Llevar un registro detallado de los gastos. (C)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q13"
-                    value="P"
+                    value="S"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Flexible y sobre la marcha</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Mediar en una discusión entre amigos. (S)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="J"
-            data-mbti-pair="P"
-          >
+          <!-- Pregunta 14 (R vs E) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                14. Un lugar de trabajo ideal…
+                14. Me interesa más:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q14"
-                    value="J"
+                    value="R"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Tiene estructura y orden</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >La mecánica automotriz o la carpintería. (R)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q14"
-                    value="P"
+                    value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Es flexible y adaptable</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Las finanzas, las ventas o la política. (E)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="J"
-            data-mbti-pair="P"
-          >
+          <!-- Pregunta 15 (I vs C) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                15. ¿Qué te hace sentir más cómodo?
+                15. En un trabajo, valoraría más:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q15"
-                    value="J"
+                    value="I"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Terminar una tarea</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >La oportunidad de investigar y descubrir. (I)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q15"
-                    value="P"
+                    value="C"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Empezar una nueva</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >La estabilidad y un entorno predecible. (C)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
-          <div
-            class="question-container"
-            data-section="mbti"
-            data-mbti-type="J"
-            data-mbti-pair="P"
-          >
+          <!-- Pregunta 16 (A vs E) -->
+          <div class="question-container" data-section="riasec">
             <div class="mb-6 p-6 bg-gray-50 rounded-lg">
               <p class="text-lg font-semibold text-impulso-dark mb-4">
-                16. Mi rutina…
+                16. Disfruto de:
               </p>
               <div class="space-y-3">
                 <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q16"
-                    value="J"
+                    value="A"
                     class="form-radio h-5 w-5 text-impulso-teal"
                     required
-                  /><span class="ml-3 text-gray-700"
-                    >Me ayuda a sentirme productivo</span
-                  ></label
-                ><label
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Tareas que me permitan ser original y diferente. (A)</span
+                  >
+                </label>
+                <label
                   class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
-                  ><input
+                >
+                  <input
                     type="radio"
                     name="q16"
-                    value="P"
+                    value="E"
                     class="form-radio h-5 w-5 text-impulso-teal"
-                  /><span class="ml-3 text-gray-700"
-                    >Me siento limitado</span
-                  ></label
-                >
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Tareas que me permitan influir en la gente. (E)</span
+                  >
+                </label>
               </div>
             </div>
           </div>
+          <!-- Pregunta 17 (S vs R) -->
+          <div class="question-container" data-section="riasec">
+            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+              <p class="text-lg font-semibold text-impulso-dark mb-4">
+                17. Prefiero ser considerado:
+              </p>
+              <div class="space-y-3">
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q17"
+                    value="S"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Empático y cooperativo. (S)</span
+                  >
+                </label>
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q17"
+                    value="R"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Práctico y realista. (R)</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Pregunta 18 (C vs A) -->
+          <div class="question-container" data-section="riasec">
+            <div class="mb-6 p-6 bg-gray-50 rounded-lg">
+              <p class="text-lg font-semibold text-impulso-dark mb-4">
+                18. Un proyecto ideal para mí sería:
+              </p>
+              <div class="space-y-3">
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q18"
+                    value="C"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                    required
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Clasificar y organizar la información de la biblioteca.
+                    (C)</span
+                  >
+                </label>
+                <label
+                  class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-impulso-light/20 transition-colors"
+                >
+                  <input
+                    type="radio"
+                    name="q18"
+                    value="A"
+                    class="form-radio h-5 w-5 text-impulso-teal"
+                  />
+                  <span class="ml-3 text-gray-700"
+                    >Escribir una obra de teatro o componer música. (A)</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- === FIN: PREGUNTAS RIASEC === -->
 
-          <!-- Botones de Navegación -->
+          <!-- Botones de Navegación del Test -->
           <div class="text-center mt-8">
             <button
               id="next-btn"
@@ -883,32 +943,36 @@
           </div>
         </form>
 
-        <!-- Sección de Resultados (Solo MBTI) -->
+        <!-- Sección de Resultados (ACTUALIZADA PARA RIASEC) -->
         <div
           id="resultSection"
-          class="hidden mt-8 p-6 bg-white rounded-lg shadow-inner border-t-4 border-impulso-teal"
+          class="hidden text-center mt-8 p-6 bg-white rounded-lg shadow-inner border-t-4 border-impulso-teal"
           data-aos="fade-up"
         >
-          <h3 class="text-2xl font-bold text-impulso-dark mb-4 text-center">
+          <h3 class="text-2xl font-bold text-impulso-dark mb-6 text-center">
             Tus Resultados
           </h3>
-          <div class="mb-6 pb-6 border-b border-gray-200">
+          <!-- Resultado RIASEC (NUEVO) -->
+          <div class="mb-4">
             <h4
               class="text-xl font-semibold text-impulso-dark mb-2 text-center"
             >
-              Perfil de Personalidad (MBTI)
+              Tu Perfil de Intereses (RIASEC)
             </h4>
             <p
-              id="mbtiResult"
+              id="riasecResult"
               class="text-4xl font-extrabold text-impulso-teal mb-3 text-center"
             >
-              [Tipo MBTI]
+              [Código RIASEC]
             </p>
-            <p id="mbtiDescription" class="text-gray-700 text-center"></p>
+            <p
+              id="riasecDescription"
+              class="text-gray-700 text-center max-w-lg mx-auto"
+            ></p>
           </div>
         </div>
 
-        <!-- Sección de Recomendaciones -->
+        <!-- Sección de Recomendaciones (Igual, pero ahora basada en RIASEC) -->
         <div
           id="recommendationsSection"
           class="hidden mt-12"
@@ -918,8 +982,9 @@
           <hr class="my-8 border-gray-300" />
           <h3 class="text-2xl font-bold text-impulso-dark mb-6 text-center">
             <i class="fas fa-star text-impulso-gold mr-2"></i> Carreras
-            Recomendadas (Basado en MBTI)
+            Recomendadas para tu Perfil
           </h3>
+
           <div
             id="loading-spinner-rec"
             class="flex justify-center py-12 hidden"
@@ -951,10 +1016,14 @@
               >.
             </p>
           </div>
+
           <div
             id="recommendedCareersContainer"
             class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch mt-6"
-          ></div>
+          >
+            <!-- Las tarjetas se insertarán aquí -->
+          </div>
+
           <div class="mt-8 text-center">
             <a
               href="explorador.html"

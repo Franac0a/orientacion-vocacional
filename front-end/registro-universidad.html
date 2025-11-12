@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro - Impulso Educativo</title>
+    <title>Registro de Institución - Impulso Educativo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -32,19 +32,25 @@
         },
       };
     </script>
+    <style>
+      img {
+        border-radius: 50px;
+      }
+    </style>
   </head>
   <body class="overflow-x-hidden">
     <nav
       class="fixed top-0 w-full bg-white/90 backdrop-blur-md shadow-lg z-50 transition-all duration-300"
       id="navbar"
     >
+      <!-- ... (El Navbar sigue igual) ... -->
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-4">
           <div class="flex items-center space-x-3">
             <a href="index.html">
               <img
                 src="src/img/logo.jpg"
-                alt="Logo Impulso Educativo con libro abierto y birrete de graduación en círculo verde"
+                alt="Logo Impulso Educativo"
                 class="w-10 h-10 animate-pulse-slow"
               />
             </a>
@@ -52,7 +58,6 @@
               >Impulso Educativo</span
             >
           </div>
-
           <div class="md:hidden">
             <button
               id="mobile-menu-btn"
@@ -61,7 +66,6 @@
               <i class="fas fa-bars text-xl"></i>
             </button>
           </div>
-
           <div class="hidden md:flex items-center space-x-8">
             <a
               href="index.html"
@@ -77,7 +81,7 @@
               href="test.html"
               class="text-impulso-dark hover:text-impulso-teal transition-colors font-medium"
               id="test-link"
-              >Test de Personalidad</a
+              >Test Vocacional</a
             >
             <a
               href="nosotros.html"
@@ -111,7 +115,6 @@
             </div>
           </div>
         </div>
-
         <div id="mobile-menu" class="md:hidden hidden pb-4 space-y-3">
           <a
             href="index.html"
@@ -127,7 +130,7 @@
             href="test.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             id="mobile-test-link"
-            >Test de Personalidad</a
+            >Test Vocacional</a
           >
           <a
             href="nosotros.html"
@@ -138,6 +141,11 @@
             href="contacto.html"
             class="block text-impulso-dark hover:text-impulso-teal transition-colors"
             >Contacto</a
+          >
+          <a
+            href="explorador.html"
+            class="block text-impulso-dark hover:text-impulso-teal transition-colors"
+            >Explorá</a
           >
           <div class="pt-3 space-y-2" id="mobile-auth-buttons">
             <a
@@ -156,6 +164,7 @@
         </div>
       </div>
     </nav>
+
     <main
       class="min-h-screen bg-gradient-to-br from-teal-50 to-emerald-100 flex items-center justify-center pt-24 md:pt-16 p-4"
     >
@@ -182,12 +191,12 @@
           <div class="mb-4 p-2 bg-white rounded-full shadow-lg">
             <img
               src="src/img/logo.jpg"
-              alt="Logo Impulso Educativo con libro abierto y birrete de graduación"
+              alt="Logo Impulso Educativo"
               class="w-24 h-24 rounded-full"
             />
           </div>
           <h1 class="text-2xl font-bold text-white">Impulso Educativo</h1>
-          <p class="text-impulso-light mt-1">Sistema de Test Personalidad</p>
+          <p class="text-impulso-light mt-1">Registro para Instituciones</p>
         </div>
 
         <div class="md:flex">
@@ -195,14 +204,12 @@
             class="hidden md:block md:w-2/5 bg-gradient-to-b from-emerald-50 to-teal-50 p-8 flex flex-col justify-center"
           >
             <div class="text-center mb-6">
-              <i
-                class="fas fa-graduation-cap text-impulso-teal text-5xl mb-4"
-              ></i>
+              <i class="fas fa-university text-impulso-teal text-5xl mb-4"></i>
               <h2 class="text-xl font-semibold text-impulso-dark">
-                Encontrá tu camino
+                Gestione su Oferta
               </h2>
               <p class="text-impulso-green mt-2">
-                Descubrí tu vocación con nuestra plataforma especializada
+                Registre su institución y comience a cargar sus carreras.
               </p>
             </div>
 
@@ -212,29 +219,34 @@
                   <i class="fas fa-check-circle text-impulso-teal"></i>
                 </div>
                 <p class="text-impulso-dark">
-                  Evaluación profesional de aptitudes
+                  Cree y edite el perfil de su institución.
                 </p>
               </div>
               <div class="flex items-start">
                 <div class="bg-impulso-light/30 p-2 rounded-full mr-3">
                   <i class="fas fa-check-circle text-impulso-teal"></i>
                 </div>
-                <p class="text-impulso-dark">Recomendaciones personalizadas</p>
+                <p class="text-impulso-dark">
+                  Publique y actualice sus carreras.
+                </p>
               </div>
               <div class="flex items-start">
                 <div class="bg-impulso-light/30 p-2 rounded-full mr-3">
                   <i class="fas fa-check-circle text-impulso-teal"></i>
                 </div>
-                <p class="text-impulso-dark">Seguimiento de tu progreso</p>
+                <p class="text-impulso-dark">Llegue a miles de estudiantes.</p>
               </div>
             </div>
           </div>
 
           <div class="md:w-3/5 p-8">
             <h2 class="text-2xl font-bold text-impulso-dark mb-2">
-              Crear Cuenta
+              Crear Cuenta de Institución
+              <!-- TÍTULO CORREGIDO -->
             </h2>
-            <p class="text-gray-600 mb-6">Comenzá a orientarte hoy</p>
+            <p class="text-gray-600 mb-6">
+              Complete los datos del responsable de la cuenta.
+            </p>
 
             <form id="registerForm" class="space-y-4">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -242,7 +254,7 @@
                   <label
                     for="name"
                     class="block text-sm font-medium text-impulso-dark mb-1"
-                    >Nombre</label
+                    >Nombre (del responsable)</label
                   >
                   <div class="relative">
                     <div
@@ -256,7 +268,7 @@
                       name="name"
                       required
                       class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
-                      placeholder="Tu nombre"
+                      placeholder="Nombre"
                     />
                   </div>
                 </div>
@@ -265,7 +277,7 @@
                   <label
                     for="lastname"
                     class="block text-sm font-medium text-impulso-dark mb-1"
-                    >Apellido</label
+                    >Apellido (del responsable)</label
                   >
                   <div class="relative">
                     <div
@@ -279,7 +291,7 @@
                       name="lastname"
                       required
                       class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
-                      placeholder="Tu apellido"
+                      placeholder="Apellido"
                     />
                   </div>
                 </div>
@@ -289,7 +301,7 @@
                 <label
                   for="email"
                   class="block text-sm font-medium text-impulso-dark mb-1"
-                  >Correo electrónico</label
+                  >Correo electrónico (laboral)</label
                 >
                 <div class="relative">
                   <div
@@ -303,7 +315,7 @@
                     name="email"
                     required
                     class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200"
-                    placeholder="tu@email.com"
+                    placeholder="contacto@institucion.edu"
                   />
                 </div>
               </div>
@@ -357,6 +369,40 @@
                 </div>
               </div>
 
+              <!-- === INICIO: NUEVOS CAMPOS DE VERIFICACIÓN === -->
+              <div>
+                <label
+                  for="verification-type"
+                  class="block text-sm font-medium text-impulso-dark mb-1"
+                  >Tipo de Documento de Verificación</label
+                >
+                <select
+                  id="verification-type"
+                  name="verification-type"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-impulso-teal focus:border-impulso-teal transition duration-200 bg-white"
+                >
+                  <option value="">Seleccione un tipo de documento...</option>
+                  <option value="estatuto">Estatuto de la Institución</option>
+                  <option value="habilitacion">Habilitación Ministerial</option>
+                  <option value="otro">Otro Documento Oficial</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="verification-file"
+                  class="block text-sm font-medium text-impulso-dark mb-1"
+                  >Adjuntar Documento de Verificación</label
+                >
+                <input
+                  type="file"
+                  id="verification-file"
+                  name="verification-file"
+                  class="w-full text-sm text-gray-700 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-impulso-teal/10 file:text-impulso-dark hover:file:bg-impulso-teal/20"
+                />
+              </div>
+              <!-- === FIN: NUEVOS CAMPOS DE VERIFICACIÓN === -->
+
               <div class="flex items-center mt-4">
                 <input
                   type="checkbox"
@@ -381,7 +427,7 @@
                 class="w-full bg-gradient-to-r from-impulso-green to-impulso-teal text-white py-3 px-4 rounded-lg font-medium hover:from-impulso-dark hover:to-impulso-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-impulso-teal transition duration-200 transform hover:scale-[1.02] shadow-md"
               >
                 <i class="fas fa-user-plus mr-2"></i>
-                Crear cuenta
+                Crear cuenta de institución
               </button>
             </form>
 
@@ -397,21 +443,23 @@
               </p>
             </div>
 
+            <!-- CAMBIADO: Link a registro de estudiante -->
             <div class="mt-8 pt-6 border-t border-impulso-light/30 text-center">
               <div
                 class="bg-gradient-to-r from-impulso-light/10 to-teal-50 p-4 rounded-lg"
               >
                 <i
-                  class="fas fa-university text-impulso-gold text-2xl mb-2"
+                  class="fas fa-user-graduate text-impulso-gold text-2xl mb-2"
                 ></i>
                 <p class="text-impulso-dark font-medium">
-                  ¿Eres una institución educativa?
+                  ¿Eres un estudiante?
                 </p>
-                <p class="text-impulso-green mt-1"></p>
                 <a
-                  href="registro-universidad.html"
+                  href="registro.html"
                   class="inline-block mt-3 px-4 py-2 bg-impulso-gold/20 text-impulso-dark rounded-lg hover:bg-impulso-gold/30 transition duration-200"
-                  >¡Registrala Aquí!
+                >
+                  <i class="fas fa-arrow-left mr-2"></i>Volver al registro de
+                  estudiante
                 </a>
               </div>
             </div>
@@ -420,6 +468,7 @@
       </div>
     </main>
     <footer class="bg-impulso-dark text-white py-12 mt-auto">
+      <!-- ... (Tu footer sigue igual) ... -->
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-4 gap-8">
           <div>
@@ -464,7 +513,9 @@
                 <i class="fas fa-envelope mr-2"></i>info@impulsoeducativo.com
               </p>
               <p><i class="fas fa-phone mr-2"></i>+1 234 567 8900</p>
-              <p><i class="fas fa-map-marker-alt mr-2"></i>Ciudad, País</p>
+              <p>
+                <i class="fas fa-map-marker-alt mr-2"></i>Formosa, Argentina
+              </p>
             </div>
           </div>
 
@@ -479,7 +530,7 @@
               </a>
               <a
                 href="#"
-                class="text-impulso-light hover:text-impulso-gold transition-colors"
+                classM="text-impulso-light hover:text-impulso-gold transition-colors"
               >
                 <i class="fab fa-twitter text-xl"></i>
               </a>
@@ -506,6 +557,8 @@
         </div>
       </div>
     </footer>
+
+    <!-- === INICIO DEL SCRIPT (Actualizado) === -->
     <script>
       AOS.init({
         duration: 1000,
@@ -530,87 +583,12 @@
         }
       });
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const authButtonsContainer = document.getElementById("auth-buttons");
-        const mobileAuthButtonsContainer = document.getElementById(
-          "mobile-auth-buttons"
-        );
-        const testLink = document.getElementById("test-link");
-        const mobileTestLink = document.getElementById("mobile-test-link");
-
-        function updateUIForUser(userType) {
-          if (authButtonsContainer) {
-            authButtonsContainer.innerHTML = "";
-            const userMenuHtml = `
-              <div class="relative group">
-                <button class="px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg hover:bg-impulso-teal hover:text-white transition-all duration-300">
-                  <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden group-hover:block">
-                  <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100" id="profile-link">Perfil</a>
-                  <button id="logout-button" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Cerrar Sesión</button>
-                </div>
-              </div>
-            `;
-            authButtonsContainer.innerHTML = userMenuHtml;
-          }
-
-          if (mobileAuthButtonsContainer) {
-            mobileAuthButtonsContainer.innerHTML = `
-              <a href="#" class="block w-full text-center px-4 py-2 text-impulso-teal border border-impulso-teal rounded-lg" id="mobile-profile-link">
-                <i class="fas fa-user-circle mr-2"></i> Mi Perfil
-              </a>
-              <button id="mobile-logout-button" class="block w-full text-center px-4 py-2 bg-gradient-to-r from-impulso-green to-impulso-teal text-white rounded-lg">
-                Cerrar Sesión
-              </button>
-            `;
-          }
-
-          if (userType !== "estudiante") {
-            if (testLink) testLink.classList.add("hidden");
-            if (mobileTestLink) mobileTestLink.classList.add("hidden");
-          } else {
-            if (testLink) testLink.classList.remove("hidden");
-            if (mobileTestLink) mobileTestLink.classList.remove("hidden");
-          }
-
-          const logoutButton = document.getElementById("logout-button");
-          const mobileLogoutButton = document.getElementById(
-            "mobile-logout-button"
-          );
-
-          if (logoutButton) {
-            logoutButton.addEventListener("click", () => {
-              localStorage.removeItem("authToken");
-              localStorage.removeItem("userType");
-              window.location.href = "index.html";
-            });
-          }
-
-          if (mobileLogoutButton) {
-            mobileLogoutButton.addEventListener("click", () => {
-              localStorage.removeItem("authToken");
-              localStorage.removeItem("userType");
-              window.location.href = "index.html";
-            });
-          }
-        }
-
-        const token = localStorage.getItem("authToken");
-        const userType = localStorage.getItem("userType");
-
-        if (token) {
-          updateUIForUser(userType);
-        } else {
-          if (testLink) testLink.classList.add("hidden");
-          if (mobileTestLink) mobileTestLink.classList.add("hidden");
-        }
-      });
-    </script>
-    <script>
+      // --- Lógica de Alerta (del registro original) ---
       function showAlert(type, message) {
         const alert = document.getElementById(`alert${type}`);
         const messageElement = document.getElementById(`alert${type}Message`);
+
+        if (!alert || !messageElement) return; // Chequeo de seguridad
 
         messageElement.textContent = message;
         alert.classList.remove("hidden");
@@ -620,6 +598,7 @@
         }, 5000);
       }
 
+      // --- Lógica de Registro (¡ACTUALIZADA!) ---
       document
         .getElementById("registerForm")
         .addEventListener("submit", async function (e) {
@@ -638,12 +617,22 @@
           const confirmPassword =
             document.getElementById("confirmPassword").value;
 
+          // Campos nuevos (opcionales, no se envían al backend aún)
+          const verificationType =
+            document.getElementById("verification-type").value;
+          const verificationFile =
+            document.getElementById("verification-file").files[0];
+
           if (password !== confirmPassword) {
             showAlert("Error", "Las contraseñas no coinciden.");
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalHTML;
             return;
           }
+
+          // NOTA: En un futuro, aquí iría la lógica para subir el 'verificationFile'
+          // a un servicio de storage (como Firebase Storage o S3)
+          // y obtener una URL. Por ahora, lo ignoramos.
 
           try {
             const response = await fetch(
@@ -654,10 +643,12 @@
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  name: `${name} ${lastname}`,
+                  name: `${name} ${lastname}`, // Combina nombre y apellido
                   email,
                   password,
-                  type: "estudiante",
+                  // --- ¡CAMBIO CRÍTICO! ---
+                  type: "universidad", // Registra como tipo 'universidad'
+                  // --- ---
                 }),
               }
             );
@@ -665,11 +656,13 @@
             const data = await response.json();
 
             if (!response.ok) {
-              throw new Error(data.error || "Error al registrar");
+              // Usa data.mensaje (como en tu auth.controller)
+              throw new Error(data.mensaje || "Error al registrar");
             }
 
-            showAlert("Success", "¡Cuenta creada exitosamente!");
+            showAlert("Success", "¡Cuenta de institución creada exitosamente!");
             setTimeout(() => {
+              // Redirigir al login para que inicien sesión
               window.location.href = "login.html";
             }, 1500);
           } catch (error) {
@@ -681,10 +674,5 @@
           }
         });
     </script>
-    <style>
-      img {
-        border-radius: 50px;
-      }
-    </style>
   </body>
 </html>
