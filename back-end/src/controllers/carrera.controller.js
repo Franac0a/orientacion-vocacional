@@ -1,234 +1,201 @@
 import { CarreraModel } from "../models/carreras.model.js";
 import { UniversidadModel } from "../models/universidades.model.js";
-import { Op } from "sequelize"; // Asegúrate de importar 'Op'
+import { Op } from "sequelize";
 
-// --- Controladores de ADMIN ---
+// --- LÓGICA PARA EL PANEL DE ADMIN ---
+
+/**
+ * CREAR UNA NUEVA CARRERA
+ * Vinculada a la institución del usuario logueado.
+ */
 export const crearCarrera = async (req, res) => {
-  /* ... */
   try {
-    // Usamos nuestros campos
     const {
       nombre,
       descripcion,
       tipo,
       area_estudio,
       duracion_anios,
-      perfiles_mbti_compatibles,
+      perfiles_riasec_compatibles,
+      institucion_id, // ¡Lo recibimos del frontend!
     } = req.body;
 
-    // 1. Encontrar la universidad del usuario logueado
-    const universidad = await UniversidadModel.findOne({
-      where: { userId: req.usuario.id },
-    });
+    const userId = req.usuario.id; // ID del usuario logueado
 
-    if (!universidad)
-      return res.status(404).json({ mensaje: "Universidad no encontrada." });
+    // 1. Validar que recibimos el ID de la institución
+    if (!institucion_id) {
+      return res.status(400).json({
+        mensaje: "Error: No se proporcionó un ID de institución.",
+      });
+    }
 
-    // 2. Crear la carrera vinculada a esa universidad
-    const carrera = await CarreraModel.create({
+    // 2. Buscar la institución
+    const institucion = await UniversidadModel.findByPk(institucion_id);
+    if (!institucion) {
+      return res.status(404).json({ mensaje: "Institución no encontrada." });
+    }
+
+    // 3. ¡Chequeo de seguridad!
+    // Verificar que la institución le pertenece al usuario logueado.
+    if (institucion.userId !== userId) {
+      return res.status(403).json({
+        mensaje: "No tienes permiso para añadir carreras a esta institución.",
+      });
+    }
+
+    // 4. Crear la carrera y vincularla
+    const nuevaCarrera = await CarreraModel.create({
       nombre,
       descripcion,
       tipo,
       area_estudio,
       duracion_anios,
-      // Asegurarse de guardar como JSON string si el modelo es TEXT, o directo si es JSON nativo
-      perfiles_mbti_compatibles: Array.isArray(perfiles_mbti_compatibles)
-        ? JSON.stringify(perfiles_mbti_compatibles)
-        : perfiles_mbti_compatibles,
-      universidadId: universidad.id, // Vinculamos
+      perfiles_riasec_compatibles,
+      universidadId: institucion.id, // ¡La vinculamos con el ID correcto!
     });
 
-    res.status(201).json({ mensaje: "Carrera creada exitosamente.", carrera });
+    res.status(201).json(nuevaCarrera);
   } catch (error) {
-    console.error("Error al crear carrera:", error); // Añadir log
+    console.error("Error al crear carrera:", error);
     res
       .status(500)
-      .json({ mensaje: "Error al crear carrera.", error: error.message });
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };
+
+/**
+ * OBTENER "MIS CARRERAS"
+ * Trae solo las carreras de la institución del usuario logueado.
+ */
 export const obtenerCarrerasDeUniversidad = async (req, res) => {
-  /* ... */
   try {
-    const universidad = await UniversidadModel.findOne({
-      where: { userId: req.usuario.id },
+    const userId = req.usuario.id;
+
+    // 1. Encontrar la universidad del usuario
+    const institucion = await UniversidadModel.findOne({
+      where: { userId: userId },
     });
 
-    if (!universidad)
-      return res.status(404).json({ mensaje: "Universidad no encontrada." });
+    if (!institucion) {
+      // Si no tiene perfil de institución, no puede tener carreras
+      return res
+        .status(404)
+        .json({ mensaje: "Perfil de institución no encontrado." });
+    }
 
+    // 2. Buscar las carreras de ESA universidad
     const carreras = await CarreraModel.findAll({
-      where: { universidadId: universidad.id },
-      include: {
-        // Incluir universidad por si acaso se necesita en el dashboard
-        model: UniversidadModel,
-        attributes: ["nombre"], // Solo el nombre
-      },
+      where: { universidadId: institucion.id },
     });
 
     res.status(200).json(carreras);
   } catch (error) {
-    console.error("Error al obtener carreras de la universidad:", error); // Añadir log
+    console.error("Error al obtener 'mis carreras':", error);
     res
       .status(500)
-      .json({ mensaje: "Error al obtener carreras.", error: error.message });
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };
+
+/**
+ * EDITAR UNA CARRERA
+ * Verifica que la carrera pertenezca al usuario logueado.
+ */
 export const editarCarrera = async (req, res) => {
-  /* ... */
   try {
-    const { id } = req.params; // ID de la Carrera a editar
-    const {
-      nombre,
-      descripcion,
-      tipo,
-      area_estudio,
-      duracion_anios,
-      perfiles_mbti_compatibles,
-    } = req.body;
+    const { id } = req.params; // ID de la carrera
+    const userId = req.usuario.id; // ID del usuario
+    const datosNuevos = req.body;
 
-    // 1. Encontrar la universidad del usuario
-    const universidad = await UniversidadModel.findOne({
-      where: { userId: req.usuario.id },
-    });
-    if (!universidad)
-      return res.status(404).json({ mensaje: "Universidad no encontrada." });
-
-    // 2. Encontrar la carrera
-    const carrera = await CarreraModel.findOne({
-      where: {
-        id: id,
-        universidadId: universidad.id, // Asegurarnos que la carrera es de su universidad
-      },
-    });
-
+    // 1. Buscar la carrera
+    const carrera = await CarreraModel.findByPk(id);
     if (!carrera) {
-      return res.status(404).json({
-        mensaje: "Carrera no encontrada o no pertenece a esta universidad.",
+      return res.status(404).json({ mensaje: "Carrera no encontrada." });
+    }
+
+    // 2. Verificar permisos (Chequeo de seguridad)
+    const institucion = await UniversidadModel.findByPk(carrera.universidadId);
+    if (!institucion || institucion.userId !== userId) {
+      return res.status(403).json({
+        mensaje: "No tienes permiso para editar esta carrera.",
       });
     }
 
-    // 3. Actualizar campos
-    carrera.nombre = nombre !== undefined ? nombre : carrera.nombre;
-    carrera.descripcion =
-      descripcion !== undefined ? descripcion : carrera.descripcion;
-    carrera.tipo = tipo !== undefined ? tipo : carrera.tipo;
-    carrera.area_estudio =
-      area_estudio !== undefined ? area_estudio : carrera.area_estudio;
-    carrera.duracion_anios =
-      duracion_anios !== undefined ? duracion_anios : carrera.duracion_anios;
-    if (perfiles_mbti_compatibles !== undefined) {
-      carrera.perfiles_mbti_compatibles = Array.isArray(
-        perfiles_mbti_compatibles
-      )
-        ? JSON.stringify(perfiles_mbti_compatibles)
-        : perfiles_mbti_compatibles;
-    }
-
-    await carrera.save();
-
-    res.status(200).json(carrera);
+    // 3. Actualizar
+    await carrera.update(datosNuevos);
+    res.status(200).json({ mensaje: "Carrera actualizada", carrera });
   } catch (error) {
-    console.error("Error al editar carrera:", error); // Añadir log
+    console.error("Error al editar carrera:", error);
     res
       .status(500)
-      .json({ error: "Error interno del servidor", details: error.message });
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };
+
+/**
+ * ELIMINAR UNA CARRERA
+ * Verifica que la carrera pertenezca al usuario logueado.
+ */
 export const eliminarCarrera = async (req, res) => {
-  /* ... */
   try {
-    const { id } = req.params; // ID de la Carrera a eliminar
+    const { id } = req.params; // ID de la carrera
+    const userId = req.usuario.id; // ID del usuario
 
-    // 1. Encontrar la universidad del usuario
-    const universidad = await UniversidadModel.findOne({
-      where: { userId: req.usuario.id },
-    });
-    if (!universidad)
-      return res.status(404).json({ mensaje: "Universidad no encontrada." });
-
-    // 2. Encontrar y verificar la carrera
-    const carrera = await CarreraModel.findOne({
-      where: {
-        id: id,
-        universidadId: universidad.id, // Seguridad: solo puede borrar sus carreras
-      },
-    });
-
+    // 1. Buscar la carrera
+    const carrera = await CarreraModel.findByPk(id);
     if (!carrera) {
-      return res.status(404).json({
-        mensaje: "Carrera no encontrada o no pertenece a esta universidad.",
+      return res.status(404).json({ mensaje: "Carrera no encontrada." });
+    }
+
+    // 2. Verificar permisos (Chequeo de seguridad)
+    const institucion = await UniversidadModel.findByPk(carrera.universidadId);
+    if (!institucion || institucion.userId !== userId) {
+      return res.status(403).json({
+        mensaje: "No tienes permiso para eliminar esta carrera.",
       });
     }
 
     // 3. Eliminar
     await carrera.destroy();
-
-    res.status(200).json({ mensaje: "Carrera eliminada correctamente." });
+    res.status(200).json({ mensaje: "Carrera eliminada exitosamente." });
   } catch (error) {
-    console.error("Error al eliminar carrera:", error); // Añadir log
+    console.error("Error al eliminar carrera:", error);
     res
       .status(500)
-      .json({ error: "Error interno del servidor", details: error.message });
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };
 
-// --- CONTROLADOR PÚBLICO (LIKE SIMPLIFICADO) ---
+// --- LÓGICA PARA LA BÚSQUEDA PÚBLICA ---
+
+/**
+ * OBTENER TODAS LAS CARRERAS (PÚBLICO)
+ * Filtra por área, tipo, etc.
+ */
 export const obtenerTodasLasCarrerasPublico = async (req, res) => {
   try {
-    const { area, tipo, provincia, search, mbti } = req.query;
+    const { area, tipo, search } = req.query;
+    const filtro = {};
 
-    const filtroCarrera = {};
-    if (area) filtroCarrera.area_estudio = area;
-    if (tipo) filtroCarrera.tipo = tipo;
+    if (area) filtro.area_estudio = area;
+    if (tipo) filtro.tipo = tipo;
     if (search) {
-      filtroCarrera[Op.or] = [
-        { nombre: { [Op.like]: `%${search}%` } },
-        { descripcion: { [Op.like]: `%${search}%` } },
-      ];
+      filtro.nombre = { [Op.like]: `%${search}%` };
     }
-    // --- LÓGICA MBTI SIMPLIFICADA ---
-    if (mbti) {
-      const mbtiUpper = mbti.toUpperCase();
-      // Buscamos simplemente si el string MBTI aparece en cualquier parte
-      filtroCarrera.perfiles_mbti_compatibles = {
-        [Op.like]: `%${mbtiUpper}%`, // Busca ej: %INTJ%
-      };
-      console.log(`---> Buscando MBTI LIKE simplificado: %${mbtiUpper}%`); // Log añadido
-    }
-    // --- FIN LÓGICA MBTI ---
-
-    const filtroUniversidad = {};
-    if (provincia) {
-      filtroUniversidad.provincia = { [Op.like]: `%${provincia}%` };
-    }
-
-    console.log(
-      "Filtro Carreras Construido:",
-      JSON.stringify(filtroCarrera, null, 2)
-    );
-    console.log(
-      "Filtro Universidad Construido:",
-      JSON.stringify(filtroUniversidad, null, 2)
-    );
 
     const carreras = await CarreraModel.findAll({
-      where: filtroCarrera,
+      where: filtro,
       include: {
         model: UniversidadModel,
-        attributes: ["nombre", "provincia", "tipo_gestion", "sitio_web"],
-        where: filtroUniversidad,
-        required: provincia ? true : false,
+        attributes: ["nombre", "alias", "provincia", "tipo_gestion"],
       },
-      order: [["nombre", "ASC"]],
     });
 
-    console.log(`Carreras encontradas para mbti=${mbti}: ${carreras.length}`);
-
-    res.json(carreras);
+    res.status(200).json(carreras);
   } catch (error) {
     console.error("Error al obtener carreras públicas:", error);
     res
       .status(500)
-      .json({ message: "Error al obtener carreras", error: error.message });
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };

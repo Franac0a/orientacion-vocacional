@@ -1,15 +1,16 @@
 import { UniversidadModel } from "../models/universidades.model.js";
 import { CarreraModel } from "../models/carreras.model.js";
-import { Op } from "sequelize"; // ¡Importante para la búsqueda!
+import { Op } from "sequelize";
 
 export const crearUniversidad = async (req, res) => {
-  // ... (tu código existente de crearUniversidad) ...
   try {
-    // Usamos nuestros campos: nombre, alias, tipo_gestion, provincia, sitio_web
     const { nombre, alias, tipo_gestion, provincia, sitio_web } = req.body;
 
+    // --- ¡CORRECCIÓN DEVUELTA A "req.usuario"! ---
+    const userId = req.usuario.id;
+
     const universidadExistente = await UniversidadModel.findOne({
-      where: { userId: req.usuario.id },
+      where: { userId: userId },
     });
 
     if (universidadExistente) {
@@ -24,7 +25,7 @@ export const crearUniversidad = async (req, res) => {
       tipo_gestion,
       provincia,
       sitio_web,
-      userId: req.usuario.id, // Vinculamos al usuario logueado
+      userId: userId,
     });
 
     res.status(201).json({
@@ -38,10 +39,9 @@ export const crearUniversidad = async (req, res) => {
 };
 
 export const obtenerMisCarreras = async (req, res) => {
-  // ... (tu código existente de obtenerMisCarreras) ...
   try {
-    // 1. Encontrar la universidad del usuario
     const universidad = await UniversidadModel.findOne({
+      // --- ¡CORRECCIÓN DEVUELTA A "req.usuario"! ---
       where: { userId: req.usuario.id },
     });
 
@@ -49,42 +49,38 @@ export const obtenerMisCarreras = async (req, res) => {
       return res.status(404).json({ mensaje: "Universidad no encontrada." });
     }
 
-    // 2. Buscar las carreras de esa universidad
     const carreras = await CarreraModel.findAll({
       where: { universidadId: universidad.id },
     });
 
-    res.status(200).json(carreras);
+    res.json(carreras);
   } catch (error) {
     console.error("Error al obtener mis carreras:", error);
     res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
-// --- ¡NUEVA FUNCIÓN PÚBLICA! ---
-// --- OBTENER TODAS LAS UNIVERSIDADES (PÚBLICO) ---
 export const obtenerTodasLasUniversidadesPublico = async (req, res) => {
   try {
     const { search } = req.query;
 
     const filtro = {};
 
-    // Lógica de búsqueda (similar a la de carreras)
     if (search) {
       filtro[Op.or] = [
         {
           nombre: {
-            [Op.like]: `%${search}%`, // Buscar en el nombre
+            [Op.like]: `%${search}%`,
           },
         },
         {
           alias: {
-            [Op.like]: `%${search}%`, // O buscar en el alias (ej: "UTN")
+            [Op.like]: `%${search}%`,
           },
         },
         {
           provincia: {
-            [Op.like]: `%${search}%`, // O buscar en la provincia
+            [Op.like]: `%${search}%`,
           },
         },
       ];
@@ -97,5 +93,72 @@ export const obtenerTodasLasUniversidadesPublico = async (req, res) => {
     res.json(universidades);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener universidades", error });
+  }
+};
+
+// --- ¡NUEVAS FUNCIONES PARA EL DASHBOARD! ---
+
+export const obtenerMiInstitucion = async (req, res) => {
+  try {
+    // --- ¡CORRECCIÓN DEVUELTA A "req.usuario"! ---
+    // Esta era la línea 119 que causaba el crash
+    const userId = req.usuario.id;
+
+    const institucion = await UniversidadModel.findOne({
+      where: { userId: userId },
+    });
+
+    if (!institucion) {
+      return res.status(404).json({
+        mensaje: "El perfil de la institución aún no ha sido creado.",
+      });
+    }
+
+    res.status(200).json({ institucion: institucion });
+  } catch (error) {
+    // --- Log de error mejorado ---
+    console.error("Error al obtener perfil de institución:", error);
+    res
+      .status(500)
+      .json({ mensaje: "Error interno del servidor", error: error.message });
+  }
+};
+
+export const actualizarMiInstitucion = async (req, res) => {
+  try {
+    // --- ¡CORRECCIÓN DEVUELTA A "req.usuario"! ---
+    const userId = req.usuario.id;
+    const { nombre, alias, tipo_gestion, provincia, sitio_web } = req.body;
+
+    const institucion = await UniversidadModel.findOne({
+      where: { userId: userId },
+    });
+
+    if (!institucion) {
+      return res
+        .status(4404) // Corregido a 404
+        .json({
+          mensaje:
+            "No se encontró el perfil de la institución para actualizar.",
+        });
+    }
+
+    institucion.nombre = nombre || institucion.nombre;
+    institucion.alias = alias || institucion.alias;
+    institucion.tipo_gestion = tipo_gestion || institucion.tipo_gestion;
+    institucion.provincia = provincia || institucion.provincia;
+    institucion.sitio_web = sitio_web || institucion.sitio_web;
+
+    await institucion.save();
+
+    res.status(200).json({
+      mensaje: "Perfil de la institución actualizado correctamente.",
+      institucion: institucion,
+    });
+  } catch (error) {
+    console.error("Error al actualizar perfil de institución:", error);
+    res
+      .status(500)
+      .json({ mensaje: "Error interno del servidor", error: error.message });
   }
 };

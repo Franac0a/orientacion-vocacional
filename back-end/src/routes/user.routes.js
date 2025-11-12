@@ -1,11 +1,26 @@
 import { Router } from "express";
-import { obtenerPerfil, getAllUsers } from "../controllers/user.controller.js";
 import { verificarUsuario } from "../middlewares/auth.middleware.js";
+import {
+  obtenerPerfil,
+  getAllUsers,
+  saveVocationalResult,
+} from "../controllers/user.controller.js"; // <-- Importamos las 3 funciones
 
 export const userRoutes = Router();
 
-// Obtener perfil del usuario autenticado
-userRoutes.get("/profile", verificarUsuario, obtenerPerfil);
+userRoutes.use(verificarUsuario);
 
-// Listar todos los usuarios (opcional, solo si lo necesitás)
-userRoutes.get("/", verificarUsuario, getAllUsers);
+// --- RUTA PARA PERFIL ---
+// GET /api/users/perfil
+// (Tu perfil.js llama a esta ruta)
+userRoutes.get("/perfil", obtenerPerfil);
+
+// --- RUTA PARA GUARDAR TEST ---
+// POST /api/users/save-vocational-result
+// (Tu test.js llamará a esta ruta)
+userRoutes.post("/save-vocational-result", saveVocationalResult);
+
+// --- RUTA ADICIONAL ---
+// GET /api/users/
+// (Tu user.controller.js ya tiene esta función)
+userRoutes.get("/", getAllUsers);

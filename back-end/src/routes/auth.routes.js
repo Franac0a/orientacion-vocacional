@@ -1,31 +1,10 @@
 import { Router } from "express";
 import { register, login, logout } from "../controllers/auth.controller.js";
-import { body } from "express-validator";
+import { verificarUsuario } from "../middlewares/auth.middleware.js";
 
 export const authRoutes = Router();
 
-authRoutes.post(
-  "/register",
-  [
-    body("name").notEmpty().withMessage("El nombre es obligatorio."),
-    body("email").isEmail().withMessage("Email inválido."),
-    body("password")
-      .isLength({ min: 6 })
-      .withMessage("La contraseña debe tener al menos 6 caracteres."),
-    body("type")
-      .isIn(["estudiante", "universidad"])
-      .withMessage("Tipo de usuario inválido."),
-  ],
-  register
-);
-
-authRoutes.post(
-  "/login",
-  [
-    body("email").isEmail().withMessage("Email inválido."),
-    body("password").notEmpty().withMessage("La contraseña es obligatoria."),
-  ],
-  login
-);
-
-authRoutes.post("/logout", logout);
+// Rutas de autenticación
+authRoutes.post("/register", register);
+authRoutes.post("/login", login);
+authRoutes.post("/logout", verificarUsuario, logout); // Protegemos el logout

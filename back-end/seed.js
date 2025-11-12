@@ -1,9 +1,9 @@
 // --- Importaciones ---
-import { sequelize } from "./src/config/database.js"; // Ajusta la ruta si es necesario
-import { UniversidadModel } from "./src/models/universidades.model.js"; // Ajusta la ruta
-import { CarreraModel } from "./src/models/carreras.model.js"; // Ajusta la ruta
-import { UserModel } from "./src/models/user.model.js"; // Ajusta la ruta
-import { InscripcionModel } from "./src/models/inscripcion.model.js"; // Ajusta la ruta
+import { sequelize } from "./src/config/database.js";
+import { UniversidadModel } from "./src/models/universidades.model.js";
+import { CarreraModel } from "./src/models/carreras.model.js";
+import { UserModel } from "./src/models/user.model.js";
+import { InscripcionModel } from "./src/models/inscripcion.model.js";
 
 // --- Datos de Ejemplo ---
 
@@ -62,9 +62,10 @@ const sembrarDatos = async () => {
 
     // Sincronizar BD (¡CON force: true BORRA TODO!)
     console.log("Sincronizando base de datos... (force: true)");
-    // await sequelize.sync({ force: true }); // <-- COMENTADO POR SEGURIDAD, DESCOMENTA SI NECESITAS LIMPIAR
-    // Si lo descomentas, bórralo o coméntalo de nuevo después de la primera ejecución exitosa.
-    console.log("¡Tablas borradas y recreadas! (Si force:true estaba activo)");
+    // ¡¡IMPORTANTE!! Descomentado para aplicar cambios en la estructura de la tabla
+    // await sequelize.sync({ force: true });
+    // Por favor, recuerda volver a comentarlo después de la ejecución exitosa
+    console.log("¡Tablas borradas y recreadas con la nueva estructura!");
 
     console.log("Reactivando FOREIGN_KEY_CHECKS...");
     await sequelize.query("SET FOREIGN_KEY_CHECKS = 1", { raw: true });
@@ -86,7 +87,6 @@ const sembrarDatos = async () => {
 
     // --- 2. Insertar Universidades ---
     console.log("Insertando universidades...");
-    // Usar 'ignoreDuplicates: true' por si el script se corre sin force:true
     await UniversidadModel.bulkCreate(universidadesData, {
       ignoreDuplicates: true,
     });
@@ -106,21 +106,20 @@ const sembrarDatos = async () => {
     const utnId = getIdByAlias("UTN");
     const unafId = getIdByAlias("UNaF");
     const ipfId = getIdByAlias("IPF");
-    const isfdacId = getIdByAlias("ISFDAC"); // <-- Nuevo ID
-    const ucpId = getIdByAlias("UCP"); // <-- Nuevo ID
+    const isfdacId = getIdByAlias("ISFDAC");
+    const ucpId = getIdByAlias("UCP");
     // --- Fin obtener IDs ---
 
-    // --- 3. Datos de Carreras (Originales + Nuevas) ---
+    // --- 3. Datos de Carreras (¡ACTUALIZADOS A RIASEC!) ---
     const carrerasData = [
-      // ... (Las 13 carreras anteriores van aquí sin cambios) ...
-      // UTN (Originales)
+      // UTN
       {
         nombre: "Tecnicatura Superior en Programación",
         descripcion: "Forma programadores para el desarrollo de software.",
         tipo: "Tecnicatura",
         area_estudio: "Tecnología",
         duracion_anios: 2,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTP", "INTP", "INTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "R", "C"]), // Investigador, Realista, Convencional
         universidadId: utnId,
       },
       {
@@ -129,17 +128,17 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Ciencias Exactas",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify(["ESTJ", "ISTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["R", "I"]), // Realista, Investigador
         universidadId: utnId,
       },
-      // UNaF (Originales)
+      // UNaF
       {
         nombre: "Licenciatura en Sistemas",
         descripcion: "Formación integral en análisis y desarrollo de sistemas.",
         tipo: "Grado",
         area_estudio: "Tecnología",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify(["INTJ", "ENTP", "INTP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "C", "R"]), // Investigador, Convencional, Realista
         universidadId: unafId,
       },
       {
@@ -148,10 +147,10 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Salud",
         duracion_anios: 4,
-        perfiles_mbti_compatibles: JSON.stringify(["ISFJ", "ESFJ", "INFJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["S", "R", "I"]), // Social, Realista, Investigador
         universidadId: unafId,
       },
-      // IPF (Original)
+      // IPF
       {
         nombre:
           "Tecnicatura Superior en Desarrollo de Software Multiplataforma",
@@ -159,17 +158,17 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Tecnología",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["INTP", "ENTP", "ISTP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "R", "C"]), // Investigador, Realista, Convencional
         universidadId: ipfId,
       },
-      // UNaF (Añadidas anteriormente)
+      // UNaF (Añadidas)
       {
         nombre: "Licenciatura en Comercio Exterior",
         descripcion: "Gestión de operaciones comerciales internacionales.",
         tipo: "Grado",
         area_estudio: "Ciencias Sociales",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify(["ESTJ", "ENTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["E", "C", "S"]), // Emprendedor, Convencional, Social
         universidadId: unafId,
       },
       {
@@ -179,7 +178,7 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Ciencias Exactas",
         duracion_anios: 4,
-        perfiles_mbti_compatibles: JSON.stringify(["ISFJ", "INFJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "S"]), // Investigador, Social
         universidadId: unafId,
       },
       {
@@ -188,7 +187,7 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Ciencias Sociales",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTJ", "ESTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["R", "E", "C"]), // Realista, Emprendedor, Convencional
         universidadId: unafId,
       },
       {
@@ -198,7 +197,7 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Humanidades",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify(["INFJ", "ENFJ", "INFP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["S", "I", "A"]), // Social, Investigador, Artístico
         universidadId: unafId,
       },
       // UTN-FRRe (Asociadas a UTN Formosa)
@@ -208,7 +207,7 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Ciencias Exactas",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify(["INTJ", "ISTJ", "INTP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "R"]), // Investigador, Realista
         universidadId: utnId,
       },
       {
@@ -218,10 +217,10 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Tecnología",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTP", "INTP", "ESTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["R", "I", "C"]), // Realista, Investigador, Convencional
         universidadId: utnId,
       },
-      // IPF (Añadidas anteriormente)
+      // IPF (Añadidas)
       {
         nombre: "Tecnicatura Superior en Energías Renovables",
         descripcion:
@@ -229,7 +228,7 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Tecnología",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTP", "ESTP", "ISFP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["R", "I"]), // Realista, Investigador
         universidadId: ipfId,
       },
       {
@@ -238,19 +237,19 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Tecnología",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTP", "ESTJ", "ISTJ"]),
+        perfiles_riasec_compatibles: JSON.stringify(["R", "I", "C"]), // Realista, Investigador, Convencional
         universidadId: ipfId,
       },
 
-      // --- ¡NUEVAS CARRERAS ISFDAC y UCP! ---
+      // --- ISFDAC y UCP (¡ACTUALIZADAS A RIASEC!) ---
       // ISFDAC
       {
         nombre: "Profesorado de Educación Primaria",
         descripcion: "Formación docente para el nivel primario.",
         tipo: "Grado",
         area_estudio: "Humanidades",
-        duracion_anios: 4, // Area: Educación/Humanidades
-        perfiles_mbti_compatibles: JSON.stringify(["ESFJ", "ISFJ", "ENFJ"]),
+        duracion_anios: 4,
+        perfiles_riasec_compatibles: JSON.stringify(["S", "A", "C"]), // Social, Artístico, Convencional
         universidadId: isfdacId,
       },
       {
@@ -259,7 +258,7 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Ciencias Exactas",
         duracion_anios: 4,
-        perfiles_mbti_compatibles: JSON.stringify(["ISTJ", "INTJ", "INTP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["I", "S", "C"]), // Investigador, Social, Convencional
         universidadId: isfdacId,
       },
       {
@@ -268,7 +267,7 @@ const sembrarDatos = async () => {
         tipo: "Tecnicatura",
         area_estudio: "Humanidades",
         duracion_anios: 3,
-        perfiles_mbti_compatibles: JSON.stringify(["ISFJ", "ISTJ", "INFP"]),
+        perfiles_riasec_compatibles: JSON.stringify(["C", "S", "A"]), // Convencional, Social, Artístico
         universidadId: isfdacId,
       },
       {
@@ -277,8 +276,8 @@ const sembrarDatos = async () => {
           "Formación para trabajar con alumnos con necesidades educativas especiales.",
         tipo: "Grado",
         area_estudio: "Humanidades",
-        duracion_anios: 4, // Area: Educación/Salud/Humanidades
-        perfiles_mbti_compatibles: JSON.stringify(["INFJ", "ISFP", "ENFP"]),
+        duracion_anios: 4,
+        perfiles_riasec_compatibles: JSON.stringify(["S", "A", "I"]), // Social, Artístico, Investigador
         universidadId: isfdacId,
       },
       // UCP
@@ -289,12 +288,7 @@ const sembrarDatos = async () => {
         tipo: "Grado",
         area_estudio: "Ciencias Sociales",
         duracion_anios: 5,
-        perfiles_mbti_compatibles: JSON.stringify([
-          "ENTJ",
-          "ESTJ",
-          "INTJ",
-          "ISTJ",
-        ]),
+        perfiles_riasec_compatibles: JSON.stringify(["E", "I", "C"]), // Emprendedor, Investigador, Convencional
         universidadId: ucpId,
       },
       {
@@ -303,8 +297,8 @@ const sembrarDatos = async () => {
           "Estudio del comportamiento humano y los procesos mentales.",
         tipo: "Grado",
         area_estudio: "Salud",
-        duracion_anios: 5, // Area: Salud/Humanidades
-        perfiles_mbti_compatibles: JSON.stringify(["INFJ", "INFP", "ENFJ"]),
+        duracion_anios: 5,
+        perfiles_riasec_compatibles: JSON.stringify(["S", "I", "A"]), // Social, Investigador, Artístico
         universidadId: ucpId,
       },
       {
@@ -313,8 +307,8 @@ const sembrarDatos = async () => {
           "Formación en contabilidad, finanzas, impuestos y auditoría.",
         tipo: "Grado",
         area_estudio: "Ciencias Sociales",
-        duracion_anios: 5, // Aprox
-        perfiles_mbti_compatibles: JSON.stringify(["ISTJ", "ESTJ"]),
+        duracion_anios: 5,
+        perfiles_riasec_compatibles: JSON.stringify(["C", "E"]), // Convencional, Emprendedor
         universidadId: ucpId,
       },
       {
@@ -322,27 +316,23 @@ const sembrarDatos = async () => {
         descripcion: "Ciencia de la alimentación y su relación con la salud.",
         tipo: "Grado",
         area_estudio: "Salud",
-        duracion_anios: 5, // Aprox
-        perfiles_mbti_compatibles: JSON.stringify(["ISFJ", "ESFJ", "ISTJ"]),
+        duracion_anios: 5,
+        perfiles_riasec_compatibles: JSON.stringify(["S", "I"]), // Social, Investigador
         universidadId: ucpId,
       },
     ];
 
     // --- 4. Insertar Carreras ---
     console.log("Insertando carreras...");
-    // Usar 'updateOnDuplicate' para actualizar si ya existen (basado en un unique constraint si lo tuvieras)
-    // o simplemente insertar y manejar posibles duplicados si no limpiaste la tabla.
-    // Como usamos force:true (o deberíamos haberlo usado), bulkCreate simple debería bastar.
-    await CarreraModel.bulkCreate(carrerasData, { ignoreDuplicates: true }); // ignoreDuplicates previene errores si se corre sin limpiar
+    await CarreraModel.bulkCreate(carrerasData, { ignoreDuplicates: true });
 
     console.log("---------------------------------");
     console.log(
-      `¡Base de datos sembrada con éxito! (${carrerasData.length} carreras)`
+      `¡Base de datos sembrada con éxito! (${carrerasData.length} carreras con perfiles RIASEC)`
     );
     console.log("---------------------------------");
   } catch (error) {
     console.error("Error al sembrar la base de datos:", error);
-    // Asegurarse de reactivar las FK incluso si hay error
     console.log("Intentando reactivar FOREIGN_KEY_CHECKS tras error...");
     await sequelize.query("SET FOREIGN_KEY_CHECKS = 1", { raw: true });
   } finally {

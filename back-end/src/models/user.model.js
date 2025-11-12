@@ -10,25 +10,32 @@ export const UserModel = sequelize.define(
     },
     email: {
       type: DataTypes.STRING(100),
-      unique: true,
       allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
     type: {
-      type: DataTypes.ENUM("estudiante", "universidad"),
+      type: DataTypes.ENUM("estudiante", "universidad", "admin"),
       allowNull: false,
     },
-    // 🔑 NUEVO CAMPO: Resultado del test MBTI
-    mbtiType: {
-      type: DataTypes.STRING(4), // EJ: 'INTJ', 'ESTP'
-      allowNull: true, // Es opcional al registrarse
+    riasecProfile: {
+      type: DataTypes.STRING(3),
       defaultValue: null,
+      comment: "Código RIASEC (Holland) principal del usuario (ej. SAI)",
     },
   },
   {
     timestamps: true,
   }
 );
+
+// Aquí irían las relaciones del usuario, por ejemplo con UniversidadModel
+// (basado en tu código anterior)
+// UniversidadModel.belongsTo(UserModel, { foreignKey: "userId" });
+// UserModel.hasOne(UniversidadModel, { foreignKey: "userId" });

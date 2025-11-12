@@ -30,10 +30,11 @@ export const CarreraModel = sequelize.define(
     duracion_anios: {
       type: DataTypes.INTEGER,
     },
-    perfiles_mbti_compatibles: {
-      type: DataTypes.JSON, // Guardará un array, ej: ["INTJ", "INTP"]
+
+    perfiles_riasec_compatibles: {
+      type: DataTypes.JSON,
+      comment: "Perfiles RIASEC (Holland) compatibles con esta carrera.",
     },
-    // 'universidadId' (la llave foránea) se crea automáticamente
   },
   {
     timestamps: true,

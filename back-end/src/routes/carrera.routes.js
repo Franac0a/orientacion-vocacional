@@ -4,7 +4,7 @@ import {
   obtenerCarrerasDeUniversidad, // Esta es la de ADMIN
   editarCarrera,
   eliminarCarrera,
-  obtenerTodasLasCarrerasPublico, // ¡Necesitamos esta!
+  obtenerTodasLasCarrerasPublico,
 } from "../controllers/carrera.controller.js";
 import {
   verificarUsuario,
@@ -15,13 +15,12 @@ export const carreraRoutes = Router();
 
 // --- RUTA PÚBLICA (Para el Explorador de "Juan") ---
 // GET /api/carreras?area=Tecnología&tipo=Grado
-// Esta ruta NO lleva middlewares, es abierta a todos.
 carreraRoutes.get("/", obtenerTodasLasCarrerasPublico);
 
 // --- RUTAS DE ADMIN (Para la Universidad logueada) ---
 
 // GET /api/carreras/mis-carreras
-// (Movemos la ruta de "obtener mis carreras" aquí para que no choque con "/")
+// (Esta es la que llama el panel para MOSTRAR la tabla de carreras)
 carreraRoutes.get(
   "/mis-carreras",
   verificarUsuario,
@@ -30,15 +29,16 @@ carreraRoutes.get(
 );
 
 // POST /api/carreras
-// (Protegida)
+// (Esta es la que llama el panel para CREAR una carrera)
+// --- ¡RUTA CORREGIDA! (antes decía "/carreras") ---
 carreraRoutes.post("/", verificarUsuario, soloUniversidad, crearCarrera);
 
 // PUT /api/carreras/:id
-// (Protegida)
+// (Para Editar)
 carreraRoutes.put("/:id", verificarUsuario, soloUniversidad, editarCarrera);
 
 // DELETE /api/carreras/:id
-// (Protegida)
+// (Para Eliminar)
 carreraRoutes.delete(
   "/:id",
   verificarUsuario,
